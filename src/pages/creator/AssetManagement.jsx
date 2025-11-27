@@ -1,8 +1,15 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { assetService } from '../../services/assetService';
+import { useTheme } from '../../context/ThemeContext';
+import FloatingCard from '../../components/3d/FloatingCards';
+import { BarChartIcon, PlusIcon, ArrowRightIcon, SettingsIcon } from '../../components/icons/Icons';
 import toast from 'react-hot-toast';
+import './AssetManagement.css';
 
 const AssetManagement = () => {
+  const { theme } = useTheme();
   const [assets, setAssets] = useState([]);
   const [formData, setFormData] = useState({
     symbol: '',
@@ -39,7 +46,7 @@ const AssetManagement = () => {
 
     try {
       await assetService.createAsset({
-        symbol: formData.symbol,
+        symbol: formData.symbol.toUpperCase(),
         pipValue: parseFloat(formData.pipValue),
         spread: parseFloat(formData.spread),
         margin: parseFloat(formData.margin),
@@ -69,185 +76,223 @@ const AssetManagement = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
-        <h1>Asset Management</h1>
-        <button onClick={() => setShowForm(!showForm)} style={styles.addBtn}>
-          {showForm ? 'Cancel' : 'Add Asset'}
-        </button>
-      </div>
-
-      {showForm && (
-        <div style={styles.card}>
-          <h2>Add New Asset</h2>
-          <form onSubmit={handleSubmit} style={styles.form}>
-            <div style={styles.formGroup}>
-              <label>Symbol</label>
-              <input
-                type="text"
-                name="symbol"
-                value={formData.symbol}
-                onChange={handleChange}
-                required
-                placeholder="e.g., USD/JPY, GOLD, BTC/USDT"
-              />
+    <div className="asset-management-page" style={{ background: theme.colors.background }}>
+      {/* Header */}
+      <motion.header
+        className="page-header"
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        style={{
+          background: theme.colors.card,
+          borderBottom: `1px solid ${theme.colors.border}`,
+        }}
+      >
+        <div className="header-content">
+          <Link to="/creator/dashboard" className="back-link" style={{ color: theme.colors.textSecondary }}>
+            <ArrowRightIcon size={20} color={theme.colors.textSecondary} style={{ transform: 'rotate(180deg)' }} />
+            <span>Back to Dashboard</span>
+          </Link>
+          <div className="header-title">
+            <div className="header-icon" style={{ background: `${theme.colors.primary}20`, color: theme.colors.primary }}>
+              <BarChartIcon size={24} color={theme.colors.primary} />
             </div>
-
-            <div style={styles.formGroup}>
-              <label>PIP Value</label>
-              <input
-                type="number"
-                name="pipValue"
-                value={formData.pipValue}
-                onChange={handleChange}
-                required
-                step="0.0001"
-              />
+            <div>
+              <h1 style={{ color: theme.colors.text }}>Asset Management</h1>
+              <p style={{ color: theme.colors.textSecondary }}>Manage your trading assets and their specifications</p>
             </div>
-
-            <div style={styles.formGroup}>
-              <label>Spread</label>
-              <input
-                type="number"
-                name="spread"
-                value={formData.spread}
-                onChange={handleChange}
-                required
-                step="0.01"
-              />
-            </div>
-
-            <div style={styles.formGroup}>
-              <label>Margin</label>
-              <input
-                type="number"
-                name="margin"
-                value={formData.margin}
-                onChange={handleChange}
-                required
-                step="0.01"
-              />
-            </div>
-
-            <button type="submit" disabled={loading} style={styles.button}>
-              {loading ? 'Creating...' : 'Create Asset'}
-            </button>
-          </form>
+          </div>
+          <button
+            onClick={() => setShowForm(!showForm)}
+            className="btn-add-asset"
+            style={{
+              background: theme.colors.secondary,
+              color: theme.colors.primary,
+            }}
+          >
+            <PlusIcon size={20} color={theme.colors.primary} />
+            <span>{showForm ? 'Cancel' : 'Add Asset'}</span>
+          </button>
         </div>
-      )}
+      </motion.header>
 
-      <div style={styles.assetsList}>
-        <h2>Your Assets</h2>
-        {assets.length === 0 ? (
-          <p>No assets yet. Add your first asset above.</p>
-        ) : (
-          <table style={styles.table}>
-            <thead>
-              <tr>
-                <th>Symbol</th>
-                <th>PIP Value</th>
-                <th>Spread</th>
-                <th>Margin</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {assets.map((asset) => (
-                <tr key={asset._id}>
-                  <td>{asset.symbol}</td>
-                  <td>{asset.pipValue}</td>
-                  <td>{asset.spread}</td>
-                  <td>{asset.margin}</td>
-                  <td>
-                    <button
-                      onClick={() => handleDelete(asset._id)}
-                      style={styles.deleteBtn}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div className="page-container">
+        {showForm && (
+          <FloatingCard>
+            <motion.div
+              className="form-card"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              style={{
+                background: theme.colors.card,
+                border: `1px solid ${theme.colors.border}`,
+              }}
+            >
+              <h2 style={{ color: theme.colors.text, marginBottom: '2rem' }}>Add New Asset</h2>
+              <form onSubmit={handleSubmit} className="asset-form">
+                <div className="form-grid">
+                  <div className="form-group">
+                    <label style={{ color: theme.colors.text }}>Symbol</label>
+                    <input
+                      type="text"
+                      name="symbol"
+                      value={formData.symbol}
+                      onChange={handleChange}
+                      required
+                      placeholder="e.g., USD/JPY, GOLD, BTC/USDT"
+                      style={{
+                        background: theme.colors.backgroundSecondary,
+                        border: `1px solid ${theme.colors.border}`,
+                        color: theme.colors.text,
+                      }}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label style={{ color: theme.colors.text }}>PIP Value</label>
+                    <input
+                      type="number"
+                      name="pipValue"
+                      value={formData.pipValue}
+                      onChange={handleChange}
+                      required
+                      step="0.0001"
+                      placeholder="0.0001"
+                      style={{
+                        background: theme.colors.backgroundSecondary,
+                        border: `1px solid ${theme.colors.border}`,
+                        color: theme.colors.text,
+                      }}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label style={{ color: theme.colors.text }}>Spread</label>
+                    <input
+                      type="number"
+                      name="spread"
+                      value={formData.spread}
+                      onChange={handleChange}
+                      required
+                      step="0.01"
+                      placeholder="0.01"
+                      style={{
+                        background: theme.colors.backgroundSecondary,
+                        border: `1px solid ${theme.colors.border}`,
+                        color: theme.colors.text,
+                      }}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label style={{ color: theme.colors.text }}>Margin</label>
+                    <input
+                      type="number"
+                      name="margin"
+                      value={formData.margin}
+                      onChange={handleChange}
+                      required
+                      step="0.01"
+                      placeholder="0.01"
+                      style={{
+                        background: theme.colors.backgroundSecondary,
+                        border: `1px solid ${theme.colors.border}`,
+                        color: theme.colors.text,
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="form-actions">
+                  <button
+                    type="button"
+                    onClick={() => setShowForm(false)}
+                    className="btn-cancel"
+                    style={{
+                      background: theme.colors.backgroundSecondary,
+                      border: `1px solid ${theme.colors.border}`,
+                      color: theme.colors.text,
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="btn-submit"
+                    style={{
+                      background: theme.colors.secondary,
+                      color: theme.colors.primary,
+                    }}
+                  >
+                    {loading ? 'Creating...' : 'Create Asset'}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </FloatingCard>
         )}
+
+        {/* Assets List */}
+        <motion.div
+          className="assets-section"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <h2 style={{ color: theme.colors.text, marginBottom: '1.5rem' }}>
+            Your Assets ({assets.length})
+          </h2>
+          {assets.length === 0 ? (
+            <div className="empty-state" style={{ background: theme.colors.card, border: `1px solid ${theme.colors.border}` }}>
+              <BarChartIcon size={48} color={theme.colors.textTertiary} />
+              <p style={{ color: theme.colors.textSecondary }}>No assets yet. Add your first asset above.</p>
+            </div>
+          ) : (
+            <div className="assets-grid">
+              {assets.map((asset, index) => (
+                <FloatingCard key={asset._id} delay={index * 0.1}>
+                  <motion.div
+                    className="asset-card"
+                    whileHover={{ scale: 1.02, y: -5 }}
+                    style={{
+                      background: theme.colors.card,
+                      border: `1px solid ${theme.colors.border}`,
+                    }}
+                  >
+                    <div className="asset-header">
+                      <div className="asset-symbol" style={{ color: theme.colors.secondary }}>
+                        {asset.symbol}
+                      </div>
+                      <button
+                        onClick={() => handleDelete(asset._id)}
+                        className="btn-delete"
+                        style={{ color: theme.colors.danger }}
+                      >
+                        ×
+                      </button>
+                    </div>
+                    <div className="asset-details">
+                      <div className="asset-detail">
+                        <span style={{ color: theme.colors.textSecondary }}>PIP Value</span>
+                        <span style={{ color: theme.colors.text, fontWeight: 600 }}>{asset.pipValue}</span>
+                      </div>
+                      <div className="asset-detail">
+                        <span style={{ color: theme.colors.textSecondary }}>Spread</span>
+                        <span style={{ color: theme.colors.text, fontWeight: 600 }}>{asset.spread}</span>
+                      </div>
+                      <div className="asset-detail">
+                        <span style={{ color: theme.colors.textSecondary }}>Margin</span>
+                        <span style={{ color: theme.colors.text, fontWeight: 600 }}>{asset.margin}</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                </FloatingCard>
+              ))}
+            </div>
+          )}
+        </motion.div>
       </div>
     </div>
   );
 };
 
-const styles = {
-  container: {
-    padding: '2rem',
-    maxWidth: '1200px',
-    margin: '0 auto',
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '2rem',
-  },
-  addBtn: {
-    padding: '0.75rem 1.5rem',
-    backgroundColor: '#007bff',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  card: {
-    backgroundColor: 'white',
-    padding: '2rem',
-    borderRadius: '8px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-    marginBottom: '2rem',
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  formGroup: {
-    marginBottom: '1rem',
-  },
-  label: {
-    display: 'block',
-    marginBottom: '0.5rem',
-    fontWeight: '500',
-  },
-  input: {
-    width: '100%',
-    padding: '0.75rem',
-    border: '1px solid #ddd',
-    borderRadius: '4px',
-  },
-  button: {
-    padding: '0.75rem',
-    backgroundColor: '#007bff',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  assetsList: {
-    backgroundColor: 'white',
-    padding: '2rem',
-    borderRadius: '8px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-  },
-  table: {
-    width: '100%',
-    borderCollapse: 'collapse',
-  },
-  deleteBtn: {
-    padding: '0.5rem 1rem',
-    backgroundColor: '#dc3545',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-};
-
 export default AssetManagement;
-

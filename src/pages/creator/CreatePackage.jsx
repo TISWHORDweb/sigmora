@@ -1,9 +1,15 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { packageService } from '../../services/packageService';
+import { useTheme } from '../../context/ThemeContext';
+import FloatingCard from '../../components/3d/FloatingCards';
+import { PackageIcon, ArrowRightIcon, PlusIcon } from '../../components/icons/Icons';
 import toast from 'react-hot-toast';
+import './CreatePackage.css';
 
 const CreatePackage = () => {
+  const { theme } = useTheme();
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -47,119 +53,160 @@ const CreatePackage = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h1>Create Package</h1>
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div style={styles.formGroup}>
-            <label>Package Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              placeholder="e.g., Basic, Pro, Advanced"
-            />
+    <div className="create-package-page" style={{ background: theme.colors.background }}>
+      {/* Header */}
+      <motion.header
+        className="page-header"
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        style={{
+          background: theme.colors.card,
+          borderBottom: `1px solid ${theme.colors.border}`,
+        }}
+      >
+        <div className="header-content">
+          <Link to="/creator/dashboard" className="back-link" style={{ color: theme.colors.textSecondary }}>
+            <ArrowRightIcon size={20} color={theme.colors.textSecondary} style={{ transform: 'rotate(180deg)' }} />
+            <span>Back to Dashboard</span>
+          </Link>
+          <div className="header-title">
+            <div className="header-icon" style={{ background: `${theme.colors.secondary}20`, color: theme.colors.secondary }}>
+              <PackageIcon size={24} color={theme.colors.secondary} />
+            </div>
+            <div>
+              <h1 style={{ color: theme.colors.text }}>Create Package</h1>
+              <p style={{ color: theme.colors.textSecondary }}>Create a new subscription package for your students</p>
+            </div>
           </div>
+        </div>
+      </motion.header>
 
-          <div style={styles.formGroup}>
-            <label>Description</label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              required
-              rows="4"
-              placeholder="Describe what subscribers will get..."
-            />
-          </div>
+      <div className="page-container">
+        <FloatingCard>
+          <motion.div
+            className="form-card"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            style={{
+              background: theme.colors.card,
+              border: `1px solid ${theme.colors.border}`,
+            }}
+          >
+            <form onSubmit={handleSubmit} className="package-form">
+              <div className="form-group">
+                <label style={{ color: theme.colors.text }}>Package Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  placeholder="e.g., Basic, Pro, Advanced"
+                  style={{
+                    background: theme.colors.backgroundSecondary,
+                    border: `1px solid ${theme.colors.border}`,
+                    color: theme.colors.text,
+                  }}
+                />
+              </div>
 
-          <div style={styles.formGroup}>
-            <label>Price (NGN)</label>
-            <input
-              type="number"
-              name="price"
-              value={formData.price}
-              onChange={handleChange}
-              required
-              min="0"
-              step="0.01"
-              placeholder="0.00"
-            />
-          </div>
+              <div className="form-group">
+                <label style={{ color: theme.colors.text }}>Description</label>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  required
+                  rows="5"
+                  placeholder="Describe what subscribers will get with this package..."
+                  style={{
+                    background: theme.colors.backgroundSecondary,
+                    border: `1px solid ${theme.colors.border}`,
+                    color: theme.colors.text,
+                  }}
+                />
+              </div>
 
-          <div style={styles.formGroup}>
-            <label>Features (comma-separated)</label>
-            <input
-              type="text"
-              name="features"
-              value={formData.features}
-              onChange={handleChange}
-              placeholder="Feature 1, Feature 2, Feature 3"
-            />
-          </div>
+              <div className="form-row">
+                <div className="form-group">
+                  <label style={{ color: theme.colors.text }}>Price (NGN)</label>
+                  <input
+                    type="number"
+                    name="price"
+                    value={formData.price}
+                    onChange={handleChange}
+                    required
+                    min="0"
+                    step="0.01"
+                    placeholder="0.00"
+                    style={{
+                      background: theme.colors.backgroundSecondary,
+                      border: `1px solid ${theme.colors.border}`,
+                      color: theme.colors.text,
+                    }}
+                  />
+                </div>
+              </div>
 
-          <button type="submit" disabled={loading} style={styles.button}>
-            {loading ? 'Creating...' : 'Create Package'}
-          </button>
-        </form>
+              <div className="form-group">
+                <label style={{ color: theme.colors.text }}>
+                  Features <span style={{ color: theme.colors.textTertiary, fontSize: '0.9rem' }}>(comma-separated)</span>
+                </label>
+                <input
+                  type="text"
+                  name="features"
+                  value={formData.features}
+                  onChange={handleChange}
+                  placeholder="Feature 1, Feature 2, Feature 3"
+                  style={{
+                    background: theme.colors.backgroundSecondary,
+                    border: `1px solid ${theme.colors.border}`,
+                    color: theme.colors.text,
+                  }}
+                />
+                <p className="form-hint" style={{ color: theme.colors.textTertiary }}>
+                  Separate multiple features with commas
+                </p>
+              </div>
+
+              <div className="form-actions">
+                <button
+                  type="button"
+                  onClick={() => navigate('/creator/dashboard')}
+                  className="btn-cancel"
+                  style={{
+                    background: theme.colors.backgroundSecondary,
+                    border: `1px solid ${theme.colors.border}`,
+                    color: theme.colors.text,
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="btn-submit"
+                  style={{
+                    background: theme.colors.secondary,
+                    color: theme.colors.primary,
+                  }}
+                >
+                  {loading ? (
+                    'Creating...'
+                  ) : (
+                    <>
+                      <PlusIcon size={20} color={theme.colors.primary} />
+                      <span>Create Package</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </motion.div>
+        </FloatingCard>
       </div>
     </div>
   );
 };
 
-const styles = {
-  container: {
-    minHeight: '100vh',
-    padding: '2rem',
-    backgroundColor: '#f5f5f5',
-  },
-  card: {
-    maxWidth: '600px',
-    margin: '0 auto',
-    backgroundColor: 'white',
-    padding: '2rem',
-    borderRadius: '8px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  formGroup: {
-    marginBottom: '1.5rem',
-  },
-  label: {
-    display: 'block',
-    marginBottom: '0.5rem',
-    fontWeight: '500',
-  },
-  input: {
-    width: '100%',
-    padding: '0.75rem',
-    border: '1px solid #ddd',
-    borderRadius: '4px',
-    fontSize: '1rem',
-  },
-  textarea: {
-    width: '100%',
-    padding: '0.75rem',
-    border: '1px solid #ddd',
-    borderRadius: '4px',
-    fontSize: '1rem',
-    fontFamily: 'inherit',
-  },
-  button: {
-    padding: '0.75rem',
-    backgroundColor: '#007bff',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    fontSize: '1rem',
-    cursor: 'pointer',
-  },
-};
-
 export default CreatePackage;
-

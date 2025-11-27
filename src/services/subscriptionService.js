@@ -12,5 +12,11 @@ export const subscriptionService = {
     const response = await api.get('/subscriptions/status');
     return response.data;
   },
+
+  // Get creator subscriptions (for analytics)
+  getCreatorSubscriptions: async () => {
+    const response = await api.get('/subscriptions/creator');
+    return response.data;
+  },
 };
 

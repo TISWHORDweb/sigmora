@@ -1,0 +1,19 @@
+.analytics-chart-container {
+  width: 100%;
+  padding: 1rem;
+  background: var(--color-card, #ffffff);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-sm, 0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: all 0.3s ease;
+}
+
+.analytics-chart-container:hover {
+  box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.1));
+  transform: translateY(-2px);
+}
+
+[data-theme='dark'] .analytics-chart-container {
+  background: var(--color-card, #141B2D);
+  border: 1px solid var(--color-border, #2D3748);
+}
+

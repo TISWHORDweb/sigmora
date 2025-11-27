@@ -2,6 +2,15 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
+import './styles/global.css';
+
+// Public Pages
+import Home from './pages/home/Home';
+import About from './pages/about/About';
+import Features from './pages/features/Features';
+import FAQ from './pages/faq/FAQ';
+import Contact from './pages/contact/Contact';
 
 // Auth Pages
 import Login from './pages/auth/Login';
@@ -39,11 +48,19 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <Router>
-          <Routes>
-            {/* Auth Routes */}
-            <Route path="/login" element={<Login />} />
+      <ThemeProvider>
+        <AuthProvider>
+          <Router>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/features" element={<Features />} />
+              <Route path="/faq" element={<FAQ />} />
+              <Route path="/contact" element={<Contact />} />
+              
+              {/* Auth Routes */}
+              <Route path="/login" element={<Login />} />
             <Route path="/register/creator" element={<RegisterCreator />} />
             <Route path="/register/subscriber" element={<RegisterSubscriber />} />
             <Route path="/join" element={<JoinAcademy />} />
@@ -133,13 +150,13 @@ function App() {
             />
             <Route path="/payment/callback" element={<PaymentCallback />} />
 
-            {/* Default Route */}
-            <Route path="/" element={<Navigate to="/login" replace />} />
-            <Route path="*" element={<Navigate to="/login" replace />} />
+            {/* 404 Route */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
           <Toaster position="top-right" />
         </Router>
       </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

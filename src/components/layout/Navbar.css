@@ -1,0 +1,221 @@
+.navbar-modern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1.25rem 2rem;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.navbar-modern.scrolled {
+  padding: 1rem 2rem;
+}
+
+.navbar-container-modern {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.navbar-logo-modern {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 900;
+  transition: transform 0.3s ease;
+  letter-spacing: 0.05em;
+}
+
+.navbar-logo-modern:hover {
+  transform: scale(1.05);
+}
+
+.logo-icon-modern {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-text-modern {
+  background: linear-gradient(135deg, #FFB800 0%, #FF8F00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.navbar-links-modern {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.nav-link-modern {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.nav-link-modern:hover {
+  background: var(--color-backgroundSecondary, #F5F7FA);
+}
+
+[data-theme='dark'] .nav-link-modern:hover {
+  background: var(--color-backgroundSecondary, #141B2D);
+}
+
+.nav-link-indicator {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+}
+
+.navbar-actions-modern {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.theme-toggle-modern {
+  width: 42px;
+  height: 42px;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.theme-toggle-modern:hover {
+  transform: scale(1.1) rotate(15deg);
+}
+
+.user-menu-modern,
+.auth-buttons-modern {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.btn-nav-primary,
+.btn-nav-secondary {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-nav-primary {
+  box-shadow: 0 4px 15px rgba(255, 184, 0, 0.3);
+}
+
+.btn-nav-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 184, 0, 0.4);
+}
+
+.btn-nav-secondary {
+  background: transparent;
+}
+
+.btn-nav-secondary:hover {
+  background: var(--color-backgroundSecondary, #F5F7FA);
+}
+
+[data-theme='dark'] .btn-nav-secondary:hover {
+  background: var(--color-backgroundSecondary, #141B2D);
+}
+
+.mobile-menu-toggle-modern {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.mobile-menu-toggle-modern span {
+  width: 25px;
+  height: 3px;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-modern {
+  display: none;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem 2rem;
+  backdrop-filter: blur(20px);
+}
+
+.mobile-nav-link-modern {
+  padding: 1rem 1.25rem;
+  text-decoration: none;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}
+
+.mobile-nav-link-modern:hover {
+  background: var(--color-backgroundSecondary, #F5F7FA);
+}
+
+[data-theme='dark'] .mobile-nav-link-modern:hover {
+  background: var(--color-backgroundSecondary, #141B2D);
+}
+
+@media (max-width: 768px) {
+  .navbar-modern {
+    padding: 1rem;
+  }
+
+  .navbar-links-modern {
+    display: none;
+  }
+
+  .user-menu-modern,
+  .auth-buttons-modern {
+    display: none;
+  }
+
+  .mobile-menu-toggle-modern {
+    display: flex;
+  }
+
+  .mobile-menu-modern {
+    display: flex;
+  }
+}

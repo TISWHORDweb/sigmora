@@ -24,5 +24,23 @@ export const authService = {
     const response = await api.get('/auth/me');
     return response.data;
   },
+
+  // Logout
+  logout: async () => {
+    const response = await api.post('/auth/logout');
+    return response.data;
+  },
+
+  // Logout from all devices
+  logoutAll: async () => {
+    const response = await api.post('/auth/logout-all');
+    return response.data;
+  },
+
+  // Refresh token
+  refreshToken: async () => {
+    const response = await api.post('/auth/refresh');
+    return response.data;
+  },
 };
 
