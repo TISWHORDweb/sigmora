@@ -1,0 +1,23 @@
+.hero-candlestick-chart {
+  width: 100%;
+  background: var(--surface);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.hero-candlestick-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 180px;
+}
+
+.hero-candlestick-chart .axis-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  fill: var(--label-slate);
+}
+
+.hero-candlestick-chart .axis-y {
+  font-size: 10px;
+}

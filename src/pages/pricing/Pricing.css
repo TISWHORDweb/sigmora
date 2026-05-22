@@ -8,7 +8,7 @@
 .pricing-hero {
   padding: 6rem 2rem;
   text-align: center;
-  background: linear-gradient(135deg, #0A1929 0%, #1E3A5F 100%);
+  background: linear-gradient(135deg, #0A0F1E 0%, #121826 100%);
   color: #FFFFFF;
 }
 
@@ -59,7 +59,7 @@
 }
 
 .pricing-card.popular {
-  border-color: var(--color-secondary, #FFB800);
+  border-color: var(--color-secondary, #00FFA3);
   box-shadow: 0 10px 40px rgba(255, 184, 0, 0.2);
   transform: scale(1.05);
 }
@@ -69,8 +69,8 @@
   top: -15px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, #FFB800 0%, #FF8F00 100%);
-  color: #0A1929;
+  background: linear-gradient(135deg, #00FFA3 0%, #00CC82 100%);
+  color: #0A0F1E;
   padding: 0.5rem 1.5rem;
   border-radius: 2rem;
   font-weight: 700;
@@ -99,7 +99,7 @@
 .price {
   font-size: 3rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #FFB800 0%, #FF8F00 100%);
+  background: linear-gradient(135deg, #00FFA3 0%, #00CC82 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -124,7 +124,7 @@
 }
 
 .check-icon {
-  color: var(--color-success, #00E676);
+  color: var(--color-success, #00FFA3);
   font-weight: 700;
   font-size: 1.2rem;
 }
@@ -134,8 +134,8 @@
   width: 100%;
   padding: 1rem;
   text-align: center;
-  background: linear-gradient(135deg, #FFB800 0%, #FF8F00 100%);
-  color: #0A1929;
+  background: linear-gradient(135deg, #00FFA3 0%, #00CC82 100%);
+  color: #0A0F1E;
   text-decoration: none;
   border-radius: 0.75rem;
   font-weight: 700;
@@ -149,7 +149,7 @@
 }
 
 .pricing-card.popular .plan-button {
-  background: linear-gradient(135deg, #00E676 0%, #00B248 100%);
+  background: linear-gradient(135deg, #00FFA3 0%, #00B248 100%);
   color: #FFFFFF;
 }
 

@@ -141,6 +141,26 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const refreshUser = async () => {
+    const userData = await authService.getMe();
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+    return userData;
+  };
+
+  const updateProfile = async (data) => {
+    try {
+      const updated = await authService.updateProfile(data);
+      setUser(updated);
+      localStorage.setItem('user', JSON.stringify(updated));
+      toast.success('Profile updated');
+      return updated;
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to update profile');
+      throw error;
+    }
+  };
+
   const value = {
     user,
     loading,
@@ -148,6 +168,8 @@ export const AuthProvider = ({ children }) => {
     registerCreator,
     registerSubscriber,
     logout,
+    refreshUser,
+    updateProfile,
     isAuthenticated: !!user,
   };
 

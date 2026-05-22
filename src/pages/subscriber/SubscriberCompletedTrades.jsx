@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import SubscriberShell from '../../components/subscriber/SubscriberShell';
 import { tradeService } from '../../services/tradeService';
 import toast from 'react-hot-toast';
 
 const SubscriberCompletedTrades = () => {
   const [trades, setTrades] = useState([]);
   const [loading, setLoading] = useState(true);
+  const initialLoad = useRef(true);
 
   useEffect(() => {
     loadTrades();
@@ -13,93 +15,60 @@ const SubscriberCompletedTrades = () => {
   const loadTrades = async () => {
     try {
       const data = await tradeService.getSubscriberCompletedTrades();
-      setTrades(data);
-    } catch (error) {
-      toast.error('Failed to load trades');
+      setTrades(Array.isArray(data) ? data : []);
+    } catch {
+      if (initialLoad.current) toast.error('Failed to load trades');
     } finally {
-      setLoading(false);
+      if (initialLoad.current) {
+        initialLoad.current = false;
+        setLoading(false);
+      }
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-
   return (
-    <div style={styles.container}>
-      <h1>Completed Trades</h1>
+    <SubscriberShell
+      title="Completed Trades"
+      subtitle="Closed signals from your academy"
+      activeNav="completed-trades"
+      loading={loading}
+    >
       {trades.length === 0 ? (
-        <p>No completed trades</p>
+        <div className="cr-card cr-empty">
+          <h3>No completed trades</h3>
+          <p>Your closed signals will show up here.</p>
+        </div>
       ) : (
-        <div style={styles.tradesList}>
+        <div className="cr-trade-grid">
           {trades.map((trade) => (
-            <div
+            <article
               key={trade._id}
-              style={{
-                ...styles.tradeCard,
-                borderLeft: `4px solid ${trade.type === 'BUY' ? '#28a745' : '#dc3545'}`,
-              }}
+              className={`cr-card cr-trade-card ${trade.type === 'BUY' ? 'buy' : 'sell'}`}
             >
-              <div style={styles.tradeHeader}>
-                <h3>{trade.asset?.symbol}</h3>
-                <span
-                  style={{
-                    ...styles.typeBadge,
-                    backgroundColor: trade.type === 'BUY' ? '#28a745' : '#dc3545',
-                  }}
-                >
-                  {trade.type}
-                </span>
+              <div className="cr-trade-head">
+                <span className="cr-trade-symbol">{trade.asset?.symbol || '—'}</span>
+                <span className={`cr-trade-badge ${trade.type === 'BUY' ? 'buy' : 'sell'}`}>{trade.type}</span>
               </div>
-              <div style={styles.tradeDetails}>
-                <p><strong>PIP:</strong> {trade.pip}</p>
-                <p><strong>Spread:</strong> {trade.spread}</p>
-                <p><strong>Take Profit:</strong> {trade.takeProfit}</p>
-                <p><strong>Stop Loss:</strong> {trade.stopLoss}</p>
-                <p><strong>Closed:</strong> {trade.closeReason}</p>
-                <p><strong>Closed At:</strong> {new Date(trade.closedAt).toLocaleString()}</p>
-                <p><strong>Creator:</strong> {trade.creator?.creatorName}</p>
-              </div>
-            </div>
+              <dl className="cr-trade-meta">
+                <div>
+                  <dt>Closed</dt>
+                  <dd>{trade.closeReason || '—'}</dd>
+                </div>
+                <div>
+                  <dt>Closed At</dt>
+                  <dd>{trade.closedAt ? new Date(trade.closedAt).toLocaleString() : '—'}</dd>
+                </div>
+                <div>
+                  <dt>Creator</dt>
+                  <dd>{trade.creator?.creatorName || '—'}</dd>
+                </div>
+              </dl>
+            </article>
           ))}
         </div>
       )}
-    </div>
+    </SubscriberShell>
   );
 };
 
-const styles = {
-  container: {
-    padding: '2rem',
-    maxWidth: '1200px',
-    margin: '0 auto',
-  },
-  tradesList: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-    gap: '1.5rem',
-    marginTop: '2rem',
-  },
-  tradeCard: {
-    backgroundColor: 'white',
-    padding: '1.5rem',
-    borderRadius: '8px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-  },
-  tradeHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '1rem',
-  },
-  typeBadge: {
-    padding: '0.25rem 0.75rem',
-    borderRadius: '4px',
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  tradeDetails: {
-    marginBottom: '1rem',
-  },
-};
-
 export default SubscriberCompletedTrades;
-

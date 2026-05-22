@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useTheme } from '../../context/ThemeContext';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import FloatingCard from '../../components/3d/FloatingCards';
 import TradingChart from '../../components/charts/TradingChart';
+import HeroCandlestickChart from '../../components/charts/HeroCandlestickChart';
 import {
   ChartIcon,
   TargetIcon,
@@ -16,28 +17,71 @@ import {
   TrendingUpIcon,
   ActivityIcon,
   ArrowRightIcon,
-  CheckIcon,
   BarChartIcon,
-  CoinsIcon,
+  CheckIcon,
 } from '../../components/icons/Icons';
+import '../../styles/landing-tokens.css';
 import './Home.css';
 
+const HeroWaveDivider = () => (
+  <div className="section-divider section-divider-wave" aria-hidden="true">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"
+        fill="var(--bg-secondary)"
+      />
+    </svg>
+  </div>
+);
+
+const FEATURE_ACCENTS = ['gold', 'teal', 'purple', 'coral', 'blue', 'gold'];
+
+const getChartHeight = () => {
+  if (typeof window === 'undefined') return 650;
+  const w = window.innerWidth;
+  if (w < 480) return 300;
+  if (w < 768) return 380;
+  if (w < 1100) return 480;
+  return 650;
+};
+
+const CREATOR_PERKS = [
+  'Private academy invite codes',
+  'Subscriber & package management',
+  'Real-time trade publishing',
+  'Asset-level pip & margin control',
+];
+
 const Home = () => {
-  const { theme, isDark } = useTheme();
+  const navigate = useNavigate();
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [chartHeight, setChartHeight] = useState(getChartHeight);
+  const [academyCode, setAcademyCode] = useState('');
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
+  useEffect(() => {
+    const onResize = () => setChartHeight(getChartHeight());
+    onResize();
+    window.addEventListener('resize', onResize, { passive: true });
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0 },
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      setScrollProgress(progress);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleJoinAcademy = (e) => {
+    e.preventDefault();
+    const code = academyCode.trim().toUpperCase();
+    if (!code) return;
+    navigate(`/register?role=subscriber&code=${encodeURIComponent(code)}`);
   };
 
   const features = [
@@ -45,37 +89,31 @@ const Home = () => {
       Icon: ChartIcon,
       title: 'Real-Time Analytics',
       description: 'Advanced analytics and insights to track your trading performance with precision and clarity. Monitor your portfolio in real-time with comprehensive dashboards.',
-      color: theme.colors.secondary,
     },
     {
       Icon: TargetIcon,
       title: 'Expert Strategies',
       description: 'Follow proven trading strategies from professional forex experts with years of market experience. Learn from the best and replicate their success.',
-      color: theme.colors.success,
     },
     {
       Icon: ShieldIcon,
       title: 'Bank-Level Security',
       description: 'Enterprise-grade security with end-to-end encryption to protect your data and trading information. Your privacy and security are our top priorities.',
-      color: theme.colors.primary,
     },
     {
       Icon: ZapIcon,
       title: 'Lightning Fast Execution',
       description: 'Ultra-low latency execution with sub-millisecond response times for optimal trading performance. Never miss an opportunity with instant trade execution.',
-      color: theme.colors.secondary,
     },
     {
       Icon: ActivityIcon,
       title: 'Multi-Platform Access',
       description: 'Access your trades seamlessly from desktop, mobile, or tablet with full feature parity. Trade on the go with our responsive design.',
-      color: theme.colors.success,
     },
     {
       Icon: DiamondIcon,
       title: 'Premium Support',
       description: '24/7 dedicated support from our expert team of trading professionals and technical specialists. Get help when you need it most.',
-      color: theme.colors.secondary,
     },
   ];
 
@@ -112,17 +150,21 @@ const Home = () => {
   ];
 
   return (
-    <div className="home-page" style={{ background: theme.colors.background }}>
-      <Navbar />
-      
+    <div className="home-page landing-premium">
+      <div
+        className="scroll-progress-bar"
+        style={{ width: `${scrollProgress}%` }}
+        aria-hidden="true"
+      />
+
+      <Navbar landing />
+
       {/* Professional & Futuristic Hero Section */}
-      <section className={`hero-section-modern ${isDark ? 'hero-dark' : 'hero-light'}`}>
-        {/* Futuristic Background */}
+      <section className="hero-section-modern section-bg-odd">
         <div className="hero-bg-modern">
-          <div className="hero-gradient-orb orb-modern-1"></div>
-          <div className="hero-gradient-orb orb-modern-2"></div>
-          <div className="hero-grid-modern"></div>
-          <div className="hero-scan-line"></div>
+          <div className="hero-gradient-orb orb-modern-1" />
+          <div className="hero-gradient-orb orb-modern-2" />
+          <div className="hero-grid-modern" />
         </div>
 
         <div className="hero-container-modern">
@@ -132,129 +174,85 @@ const Home = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Modern Badge */}
-            <motion.div
-              className="hero-badge-modern"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              style={{
-                background: isDark
-                  ? 'rgba(255, 184, 0, 0.1)'
-                  : 'rgba(255, 184, 0, 0.08)',
-                borderColor: isDark
-                  ? 'rgba(255, 184, 0, 0.3)'
-                  : 'rgba(255, 184, 0, 0.25)',
-                color: theme.colors.text,
-              }}
-            >
-              <div className="badge-indicator" style={{ background: theme.colors.secondary }}></div>
-              <TrendingUpIcon size={16} color={theme.colors.secondary} />
-              <span>10,000+ Professional Traders</span>
-            </motion.div>
-
-            {/* Futuristic Title */}
             <motion.h1
-              className="hero-title-modern"
+              className="hero-title-modern hero-title-compact"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
             >
-              <span className="title-line-1" style={{ color: theme.colors.text }}>
-                Master Forex Trading
-              </span>
+              <span className="title-line-1">Institutional Grade</span>
               <span className="title-line-2">
-                <span className="gradient-modern">with Excellence</span>
-                <span className="title-accent" style={{ color: theme.colors.secondary }}>.</span>
+                <span className="gradient-modern">Signals</span>
               </span>
             </motion.h1>
 
-            {/* Professional Subtitle */}
+            <motion.p
+              className="hero-tagline-modern"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.45, duration: 0.8 }}
+            >
+              Master the markets with elite signal providers.
+            </motion.p>
+
             <motion.p
               className="hero-subtitle-modern"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              style={{ color: theme.colors.textSecondary }}
             >
-              Connect with expert traders, follow proven strategies, and transform your trading journey.
-              <br />
-              <span style={{ color: theme.colors.text, fontWeight: 500 }}>
-                Professional-grade platform trusted by thousands worldwide.
-              </span>
+              Connect with verified trading creators. Access real-time trade signals, institutional
+              risk management, and structured learning paths.
             </motion.p>
 
-            {/* Modern CTA Buttons */}
+            <motion.form
+              className="hero-academy-form"
+              onSubmit={handleJoinAcademy}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.55, duration: 0.8 }}
+            >
+              <input
+                type="text"
+                value={academyCode}
+                onChange={(e) => setAcademyCode(e.target.value.toUpperCase())}
+                placeholder="Enter Academy Code (e.g. TRD782)"
+                maxLength={6}
+                className="hero-academy-input"
+                aria-label="Academy code"
+              />
+              <button type="submit" className="btn-modern-primary hero-academy-btn">
+                Join Academy
+              </button>
+            </motion.form>
+
+            <motion.p
+              className="hero-creator-link"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.65 }}
+            >
+              Or{' '}
+              <Link to="/register?role=creator">
+                register as a creator
+                <ArrowRightIcon size={14} color="currentColor" />
+              </Link>
+            </motion.p>
+
             <motion.div
               className="hero-cta-modern"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.8 }}
+              transition={{ delay: 0.7, duration: 0.8 }}
             >
-              <Link to="/register/creator" className="btn-modern-primary">
-                <span>Get Started</span>
+              <Link to="/register" className="btn-modern-primary">
+                <span>Start Trading</span>
                 <ArrowRightIcon size={18} color="currentColor" />
-                <div className="btn-modern-glow"></div>
-              </Link>
-              <Link
-                to="/features"
-                className="btn-modern-secondary"
-                style={{
-                  color: theme.colors.text,
-                  borderColor: theme.colors.border,
-                }}
-              >
-                <ActivityIcon size={18} color={theme.colors.textSecondary} />
-                <span>Learn More</span>
               </Link>
             </motion.div>
 
-            {/* Professional Stats */}
-            <motion.div
-              className="hero-stats-modern"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-            >
-              {stats.slice(0, 4).map((stat, index) => (
-                <motion.div
-                  key={index}
-                  className="stat-modern"
-                  whileHover={{ y: -5, scale: 1.02 }}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.9 + index * 0.1 }}
-                  style={{
-                    background: isDark
-                      ? 'rgba(20, 27, 45, 0.6)'
-                      : 'rgba(255, 255, 255, 0.8)',
-                    border: `1px solid ${theme.colors.border}`,
-                    backdropFilter: 'blur(20px)',
-                  }}
-                >
-                  <div
-                    className="stat-modern-icon"
-                    style={{
-                      background: `${theme.colors.secondary}15`,
-                      color: theme.colors.secondary,
-                    }}
-                  >
-                    <stat.icon size={20} color={theme.colors.secondary} />
-                  </div>
-                  <div className="stat-modern-content">
-                    <div className="stat-modern-number" style={{ color: theme.colors.text }}>
-                      {stat.number}
-                    </div>
-                    <div className="stat-modern-label" style={{ color: theme.colors.textSecondary }}>
-                      {stat.label}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
           </motion.div>
 
-          {/* Futuristic Visual Panel */}
           <motion.div
             className="hero-visual-modern"
             initial={{ opacity: 0, x: 50 }}
@@ -262,83 +260,87 @@ const Home = () => {
             transition={{ delay: 0.4, duration: 1 }}
           >
             <div className="visual-panel-modern">
-              <div
-                className="panel-glass"
-                style={{
-                  background: isDark
-                    ? 'rgba(20, 27, 45, 0.4)'
-                    : 'rgba(255, 255, 255, 0.6)',
-                  border: `1px solid ${theme.colors.border}`,
-                  backdropFilter: 'blur(30px)',
-                }}
-              >
-                <div className="panel-header" style={{ borderBottom: `1px solid ${theme.colors.border}` }}>
-                  <div className="panel-title">
-                    <div className="panel-dot" style={{ background: theme.colors.success }}></div>
-                    <span style={{ color: theme.colors.text }}>EUR/USD</span>
+              <div className="hero-chart-card">
+                <div className="hero-chart-topbar">
+                  <div className="hero-chart-ticker">
+                    <span className="ticker-symbol">EUR/USD</span>
+                    <span className="exchange-badge">FOREX</span>
                   </div>
-                  <div className="panel-price" style={{ color: theme.colors.success }}>
-                    <TrendingUpIcon size={14} color={theme.colors.success} />
-                    <span>+0.45%</span>
+                  <div className="hero-chart-change">+4.85%</div>
+                </div>
+                <HeroCandlestickChart />
+                <div className="hero-chart-metrics">
+                  <div className="hero-chart-traders-pill">
+                    <span className="traders-value">2.4K</span>
+                    <span className="traders-label">Traders</span>
+                  </div>
+                  <div className="hero-chart-win-badge" aria-label="98 percent win rate">
+                    <span className="win-badge-value">98%</span>
+                    <span className="win-badge-label">Win rate</span>
                   </div>
                 </div>
-                <div className="panel-chart">
-                  {[...Array(25)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="chart-bar-modern"
-                      initial={{ height: 0 }}
-                      animate={{ height: `${Math.random() * 70 + 15}%` }}
-                      transition={{
-                        delay: 1 + i * 0.03,
-                        duration: 0.6,
-                        ease: "easeOut",
-                      }}
-                      style={{
-                        background: `linear-gradient(180deg, ${theme.colors.secondary} 0%, ${theme.colors.success} 100%)`,
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {/* Floating Metrics */}
-              <div className="metrics-float">
-                {[
-                  { value: '98%', label: 'Win Rate', color: theme.colors.success },
-                  { value: '2.4K', label: 'Trades', color: theme.colors.secondary },
-                ].map((metric, i) => (
-                  <motion.div
-                    key={i}
-                    className="metric-card"
-                    whileHover={{ scale: 1.1, y: -8 }}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.2 + i * 0.2 }}
-                    style={{
-                      background: isDark
-                        ? 'rgba(20, 27, 45, 0.8)'
-                        : 'rgba(255, 255, 255, 0.9)',
-                      border: `1px solid ${metric.color}40`,
-                      backdropFilter: 'blur(20px)',
-                    }}
-                  >
-                    <div className="metric-value" style={{ color: metric.color }}>
-                      {metric.value}
-                    </div>
-                    <div className="metric-label" style={{ color: theme.colors.textSecondary }}>
-                      {metric.label}
-                    </div>
-                  </motion.div>
-                ))}
               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
+      <HeroWaveDivider />
+
+      {/* For Creators */}
+      <section className="creators-section section-bg-even">
+        <div className="section-container creators-split">
+          <motion.div
+            className="creators-copy"
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="section-eyebrow">For Creators</span>
+            <h2 className="section-title section-title-left">
+              Are you a creator? <span className="gradient-modern">Control your destiny.</span>
+            </h2>
+            <p className="creators-lead">
+              Set up your academy in minutes. Publish trades, define packages, and share your invite
+              code — payments stay between you and your subscribers.
+            </p>
+            <ul className="creators-perks">
+              {CREATOR_PERKS.map((perk) => (
+                <li key={perk}>
+                  <CheckIcon size={18} color="currentColor" />
+                  <span>{perk}</span>
+                </li>
+              ))}
+            </ul>
+            <Link to="/register?role=creator" className="btn-modern-primary creators-cta">
+              <span>Launch your academy</span>
+              <ArrowRightIcon size={18} color="currentColor" />
+            </Link>
+          </motion.div>
+          <motion.div
+            className="creators-panel"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <FloatingCard>
+              <div className="creators-panel-inner">
+                <div className="creators-panel-icon">
+                  <PackageIcon size={28} color="currentColor" />
+                </div>
+                <h3>Your academy, your rules</h3>
+                <p>
+                  Build a private community around your strategy. Manage subscribers, publish signals,
+                  and grow on your terms.
+                </p>
+              </div>
+            </FloatingCard>
+          </motion.div>
+        </div>
+      </section>
+
       {/* How It Works Section */}
-      <section className="how-it-works" style={{ background: theme.colors.backgroundSecondary }}>
+      <section className="how-it-works section-bg-even">
         <motion.div
           className="section-container"
           initial={{ opacity: 0, y: 50 }}
@@ -347,15 +349,15 @@ const Home = () => {
           transition={{ duration: 0.6 }}
         >
           <div className="section-header">
-            <h2 className="section-title" style={{ color: theme.colors.text }}>
-              How It Works
-            </h2>
-            <p className="section-subtitle" style={{ color: theme.colors.textSecondary }}>
+            <span className="section-eyebrow">Simple Process</span>
+            <h2 className="section-title">How It Works</h2>
+            <p className="section-subtitle">
               Get started with Sigmora in three simple steps and begin your journey to trading success
             </p>
           </div>
 
           <div className="steps-container">
+            <div className="steps-connector" aria-hidden="true" />
             {[
               {
                 step: '01',
@@ -383,26 +385,15 @@ const Home = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.2 }}
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  style={{
-                    background: theme.colors.card,
-                    border: `1px solid ${theme.colors.border}`,
-                  }}
+                  whileHover={{ y: -6 }}
                 >
-                  <div className="step-number" style={{ color: theme.colors.secondary }}>
-                    {step.step}
+                  <span className="step-watermark">{step.step}</span>
+                  <div className="step-number-circle">{step.step}</div>
+                  <div className="step-icon">
+                    <step.icon size={24} />
                   </div>
-                  <div 
-                    className="step-icon"
-                    style={{ 
-                      background: `${theme.colors.secondary}15`,
-                      color: theme.colors.secondary,
-                    }}
-                  >
-                    <step.icon size={32} color={theme.colors.secondary} />
-                  </div>
-                  <h3 style={{ color: theme.colors.text }}>{step.title}</h3>
-                  <p style={{ color: theme.colors.textSecondary }}>{step.description}</p>
+                  <h3>{step.title}</h3>
+                  <p>{step.description}</p>
                 </motion.div>
               </FloatingCard>
             ))}
@@ -411,7 +402,7 @@ const Home = () => {
       </section>
 
       {/* Live Trading Chart Section */}
-      <section className="chart-section" style={{ background: theme.colors.background }}>
+      <section className="chart-section section-bg-odd">
         <motion.div
           className="section-container"
           initial={{ opacity: 0, y: 50 }}
@@ -420,28 +411,31 @@ const Home = () => {
           transition={{ duration: 0.6 }}
         >
           <div className="section-header">
-            <div className="section-badge" style={{ background: `${theme.colors.secondary}15`, color: theme.colors.secondary }}>
-              <ActivityIcon size={16} color={theme.colors.secondary} />
-              <span>Live Data</span>
+            <div className="chart-section-header-row">
+              <div className="chart-gold-accent" aria-hidden="true" />
+              <div>
+                <div className="section-badge">
+                  <ActivityIcon size={16} />
+                  <span>Live Data</span>
+                </div>
+                <h2 className="section-title">Real-Time Market Analysis</h2>
+                <p className="section-subtitle">
+                  Professional-grade trading charts powered by TradingView. Track EUR/USD, GBP/USD, USD/JPY,
+                  and more with advanced technical indicators, drawing tools, and market analysis.
+                </p>
+              </div>
             </div>
-            <h2 className="section-title" style={{ color: theme.colors.text }}>
-              Real-Time Market Analysis
-            </h2>
-            <p className="section-subtitle" style={{ color: theme.colors.textSecondary }}>
-              Professional-grade trading charts powered by TradingView. Track EUR/USD, GBP/USD, USD/JPY,
-              and more with advanced technical indicators, drawing tools, and market analysis.
-            </p>
           </div>
           <FloatingCard>
             <div className="chart-wrapper">
-              <TradingChart symbol="EURUSD" height={650} />
+              <TradingChart symbol="EURUSD" height={chartHeight} lazy />
             </div>
           </FloatingCard>
         </motion.div>
       </section>
 
       {/* Features Preview */}
-      <section className="features-preview" style={{ background: theme.colors.backgroundSecondary }}>
+      <section className="features-preview section-bg-even">
         <motion.div
           className="section-container"
           initial={{ opacity: 0 }}
@@ -450,41 +444,29 @@ const Home = () => {
           transition={{ duration: 0.6 }}
         >
           <div className="section-header">
-            <h2 className="section-title" style={{ color: theme.colors.text }}>
-              Why Choose Sigmora?
-            </h2>
-            <p className="section-subtitle" style={{ color: theme.colors.textSecondary }}>
+            <h2 className="section-title">Why Choose Sigmora?</h2>
+            <p className="section-subtitle">
               Experience the future of forex trading management with cutting-edge technology
               and professional-grade tools designed for serious traders.
             </p>
           </div>
-          
+
           <div className="features-grid">
             {features.map((feature, index) => (
               <FloatingCard key={index} delay={index * 0.1}>
                 <motion.div
-                  className="feature-card"
+                  className={`feature-card feature-accent-${FEATURE_ACCENTS[index]}`}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  style={{
-                    background: theme.colors.card,
-                    border: `1px solid ${theme.colors.border}`,
-                  }}
+                  whileHover={{ y: -4 }}
                 >
-                  <div 
-                    className="feature-icon-wrapper"
-                    style={{ 
-                      background: `${feature.color}15`,
-                      color: feature.color,
-                    }}
-                  >
-                    <feature.Icon size={36} color={feature.color} />
+                  <div className="feature-icon-wrapper">
+                    <feature.Icon size={32} />
                   </div>
-                  <h3 style={{ color: theme.colors.text }}>{feature.title}</h3>
-                  <p style={{ color: theme.colors.textSecondary }}>{feature.description}</p>
+                  <h3>{feature.title}</h3>
+                  <p>{feature.description}</p>
                 </motion.div>
               </FloatingCard>
             ))}
@@ -493,7 +475,7 @@ const Home = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="benefits-section" style={{ background: theme.colors.background }}>
+      <section className="benefits-section section-bg-odd">
         <motion.div
           className="section-container"
           initial={{ opacity: 0, y: 50 }}
@@ -503,10 +485,8 @@ const Home = () => {
         >
           <div className="benefits-content">
             <div className="benefits-text">
-              <h2 style={{ color: theme.colors.text }}>
-                Everything You Need to Succeed in Forex Trading
-              </h2>
-              <p style={{ color: theme.colors.textSecondary }}>
+              <h2>Everything You Need to Succeed in Forex Trading</h2>
+              <p>
                 Our comprehensive platform provides all the tools and resources you need to excel
                 in the competitive world of forex trading. From expert guidance to advanced analytics,
                 we've got you covered.
@@ -521,53 +501,39 @@ const Home = () => {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <div 
-                      className="benefit-icon"
-                      style={{ 
-                        background: `${theme.colors.secondary}15`,
-                        color: theme.colors.secondary,
-                      }}
-                    >
-                      <benefit.icon size={20} color={theme.colors.secondary} />
+                    <div className="benefit-icon" aria-hidden="true">
+                      <benefit.icon size={22} color="currentColor" />
                     </div>
                     <div>
-                      <h4 style={{ color: theme.colors.text }}>{benefit.title}</h4>
-                      <p style={{ color: theme.colors.textSecondary }}>{benefit.description}</p>
+                      <h4>{benefit.title}</h4>
+                      <p>{benefit.description}</p>
                     </div>
                   </motion.div>
                 ))}
               </div>
-              <Link to="/register/creator" className="btn-benefits" style={{ background: theme.colors.secondary, color: theme.colors.primary }}>
-                <span>Get Started Today</span>
-                <ArrowRightIcon size={20} color={theme.colors.primary} />
+              <Link to="/register" className="btn-benefits">
+                <span>Start Trading</span>
+                <ArrowRightIcon size={20} />
               </Link>
             </div>
             <FloatingCard delay={0.3}>
-              <div 
-                className="benefits-visual"
-                style={{
-                  background: theme.colors.card,
-                  border: `1px solid ${theme.colors.border}`,
-                }}
-              >
+              <div className="benefits-visual">
                 <div className="visual-stats">
                   {stats.map((stat, index) => (
                     <motion.div
                       key={index}
                       className="visual-stat"
-                      initial={{ opacity: 0, scale: 0.8 }}
+                      initial={{ opacity: 0, scale: 0.9 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <stat.icon size={24} color={theme.colors.secondary} />
-                      <div>
-                        <div className="visual-stat-number" style={{ color: theme.colors.text }}>
-                          {stat.number}
-                        </div>
-                        <div className="visual-stat-label" style={{ color: theme.colors.textSecondary }}>
-                          {stat.label}
-                        </div>
+                      <div className="visual-stat-icon">
+                        <stat.icon size={22} color="currentColor" />
+                      </div>
+                      <div className="visual-stat-copy">
+                        <div className="visual-stat-number">{stat.number}</div>
+                        <div className="visual-stat-label">{stat.label}</div>
                       </div>
                     </motion.div>
                   ))}
@@ -579,25 +545,31 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="cta-section">
-        <div className="cta-background">
-          <div className="cta-orb cta-orb-1"></div>
-          <div className="cta-orb cta-orb-2"></div>
+      <section className="cta-section section-bg-even">
+        <div className="cta-orb-large" aria-hidden="true" />
+        <div className="cta-grid-pattern" aria-hidden="true" />
+        <div className="cta-particles" aria-hidden="true">
+          {Array.from({ length: 12 }, (_, i) => (
+            <span key={i} className={`cta-particle cta-particle-${i + 1}`} />
+          ))}
         </div>
         <motion.div
           className="cta-content"
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
         >
-          <h2>Ready to Transform Your Trading?</h2>
+          <h2>
+            Ready to Transform Your{' '}
+            <span className="cta-headline-highlight">Trading?</span>
+          </h2>
           <p>
             Join thousands of successful traders on Sigmora today and start your journey to trading excellence.
             Experience the difference that professional-grade tools and expert guidance can make.
           </p>
           <div className="cta-buttons">
-            <Link to="/register/creator" className="btn-cta">
-              <span>Get Started Free</span>
+            <Link to="/register" className="btn-cta">
+              <span>Start Trading</span>
               <ArrowRightIcon size={20} color="currentColor" />
             </Link>
             <Link to="/faq" className="btn-cta-secondary">
@@ -607,7 +579,7 @@ const Home = () => {
         </motion.div>
       </section>
 
-      <Footer />
+      <Footer landing />
     </div>
   );
 };

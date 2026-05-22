@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
+import { Copy } from 'lucide-react';
+import CreatorShell from '../../components/creator/CreatorShell';
 import { academyService } from '../../services/academyService';
 import toast from 'react-hot-toast';
 
 const AcademyCode = () => {
   const [academyCode, setAcademyCode] = useState('');
   const [creatorName, setCreatorName] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadAcademyCode();
@@ -13,86 +16,61 @@ const AcademyCode = () => {
   const loadAcademyCode = async () => {
     try {
       const data = await academyService.getAcademyCode();
-      setAcademyCode(data.academyCode);
-      setCreatorName(data.creatorName);
-    } catch (error) {
+      setAcademyCode(data.academyCode || '');
+      setCreatorName(data.creatorName || '');
+    } catch {
       toast.error('Failed to load academy code');
+    } finally {
+      setLoading(false);
     }
   };
 
   const copyToClipboard = () => {
+    if (!academyCode) return;
     navigator.clipboard.writeText(academyCode);
-    toast.success('Academy code copied to clipboard!');
+    toast.success('Academy code copied');
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h1>Your Academy Code</h1>
-        <p style={styles.creatorName}>Creator: {creatorName}</p>
-        
-        <div style={styles.codeContainer}>
-          <h2 style={styles.code}>{academyCode}</h2>
-          <button onClick={copyToClipboard} style={styles.copyBtn}>
-            Copy Code
-          </button>
-        </div>
+    <CreatorShell
+      title="Academy Code"
+      subtitle="Share with subscribers so they can join your academy"
+      activeNav="academy-code"
+      loading={loading}
+    >
+      <div className="cr-card cr-card-glow cr-academy-card">
+        <p className="cr-dash-hero-label">Creator</p>
+        <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: 600 }}>{creatorName || '—'}</p>
 
-        <div style={styles.info}>
-          <h3>How to use:</h3>
+        <p className="cr-dash-hero-label" style={{ marginTop: 24 }}>
+          Your code
+        </p>
+        <div className="cr-academy-code">{academyCode || '—'}</div>
+
+        <button
+          type="button"
+          className="cr-btn-primary cr-btn-sm"
+          style={{ width: 'auto', margin: '0 auto' }}
+          onClick={copyToClipboard}
+          disabled={!academyCode}
+        >
+          <Copy size={16} />
+          Copy code
+        </button>
+
+        <div className="cr-academy-steps">
+          <h3 className="cr-section-title" style={{ marginBottom: 0 }}>
+            How to use
+          </h3>
           <ol>
             <li>Share this code with your students</li>
-            <li>Students will use it to join your academy</li>
-            <li>They can then subscribe to your packages</li>
+            <li>They enter it when joining your academy</li>
+            <li>They can subscribe to your packages and receive signals</li>
           </ol>
         </div>
       </div>
-    </div>
+    </CreatorShell>
   );
 };
 
-const styles = {
-  container: {
-    padding: '2rem',
-    maxWidth: '600px',
-    margin: '0 auto',
-  },
-  card: {
-    backgroundColor: 'white',
-    padding: '2rem',
-    borderRadius: '8px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-    textAlign: 'center',
-  },
-  creatorName: {
-    fontSize: '1.2rem',
-    color: '#666',
-    marginBottom: '2rem',
-  },
-  codeContainer: {
-    margin: '2rem 0',
-  },
-  code: {
-    fontSize: '3rem',
-    fontWeight: 'bold',
-    color: '#007bff',
-    letterSpacing: '0.5rem',
-    marginBottom: '1rem',
-  },
-  copyBtn: {
-    padding: '0.75rem 2rem',
-    backgroundColor: '#007bff',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    fontSize: '1rem',
-    cursor: 'pointer',
-  },
-  info: {
-    marginTop: '2rem',
-    textAlign: 'left',
-  },
-};
-
 export default AcademyCode;
-

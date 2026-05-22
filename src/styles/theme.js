@@ -1,54 +1,45 @@
-// Forex Trading Theme - Professional Color Scheme
+// Sigmora theme — mint brand on deep navy
+
 export const lightTheme = {
   name: 'light',
   colors: {
-    // Primary - Professional Blue
-    primary: '#0A1929',
-    primaryLight: '#1E3A5F',
-    primaryDark: '#051422',
-    
-    // Secondary - Gold/Amber (Forex accent)
-    secondary: '#FFB800',
-    secondaryLight: '#FFD54F',
-    secondaryDark: '#FF8F00',
-    
-    // Success - Green (Profits)
-    success: '#00E676',
-    successLight: '#66FFA6',
-    successDark: '#00B248',
-    
-    // Danger - Red (Losses)
-    danger: '#FF1744',
-    dangerLight: '#FF616F',
-    dangerDark: '#C51162',
-    
-    // Background
-    background: '#FFFFFF',
-    backgroundSecondary: '#F5F7FA',
-    backgroundTertiary: '#E8ECF1',
-    
-    // Text
-    text: '#1A1A1A',
-    textSecondary: '#4A5568',
-    textTertiary: '#718096',
-    
-    // Borders
+    primary: '#0A0F1E',
+    primaryLight: '#121826',
+    primaryDark: '#060A14',
+
+    secondary: '#00FFA3',
+    secondaryLight: '#66FFC4',
+    secondaryDark: '#00CC82',
+
+    success: '#00FFA3',
+    successLight: '#66FFC4',
+    successDark: '#00CC82',
+
+    danger: '#FF4B5C',
+    dangerLight: '#FF7A87',
+    dangerDark: '#E03546',
+
+    background: '#F8FAFC',
+    backgroundSecondary: '#F1F5F9',
+    backgroundTertiary: '#E2E8F0',
+
+    text: '#0A0F1E',
+    textSecondary: '#64748B',
+    textTertiary: '#94A3B8',
+
     border: '#E2E8F0',
     borderLight: '#F1F5F9',
-    
-    // Cards
+
     card: '#FFFFFF',
     cardHover: '#F8FAFC',
-    
-    // Shadows
-    shadow: 'rgba(0, 0, 0, 0.1)',
-    shadowHover: 'rgba(0, 0, 0, 0.15)',
-    
-    // Gradients
-    gradientPrimary: 'linear-gradient(135deg, #0A1929 0%, #1E3A5F 100%)',
-    gradientSuccess: 'linear-gradient(135deg, #00E676 0%, #00B248 100%)',
-    gradientDanger: 'linear-gradient(135deg, #FF1744 0%, #C51162 100%)',
-    gradientGold: 'linear-gradient(135deg, #FFB800 0%, #FF8F00 100%)',
+
+    shadow: 'rgba(10, 15, 30, 0.08)',
+    shadowHover: 'rgba(10, 15, 30, 0.12)',
+
+    gradientPrimary: 'linear-gradient(135deg, #0A0F1E 0%, #121826 100%)',
+    gradientSuccess: 'linear-gradient(135deg, #00FFA3 0%, #00CC82 100%)',
+    gradientDanger: 'linear-gradient(135deg, #FF4B5C 0%, #E03546 100%)',
+    gradientGold: 'linear-gradient(135deg, #00FFA3 0%, #00CC82 100%)',
   },
   spacing: {
     xs: '0.5rem',
@@ -70,60 +61,50 @@ export const lightTheme = {
     md: '0 4px 6px rgba(0, 0, 0, 0.1)',
     lg: '0 10px 15px rgba(0, 0, 0, 0.1)',
     xl: '0 20px 25px rgba(0, 0, 0, 0.15)',
-    glow: '0 0 20px rgba(255, 184, 0, 0.3)',
+    glow: '0 0 20px rgba(0, 255, 163, 0.3)',
   },
 };
 
 export const darkTheme = {
   name: 'dark',
   colors: {
-    // Primary - Deep Blue
-    primary: '#0D1B2A',
-    primaryLight: '#1B263B',
-    primaryDark: '#050A14',
-    
-    // Secondary - Gold/Amber
-    secondary: '#FFB800',
-    secondaryLight: '#FFD54F',
-    secondaryDark: '#FF8F00',
-    
-    // Success - Green (Profits)
-    success: '#00E676',
-    successLight: '#66FFA6',
-    successDark: '#00B248',
-    
-    // Danger - Red (Losses)
-    danger: '#FF1744',
-    dangerLight: '#FF616F',
-    dangerDark: '#C51162',
-    
-    // Background
-    background: '#0A0E1A',
-    backgroundSecondary: '#141B2D',
-    backgroundTertiary: '#1E2742',
-    
-    // Text
-    text: '#F7FAFC',
-    textSecondary: '#CBD5E0',
-    textTertiary: '#A0AEC0',
-    
-    // Borders
-    border: '#2D3748',
-    borderLight: '#1A202C',
-    
-    // Cards
-    card: '#141B2D',
-    cardHover: '#1E2742',
-    
-    // Shadows
-    shadow: 'rgba(0, 0, 0, 0.3)',
+    primary: '#0A0F1E',
+    primaryLight: '#121826',
+    primaryDark: '#060A14',
+
+    secondary: '#00FFA3',
+    secondaryLight: '#66FFC4',
+    secondaryDark: '#00CC82',
+
+    success: '#00FFA3',
+    successLight: '#66FFC4',
+    successDark: '#00CC82',
+
+    danger: '#FF4B5C',
+    dangerLight: '#FF7A87',
+    dangerDark: '#E03546',
+
+    background: '#0A0F1E',
+    backgroundSecondary: '#0E1424',
+    backgroundTertiary: '#121826',
+
+    text: '#E2E8F0',
+    textSecondary: '#94A3B8',
+    textTertiary: '#64748B',
+
+    border: '#1E293B',
+    borderLight: 'rgba(255, 255, 255, 0.06)',
+
+    card: '#121826',
+    cardHover: '#1a2332',
+
+    shadow: 'rgba(0, 0, 0, 0.35)',
     shadowHover: 'rgba(0, 0, 0, 0.5)',
-    
-    // Gradients
-    gradientPrimary: 'linear-gradient(135deg, #0D1B2A 0%, #1B263B 100%)',
-    gradientSuccess: 'linear-gradient(135deg, #00E676 0%, #00B248 100%)',
-    gradientDanger: 'linear-gradient(135deg, #FF1744 0%, #C51162 100%)',
-    gradientGold: 'linear-gradient(135deg, #FFB800 0%, #FF8F00 100%)',
+
+    gradientPrimary: 'linear-gradient(135deg, #0A0F1E 0%, #121826 100%)',
+    gradientSuccess: 'linear-gradient(135deg, #00FFA3 0%, #00CC82 100%)',
+    gradientDanger: 'linear-gradient(135deg, #FF4B5C 0%, #E03546 100%)',
+    gradientGold: 'linear-gradient(135deg, #00FFA3 0%, #00CC82 100%)',
   },
   spacing: {
     xs: '0.5rem',
@@ -145,7 +126,6 @@ export const darkTheme = {
     md: '0 4px 6px rgba(0, 0, 0, 0.3)',
     lg: '0 10px 15px rgba(0, 0, 0, 0.4)',
     xl: '0 20px 25px rgba(0, 0, 0, 0.5)',
-    glow: '0 0 30px rgba(255, 184, 0, 0.4)',
+    glow: '0 0 30px rgba(0, 255, 163, 0.35)',
   },
 };
-

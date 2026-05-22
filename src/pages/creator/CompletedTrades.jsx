@@ -1,10 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import CreatorShell from '../../components/creator/CreatorShell';
+import TradeSearchBar from '../../components/creator/TradeSearchBar';
+import TradeTypeFilter from '../../components/creator/TradeTypeFilter';
 import { tradeService } from '../../services/tradeService';
+import { filterTrades, getTradeTypeCounts } from '../../utils/filterTrades';
 import toast from 'react-hot-toast';
 
 const CompletedTrades = () => {
+  const navigate = useNavigate();
   const [trades, setTrades] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
+  const [typeFilter, setTypeFilter] = useState('ALL');
+  const initialLoad = useRef(true);
+
+  const typeCounts = useMemo(() => getTradeTypeCounts(trades), [trades]);
+  const filteredTrades = useMemo(
+    () => filterTrades(trades, search, typeFilter),
+    [trades, search, typeFilter]
+  );
 
   useEffect(() => {
     loadTrades();
@@ -13,92 +29,95 @@ const CompletedTrades = () => {
   const loadTrades = async () => {
     try {
       const data = await tradeService.getCompletedTrades();
-      setTrades(data);
-    } catch (error) {
+      setTrades(Array.isArray(data) ? data : []);
+    } catch {
       toast.error('Failed to load trades');
     } finally {
-      setLoading(false);
+      if (initialLoad.current) {
+        initialLoad.current = false;
+        setLoading(false);
+      }
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-
   return (
-    <div style={styles.container}>
-      <h1>Completed Trades</h1>
-      {trades.length === 0 ? (
-        <p>No completed trades</p>
-      ) : (
-        <div style={styles.tradesList}>
-          {trades.map((trade) => (
-            <div
-              key={trade._id}
-              style={{
-                ...styles.tradeCard,
-                borderLeft: `4px solid ${trade.type === 'BUY' ? '#28a745' : '#dc3545'}`,
-              }}
-            >
-              <div style={styles.tradeHeader}>
-                <h3>{trade.asset?.symbol}</h3>
-                <span
-                  style={{
-                    ...styles.typeBadge,
-                    backgroundColor: trade.type === 'BUY' ? '#28a745' : '#dc3545',
-                  }}
-                >
-                  {trade.type}
-                </span>
-              </div>
-              <div style={styles.tradeDetails}>
-                <p>PIP: {trade.pip}</p>
-                <p>Spread: {trade.spread}</p>
-                <p>TP: {trade.takeProfit}</p>
-                <p>SL: {trade.stopLoss}</p>
-                <p>Closed: {trade.closeReason}</p>
-                <p>Closed At: {new Date(trade.closedAt).toLocaleString()}</p>
-              </div>
-            </div>
-          ))}
+    <CreatorShell
+      title="Completed Trades"
+      subtitle="Closed positions and outcomes"
+      activeNav="completed-trades"
+      loading={loading}
+      topAction={
+        <button type="button" className="cr-btn-ghost" onClick={() => navigate('/creator/dashboard')}>
+          <ArrowLeft size={16} />
+          Overview
+        </button>
+      }
+    >
+      {!loading && trades.length > 0 && (
+        <div className="cr-trades-filters">
+          <TradeTypeFilter value={typeFilter} onChange={setTypeFilter} counts={typeCounts} />
+          <TradeSearchBar
+            value={search}
+            onChange={setSearch}
+            placeholder="Search symbol, type, close reason…"
+            filteredCount={filteredTrades.length}
+            totalCount={trades.length}
+          />
         </div>
       )}
-    </div>
+
+      {!loading && trades.length === 0 ? (
+        <div className="cr-card cr-empty">
+          <h3>No completed trades yet</h3>
+          <p>Closed trades will appear here with TP, SL, or manual close details.</p>
+        </div>
+      ) : !loading && filteredTrades.length === 0 ? (
+        <div className="cr-card cr-empty">
+          <h3>No matches</h3>
+          <p>No completed trades match &ldquo;{search}&rdquo;.</p>
+          <button type="button" className="cr-dash-link" style={{ marginTop: 12 }} onClick={() => setSearch('')}>
+            Clear search
+          </button>
+        </div>
+      ) : (
+        !loading && (
+        <div className="cr-trade-grid">
+          {filteredTrades.map((trade) => (
+            <article
+              key={trade._id}
+              className={`cr-card cr-trade-card ${trade.type === 'BUY' ? 'buy' : 'sell'}`}
+            >
+              <div className="cr-trade-head">
+                <span className="cr-trade-symbol">{trade.asset?.symbol || '—'}</span>
+                <span className={`cr-trade-badge ${trade.type === 'BUY' ? 'buy' : 'sell'}`}>{trade.type}</span>
+              </div>
+              <dl className="cr-trade-meta">
+                <div>
+                  <dt>PIP</dt>
+                  <dd>{trade.pip}</dd>
+                </div>
+                <div>
+                  <dt>Spread</dt>
+                  <dd>{trade.spread}</dd>
+                </div>
+                <div>
+                  <dt>Closed</dt>
+                  <dd>{trade.closeReason || '—'}</dd>
+                </div>
+                <div>
+                  <dt>Closed At</dt>
+                  <dd>
+                    {trade.closedAt ? new Date(trade.closedAt).toLocaleString() : '—'}
+                  </dd>
+                </div>
+              </dl>
+            </article>
+          ))}
+        </div>
+        )
+      )}
+    </CreatorShell>
   );
 };
 
-const styles = {
-  container: {
-    padding: '2rem',
-    maxWidth: '1200px',
-    margin: '0 auto',
-  },
-  tradesList: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-    gap: '1.5rem',
-    marginTop: '2rem',
-  },
-  tradeCard: {
-    backgroundColor: 'white',
-    padding: '1.5rem',
-    borderRadius: '8px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-  },
-  tradeHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '1rem',
-  },
-  typeBadge: {
-    padding: '0.25rem 0.75rem',
-    borderRadius: '4px',
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  tradeDetails: {
-    marginBottom: '1rem',
-  },
-};
-
 export default CompletedTrades;
-

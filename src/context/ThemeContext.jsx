@@ -40,6 +40,16 @@ export const ThemeProvider = ({ children }) => {
     Object.entries(theme.colors).forEach(([key, value]) => {
       root.style.setProperty(`--color-${key}`, value);
     });
+
+    root.style.setProperty('--background', theme.colors.background);
+    root.style.setProperty('--surface', theme.colors.backgroundTertiary);
+    root.style.setProperty('--foreground', theme.colors.text);
+    root.style.setProperty('--brand', theme.colors.secondary);
+    root.style.setProperty('--brand-foreground', theme.colors.primary);
+    root.style.setProperty('--danger', theme.colors.danger);
+    root.style.setProperty('--muted-foreground', theme.colors.textSecondary);
+    root.style.setProperty('--border-slate', theme.colors.border);
+    root.style.setProperty('--label-slate', theme.colors.textTertiary);
   }, [theme]);
 
   const value = {

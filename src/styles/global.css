@@ -36,23 +36,23 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-primary, #0A1929);
+  background: var(--color-primary, #0A0F1E);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primaryLight, #1E3A5F);
+  background: var(--color-primaryLight, #121826);
 }
 
 /* Selection */
 ::selection {
-  background: var(--color-secondary, #FFB800);
-  color: var(--color-primary, #0A1929);
+  background: var(--color-secondary, #00FFA3);
+  color: var(--color-primary, #0A0F1E);
 }
 
 /* Focus styles */
 *:focus {
-  outline: 2px solid var(--color-secondary, #FFB800);
+  outline: 2px solid var(--color-secondary, #00FFA3);
   outline-offset: 2px;
 }
 
@@ -150,7 +150,7 @@ html {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #FFB800 0%, #FF8F00 100%);
+  background: linear-gradient(135deg, #00FFA3 0%, #00CC82 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

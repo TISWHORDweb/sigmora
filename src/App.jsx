@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
+import { ConfirmProvider } from './context/ConfirmContext';
 import { ThemeProvider } from './context/ThemeContext';
 import './styles/global.css';
 
@@ -14,17 +15,17 @@ import Contact from './pages/contact/Contact';
 
 // Auth Pages
 import Login from './pages/auth/Login';
-import RegisterCreator from './pages/auth/RegisterCreator';
-import RegisterSubscriber from './pages/auth/RegisterSubscriber';
+import Register from './pages/auth/Register';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import ResetPassword from './pages/auth/ResetPassword';
 
 // Creator Pages
-import CreatorDashboard from './pages/creator/CreatorDashboard';
-import CreatePackage from './pages/creator/CreatePackage';
-import AssetManagement from './pages/creator/AssetManagement';
-import TradeCreation from './pages/creator/TradeCreation';
+import HappyFXDashboard from './pages/creator/HappyFXDashboard';
 import ActiveTrades from './pages/creator/ActiveTrades';
 import CompletedTrades from './pages/creator/CompletedTrades';
 import AcademyCode from './pages/creator/AcademyCode';
+import CreatorSubscribers from './pages/creator/CreatorSubscribers';
+import ProfilePage from './pages/account/ProfilePage';
 
 // Subscriber Pages
 import JoinAcademy from './pages/subscriber/JoinAcademy';
@@ -50,6 +51,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <AuthProvider>
+          <ConfirmProvider>
           <Router>
             <Routes>
               {/* Public Routes */}
@@ -61,8 +63,11 @@ function App() {
               
               {/* Auth Routes */}
               <Route path="/login" element={<Login />} />
-            <Route path="/register/creator" element={<RegisterCreator />} />
-            <Route path="/register/subscriber" element={<RegisterSubscriber />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/register/creator" element={<Navigate to="/register?role=creator" replace />} />
+              <Route path="/register/subscriber" element={<Navigate to="/register?role=subscriber" replace />} />
             <Route path="/join" element={<JoinAcademy />} />
 
             {/* Creator Routes */}
@@ -70,34 +75,13 @@ function App() {
               path="/creator/dashboard"
               element={
                 <ProtectedRoute role="creator">
-                  <CreatorDashboard />
+                  <HappyFXDashboard />
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/creator/packages/create"
-              element={
-                <ProtectedRoute role="creator">
-                  <CreatePackage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/creator/assets"
-              element={
-                <ProtectedRoute role="creator">
-                  <AssetManagement />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/creator/trades/create"
-              element={
-                <ProtectedRoute role="creator">
-                  <TradeCreation />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/creator/packages/create" element={<Navigate to="/creator/dashboard?view=packages" replace />} />
+            <Route path="/creator/assets" element={<Navigate to="/creator/dashboard?view=assets" replace />} />
+            <Route path="/creator/trades/create" element={<Navigate to="/creator/dashboard?view=trade" replace />} />
             <Route
               path="/creator/trades/active"
               element={
@@ -119,6 +103,22 @@ function App() {
               element={
                 <ProtectedRoute role="creator">
                   <AcademyCode />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/creator/subscribers"
+              element={
+                <ProtectedRoute role="creator">
+                  <CreatorSubscribers />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/creator/profile"
+              element={
+                <ProtectedRoute role="creator">
+                  <ProfilePage />
                 </ProtectedRoute>
               }
             />
@@ -148,6 +148,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/subscriber/profile"
+              element={
+                <ProtectedRoute role="subscriber">
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/payment/callback" element={<PaymentCallback />} />
 
             {/* 404 Route */}
@@ -155,6 +163,7 @@ function App() {
           </Routes>
           <Toaster position="top-right" />
         </Router>
+          </ConfirmProvider>
       </AuthProvider>
       </ThemeProvider>
     </QueryClientProvider>

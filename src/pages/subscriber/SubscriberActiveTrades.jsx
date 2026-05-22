@@ -1,106 +1,88 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import SubscriberShell from '../../components/subscriber/SubscriberShell';
 import { tradeService } from '../../services/tradeService';
 import toast from 'react-hot-toast';
 
 const SubscriberActiveTrades = () => {
   const [trades, setTrades] = useState([]);
   const [loading, setLoading] = useState(true);
+  const initialLoad = useRef(true);
 
   useEffect(() => {
     loadTrades();
-    const interval = setInterval(loadTrades, 5000); // Poll every 5 seconds
+    const interval = setInterval(loadTrades, 5000);
     return () => clearInterval(interval);
   }, []);
 
   const loadTrades = async () => {
     try {
       const data = await tradeService.getSubscriberActiveTrades();
-      setTrades(data);
-    } catch (error) {
-      toast.error('Failed to load trades');
+      setTrades(Array.isArray(data) ? data : []);
+    } catch {
+      if (initialLoad.current) toast.error('Failed to load trades');
     } finally {
-      setLoading(false);
+      if (initialLoad.current) {
+        initialLoad.current = false;
+        setLoading(false);
+      }
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-
   return (
-    <div style={styles.container}>
-      <h1>Active Trades</h1>
+    <SubscriberShell
+      title="Active Trades"
+      subtitle="Live signals from your academy"
+      activeNav="active-trades"
+      loading={loading}
+    >
       {trades.length === 0 ? (
-        <p>No active trades available</p>
+        <div className="cr-card cr-empty">
+          <h3>No active trades</h3>
+          <p>Signals from your academy will appear here when live.</p>
+        </div>
       ) : (
-        <div style={styles.tradesList}>
+        <div className="cr-trade-grid">
           {trades.map((trade) => (
-            <div
+            <article
               key={trade._id}
-              style={{
-                ...styles.tradeCard,
-                borderLeft: `4px solid ${trade.type === 'BUY' ? '#28a745' : '#dc3545'}`,
-              }}
+              className={`cr-card cr-trade-card ${trade.type === 'BUY' ? 'buy' : 'sell'}`}
             >
-              <div style={styles.tradeHeader}>
-                <h3>{trade.asset?.symbol}</h3>
-                <span
-                  style={{
-                    ...styles.typeBadge,
-                    backgroundColor: trade.type === 'BUY' ? '#28a745' : '#dc3545',
-                  }}
-                >
-                  {trade.type}
-                </span>
+              <div className="cr-trade-head">
+                <span className="cr-trade-symbol">{trade.asset?.symbol || '—'}</span>
+                <span className={`cr-trade-badge ${trade.type === 'BUY' ? 'buy' : 'sell'}`}>{trade.type}</span>
               </div>
-              <div style={styles.tradeDetails}>
-                <p><strong>PIP:</strong> {trade.pip}</p>
-                <p><strong>Spread:</strong> {trade.spread}</p>
-                <p><strong>Take Profit:</strong> {trade.takeProfit}</p>
-                <p><strong>Stop Loss:</strong> {trade.stopLoss}</p>
-                <p><strong>Status:</strong> {trade.status}</p>
-                <p><strong>Creator:</strong> {trade.creator?.creatorName}</p>
-              </div>
-            </div>
+              <dl className="cr-trade-meta">
+                <div>
+                  <dt>PIP</dt>
+                  <dd>{trade.pip}</dd>
+                </div>
+                <div>
+                  <dt>Spread</dt>
+                  <dd>{trade.spread}</dd>
+                </div>
+                <div>
+                  <dt>Take Profit</dt>
+                  <dd>{trade.takeProfit}</dd>
+                </div>
+                <div>
+                  <dt>Stop Loss</dt>
+                  <dd>{trade.stopLoss}</dd>
+                </div>
+                <div>
+                  <dt>Status</dt>
+                  <dd>{trade.status}</dd>
+                </div>
+                <div>
+                  <dt>Creator</dt>
+                  <dd>{trade.creator?.creatorName || '—'}</dd>
+                </div>
+              </dl>
+            </article>
           ))}
         </div>
       )}
-    </div>
+    </SubscriberShell>
   );
 };
 
-const styles = {
-  container: {
-    padding: '2rem',
-    maxWidth: '1200px',
-    margin: '0 auto',
-  },
-  tradesList: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-    gap: '1.5rem',
-    marginTop: '2rem',
-  },
-  tradeCard: {
-    backgroundColor: 'white',
-    padding: '1.5rem',
-    borderRadius: '8px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-  },
-  tradeHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '1rem',
-  },
-  typeBadge: {
-    padding: '0.25rem 0.75rem',
-    borderRadius: '4px',
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  tradeDetails: {
-    marginBottom: '1rem',
-  },
-};
-
 export default SubscriberActiveTrades;
-

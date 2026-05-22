@@ -1,0 +1,175 @@
+.confirm-dialog-portal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.confirm-dialog__backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: rgba(10, 15, 30, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+.confirm-dialog {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  padding: 28px 28px 24px;
+  border-radius: 16px;
+  background: #121826;
+  border: 1px solid rgba(0, 255, 163, 0.2);
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  animation: confirm-dialog-in 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.confirm-dialog--wide {
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes confirm-dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.confirm-dialog__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #8b92a8;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.confirm-dialog__close:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e8edf5;
+}
+
+.confirm-dialog__icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.confirm-dialog__icon--default,
+.confirm-dialog__icon--success {
+  background: rgba(0, 255, 163, 0.12);
+  color: #00ffa3;
+}
+
+.confirm-dialog__icon--danger {
+  background: rgba(255, 77, 109, 0.12);
+  color: #ff4d6d;
+}
+
+.confirm-dialog__icon--warning {
+  background: rgba(255, 179, 71, 0.12);
+  color: #ffb347;
+}
+
+.confirm-dialog__title {
+  font-family: 'Syne', 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #e8edf5;
+  margin: 0 0 8px;
+}
+
+.confirm-dialog__message {
+  font-family: 'DM Sans', 'Inter', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #8b92a8;
+  margin: 0 0 24px;
+}
+
+.confirm-dialog__actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.confirm-dialog__btn {
+  font-family: 'DM Sans', 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.confirm-dialog__btn:active {
+  transform: scale(0.97);
+}
+
+.confirm-dialog__btn--ghost {
+  background: transparent;
+  border: 1px solid #2a2e45;
+  color: #8b92a8;
+}
+
+.confirm-dialog__btn--ghost:hover {
+  border-color: #8b92a8;
+  color: #e8edf5;
+}
+
+.confirm-dialog__btn--primary {
+  background: #00ffa3;
+  color: #0a0f1e;
+}
+
+.confirm-dialog__btn--primary:hover {
+  box-shadow: 0 0 20px rgba(0, 255, 163, 0.35);
+}
+
+.confirm-dialog__btn--danger {
+  background: #ff4d6d;
+  color: #fff;
+}
+
+.confirm-dialog__btn--danger:hover {
+  box-shadow: 0 0 20px rgba(255, 77, 109, 0.4);
+}
+
+.confirm-dialog__btn--warning {
+  background: #ffb347;
+  color: #0a0f1e;
+}
+
+.confirm-dialog__btn--success {
+  background: #00ffa3;
+  color: #0a0f1e;
+}
