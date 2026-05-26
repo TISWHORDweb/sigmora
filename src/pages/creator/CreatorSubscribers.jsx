@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Users } from 'lucide-react';
 import CreatorShell from '../../components/creator/CreatorShell';
+import TradeSearchBar from '../../components/creator/TradeSearchBar';
 import { subscriptionService } from '../../services/subscriptionService';
 import toast from 'react-hot-toast';
 
@@ -17,6 +18,7 @@ const CreatorSubscribers = () => {
   const [subscriptions, setSubscriptions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     loadSubscribers();
@@ -42,10 +44,24 @@ const CreatorSubscribers = () => {
   }, [subscriptions]);
 
   const filtered = useMemo(() => {
-    if (filter === 'active') return subscriptions.filter((s) => s.status === 'active');
-    if (filter === 'expired') return subscriptions.filter((s) => s.status === 'expired');
-    return subscriptions;
-  }, [subscriptions, filter]);
+    let list = subscriptions;
+    if (filter === 'active') list = list.filter((s) => s.status === 'active');
+    if (filter === 'expired') list = list.filter((s) => s.status === 'expired');
+    const q = search.trim().toLowerCase();
+    if (!q) return list;
+    return list.filter((sub) => {
+      const hay = [
+        sub.subscriber?.name,
+        sub.subscriber?.email,
+        sub.package?.name,
+        sub.status,
+        formatDate(sub.expiryDate),
+      ]
+        .join(' ')
+        .toLowerCase();
+      return hay.includes(q);
+    });
+  }, [subscriptions, filter, search]);
 
   return (
     <CreatorShell
@@ -71,6 +87,16 @@ const CreatorSubscribers = () => {
             </div>
           </div>
 
+          {subscriptions.length > 0 && (
+            <TradeSearchBar
+              value={search}
+              onChange={setSearch}
+              placeholder="Search name, email, package…"
+              filteredCount={filtered.length}
+              totalCount={subscriptions.length}
+            />
+          )}
+
           <div className="cr-dash-toolbar" style={{ marginBottom: 16 }}>
             {[
               { id: 'all', label: 'All' },
@@ -91,8 +117,12 @@ const CreatorSubscribers = () => {
           {filtered.length === 0 ? (
             <div className="cr-card cr-empty">
               <Users size={32} color="#8b92a8" style={{ marginBottom: 12 }} />
-              <h3>No subscribers yet</h3>
-              <p>Share your academy code so students can join and subscribe to your packages.</p>
+              <h3>{subscriptions.length === 0 ? 'No subscribers yet' : 'No matches'}</h3>
+              <p>
+                {subscriptions.length === 0
+                  ? 'Share your academy code so students can join and subscribe to your packages.'
+                  : `No subscribers match "${search}".`}
+              </p>
             </div>
           ) : (
             <div className="cr-card cr-feed-card">

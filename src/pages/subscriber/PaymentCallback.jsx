@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import SigmoraLoader from '../../components/common/SigmoraLoader';
 import toast from 'react-hot-toast';
-import '../../styles/landing-tokens.css';
-import '../../styles/app-shell.css';
+import '../../styles/creator-admin.css';
 
 const PaymentCallback = () => {
   const [searchParams] = useSearchParams();
@@ -12,19 +12,20 @@ const PaymentCallback = () => {
   useEffect(() => {
     if (status === 'successful') {
       toast.success('Payment successful! Your subscription is now active.');
-      setTimeout(() => navigate('/subscriber/dashboard'), 2000);
+      setTimeout(() => navigate('/subscriber/subscriptions'), 2000);
     } else {
       toast.error('Payment failed. Please try again.');
-      setTimeout(() => navigate('/join'), 2000);
+      setTimeout(() => navigate('/subscriber/academy'), 2000);
     }
   }, [status, navigate]);
 
   return (
-    <div className="app-shell-page app-shell-page--centered landing-premium">
-      <div className="app-shell-card" style={{ textAlign: 'center' }}>
-        <h1>Processing Payment...</h1>
-        <p style={{ color: 'var(--muted-foreground)' }}>
-          {status === 'successful' ? 'Payment successful!' : 'Payment failed'}
+    <div className="cr-app" style={{ minHeight: '100vh' }}>
+      <div className="cr-grain" aria-hidden="true" />
+      <div className="cr-main-loader" style={{ minHeight: '100vh' }}>
+        <SigmoraLoader fullScreen={false} inline message="Processing payment…" />
+        <p style={{ textAlign: 'center', color: 'var(--cr-muted)', marginTop: 16 }}>
+          {status === 'successful' ? 'Payment successful' : 'Payment failed'}
         </p>
       </div>
     </div>

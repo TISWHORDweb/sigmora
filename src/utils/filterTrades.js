@@ -24,6 +24,7 @@ export function filterTrades(trades, query, typeFilter = 'ALL') {
       .map((p) => (typeof p === 'object' ? p.name : ''))
       .join(' ')
       .toLowerCase();
+    const creator = trade.creator?.creatorName?.toLowerCase() ?? '';
 
     return (
       symbol.includes(q) ||
@@ -31,7 +32,8 @@ export function filterTrades(trades, query, typeFilter = 'ALL') {
       status.includes(q) ||
       closeReason.includes(q) ||
       pip.includes(q) ||
-      packages.includes(q)
+      packages.includes(q) ||
+      creator.includes(q)
     );
   });
 }

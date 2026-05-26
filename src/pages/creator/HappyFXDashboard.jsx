@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Boxes, Layers, Plus, Search, X } from 'lucide-react';
 import DetailModal, { DetailRow } from '../../components/common/DetailModal';
 import CreatePackageModal from '../../components/creator/CreatePackageModal';
+import CreateAssetModal from '../../components/creator/CreateAssetModal';
+import TradeSearchBar from '../../components/creator/TradeSearchBar';
 import toast from 'react-hot-toast';
 import CreatorShell from '../../components/creator/CreatorShell';
 import SigmoraLoader from '../../components/common/SigmoraLoader';
@@ -585,11 +587,8 @@ const AssetManagementView = () => {
   const confirm = useConfirm();
   const [assets, setAssets] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [symbol, setSymbol] = useState('');
-  const [pip, setPip] = useState('');
-  const [spread, setSpread] = useState('');
-  const [margin, setMargin] = useState('');
+  const [assetSearch, setAssetSearch] = useState('');
+  const [createModalOpen, setCreateModalOpen] = useState(false);
 
   const loadAssets = async () => {
     try {
@@ -606,29 +605,14 @@ const AssetManagementView = () => {
     loadAssets();
   }, []);
 
-  const handleCreate = async (e) => {
-    e.preventDefault();
-    if (!symbol.trim()) return;
-    setSaving(true);
-    try {
-      await assetService.createAsset({
-        symbol: symbol.trim(),
-        pipValue: parseFloat(pip),
-        spread: parseFloat(spread),
-        margin: parseFloat(margin),
-      });
-      setSymbol('');
-      setPip('');
-      setSpread('');
-      setMargin('');
-      toast.success('Asset created');
-      await loadAssets();
-    } catch (error) {
-      toast.error(getApiErrorMessage(error, 'Failed to create asset'));
-    } finally {
-      setSaving(false);
-    }
-  };
+  const filteredAssets = useMemo(() => {
+    const q = assetSearch.trim().toLowerCase();
+    if (!q) return assets;
+    return assets.filter((a) => {
+      const hay = [a.symbol, String(a.pipValue), String(a.spread), String(a.margin)].join(' ').toLowerCase();
+      return hay.includes(q);
+    });
+  }, [assets, assetSearch]);
 
   const removeAsset = async (id) => {
     const ok = await confirm({
@@ -651,88 +635,76 @@ const AssetManagementView = () => {
 
   return (
     <motion.div className="cr-page-full" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-      <form className="cr-card cr-form-panel" onSubmit={handleCreate} style={{ marginBottom: 24 }}>
-        <h3 className="cr-form-section-title" style={{ marginTop: 0 }}>
-          Add asset
-        </h3>
-        <div className="cr-form-grid-2" style={{ marginBottom: 20 }}>
-          <div className="cr-field">
-            <span className="cr-field-label">Symbol</span>
-            <input
-              className="cr-input"
-              placeholder="EUR"
-              value={symbol}
-              onChange={(e) => setSymbol(e.target.value)}
-              required
-            />
-          </div>
-          <div className="cr-field">
-            <span className="cr-field-label">PIP value</span>
-            <input
-              className="cr-input"
-              type="number"
-              step="0.0001"
-              placeholder="0.0001"
-              value={pip}
-              onChange={(e) => setPip(e.target.value)}
-            />
-          </div>
-          <div className="cr-field">
-            <span className="cr-field-label">Spread</span>
-            <input
-              className="cr-input"
-              type="number"
-              step="0.1"
-              placeholder="1.2"
-              value={spread}
-              onChange={(e) => setSpread(e.target.value)}
-            />
-          </div>
-          <div className="cr-field">
-            <span className="cr-field-label">Margin</span>
-            <input
-              className="cr-input"
-              type="number"
-              placeholder="500"
-              value={margin}
-              onChange={(e) => setMargin(e.target.value)}
-            />
-          </div>
+      <section className="cr-packages-section">
+        <div className="cr-packages-header">
+          <h3 className="cr-section-title">Your assets</h3>
+          <button
+            type="button"
+            className="cr-btn-primary cr-btn-sm no-pulse"
+            onClick={() => setCreateModalOpen(true)}
+          >
+            <Plus size={16} />
+            Add assets
+          </button>
         </div>
-        <button type="submit" className="cr-btn-primary cr-btn-sm no-pulse" style={{ width: 'auto' }} disabled={saving}>
-          {saving ? 'Creating…' : 'Create asset'}
-        </button>
-      </form>
 
-      <h3 className="cr-section-title">Your assets ({assets.length})</h3>
-      <div className="cr-assets-grid">
+        {assets.length > 0 && (
+          <TradeSearchBar
+            value={assetSearch}
+            onChange={setAssetSearch}
+            placeholder="Search by symbol, PIP, spread, margin…"
+            filteredCount={filteredAssets.length}
+            totalCount={assets.length}
+          />
+        )}
+
         {assets.length === 0 ? (
           <div className="cr-card cr-empty">
-            <p>No assets yet. Add your first symbol above.</p>
+            <p>No assets yet.</p>
+            <button
+              type="button"
+              className="cr-btn-primary cr-btn-sm no-pulse"
+              style={{ marginTop: 16, width: 'auto' }}
+              onClick={() => setCreateModalOpen(true)}
+            >
+              Add assets
+            </button>
+          </div>
+        ) : filteredAssets.length === 0 ? (
+          <div className="cr-card cr-empty">
+            <p>No assets match &ldquo;{assetSearch}&rdquo;.</p>
           </div>
         ) : (
-          assets.map((a) => (
-            <div key={a._id} className="cr-card cr-asset-card">
-              <button type="button" className="cr-asset-delete" onClick={() => removeAsset(a._id)} aria-label="Delete">
-                ×
-              </button>
-              <div className="cr-asset-symbol">{a.symbol}</div>
-              <div className="cr-asset-row">
-                <span>PIP</span>
-                <span>{a.pipValue}</span>
+          <div className="cr-assets-grid">
+            {filteredAssets.map((a) => (
+              <div key={a._id} className="cr-card cr-asset-card">
+                <button type="button" className="cr-asset-delete" onClick={() => removeAsset(a._id)} aria-label="Delete">
+                  ×
+                </button>
+                <div className="cr-asset-symbol">{a.symbol}</div>
+                <div className="cr-asset-row">
+                  <span>PIP</span>
+                  <span>{a.pipValue}</span>
+                </div>
+                <div className="cr-asset-row">
+                  <span>Spread</span>
+                  <span>{a.spread}</span>
+                </div>
+                <div className="cr-asset-row">
+                  <span>Margin</span>
+                  <span>{a.margin}</span>
+                </div>
               </div>
-              <div className="cr-asset-row">
-                <span>Spread</span>
-                <span>{a.spread}</span>
-              </div>
-              <div className="cr-asset-row">
-                <span>Margin</span>
-                <span>{a.margin}</span>
-              </div>
-            </div>
-          ))
+            ))}
+          </div>
         )}
-      </div>
+      </section>
+
+      <CreateAssetModal
+        open={createModalOpen}
+        onClose={() => setCreateModalOpen(false)}
+        onCreated={loadAssets}
+      />
     </motion.div>
   );
 };

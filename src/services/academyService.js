@@ -12,5 +12,11 @@ export const academyService = {
     const response = await api.get(`/academy/${code}`);
     return response.data;
   },
+
+  // Logged-in subscriber's academy
+  getMyAcademy: async () => {
+    const response = await api.get('/academy/me');
+    return response.data;
+  },
 };
 

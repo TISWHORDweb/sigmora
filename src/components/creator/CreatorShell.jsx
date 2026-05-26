@@ -15,6 +15,7 @@ import {
   Users,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import NotificationBell from '../common/NotificationBell';
 import SigmoraLoader from '../common/SigmoraLoader';
 import '../../styles/creator-admin.css';
 
@@ -56,6 +57,7 @@ export function getCreatorActiveNav(pathname, search) {
   if (pathname === '/creator/academy-code') return 'academy-code';
   if (pathname === '/creator/subscribers') return 'subscribers';
   if (pathname === '/creator/profile') return 'profile';
+  if (pathname === '/creator/notifications') return 'notifications';
   const view = new URLSearchParams(search).get('view');
   if (view === 'trade') return 'trade';
   if (view === 'assets') return 'assets';
@@ -190,6 +192,7 @@ const CreatorShell = ({
             </div>
           </div>
           <div className="cr-topbar-actions">
+            <NotificationBell />
             <button type="button" className="cr-topbar-chip" onClick={() => navigate('/creator/academy-code')}>
               <KeyRound size={14} />
               {academyCode}

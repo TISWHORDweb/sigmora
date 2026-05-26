@@ -26,12 +26,16 @@ import CompletedTrades from './pages/creator/CompletedTrades';
 import AcademyCode from './pages/creator/AcademyCode';
 import CreatorSubscribers from './pages/creator/CreatorSubscribers';
 import ProfilePage from './pages/account/ProfilePage';
+import NotificationsPage from './pages/notifications/NotificationsPage';
 
 // Subscriber Pages
 import JoinAcademy from './pages/subscriber/JoinAcademy';
 import SubscriberDashboard from './pages/subscriber/SubscriberDashboard';
 import SubscriberActiveTrades from './pages/subscriber/SubscriberActiveTrades';
 import SubscriberCompletedTrades from './pages/subscriber/SubscriberCompletedTrades';
+import SubscriberAcademy from './pages/subscriber/SubscriberAcademy';
+import SubscriberCheckout from './pages/subscriber/SubscriberCheckout';
+import SubscriberSubscriptions from './pages/subscriber/SubscriberSubscriptions';
 import PaymentCallback from './pages/subscriber/PaymentCallback';
 
 // Protected Route Component
@@ -153,6 +157,38 @@ function App() {
               element={
                 <ProtectedRoute role="subscriber">
                   <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/subscriber/academy"
+              element={
+                <ProtectedRoute role="subscriber">
+                  <SubscriberAcademy />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/subscriber/checkout"
+              element={
+                <ProtectedRoute role="subscriber">
+                  <SubscriberCheckout />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/subscriber/subscriptions"
+              element={
+                <ProtectedRoute role="subscriber">
+                  <SubscriberSubscriptions />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/subscriber/notifications"
+              element={
+                <ProtectedRoute role="subscriber">
+                  <NotificationsPage />
                 </ProtectedRoute>
               }
             />

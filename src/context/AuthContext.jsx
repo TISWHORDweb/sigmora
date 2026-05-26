@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { authService } from '../services/authService';
+import { normalizeSubscriberUser } from '../utils/subscriberAcademy';
 import toast from 'react-hot-toast';
 
 const AuthContext = createContext();
@@ -39,8 +40,9 @@ export const AuthProvider = ({ children }) => {
 
       if (token && storedUser) {
         try {
-          const userData = await authService.getMe();
+          const userData = normalizeSubscriberUser(await authService.getMe());
           setUser(userData);
+          localStorage.setItem('user', JSON.stringify(userData));
           // Update token expiration if provided
           if (userData.sessionExpiresAt) {
             localStorage.setItem('tokenExpiresAt', userData.sessionExpiresAt);
@@ -66,9 +68,11 @@ export const AuthProvider = ({ children }) => {
       if (data.expiresAt) {
         localStorage.setItem('tokenExpiresAt', data.expiresAt);
       }
-      setUser(data);
+      const user = normalizeSubscriberUser(data);
+      localStorage.setItem('user', JSON.stringify(user));
+      setUser(user);
       toast.success('Login successful!');
-      return data;
+      return user;
     } catch (error) {
       toast.error(error.response?.data?.message || 'Login failed');
       throw error;
@@ -102,9 +106,11 @@ export const AuthProvider = ({ children }) => {
       if (data.expiresAt) {
         localStorage.setItem('tokenExpiresAt', data.expiresAt);
       }
-      setUser(data);
+      const user = normalizeSubscriberUser(data);
+      localStorage.setItem('user', JSON.stringify(user));
+      setUser(user);
       toast.success('Registration successful!');
-      return data;
+      return user;
     } catch (error) {
       toast.error(error.response?.data?.message || 'Registration failed');
       throw error;
@@ -142,7 +148,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const refreshUser = async () => {
-    const userData = await authService.getMe();
+    const userData = normalizeSubscriberUser(await authService.getMe());
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
     return userData;

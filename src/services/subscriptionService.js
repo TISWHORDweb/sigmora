@@ -18,5 +18,11 @@ export const subscriptionService = {
     const response = await api.get('/subscriptions/creator');
     return response.data;
   },
+
+  /** Mock subscribe — no live payment gateway */
+  subscribeToPackage: async (packageId) => {
+    const response = await api.post('/subscriptions/subscribe', { packageId });
+    return response.data;
+  },
 };
 
