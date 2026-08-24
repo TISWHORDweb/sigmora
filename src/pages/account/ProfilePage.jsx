@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import CreatorShell from '../../components/creator/CreatorShell';

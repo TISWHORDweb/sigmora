@@ -34,7 +34,7 @@
 
 .app-shell-input:focus {
   outline: none;
-  border-color: var(--border-accent, rgba(0, 255, 163, 0.3));
+  border-color: var(--border-accent, rgba(168, 85, 247, 0.3));
 }
 
 .app-shell-btn {
@@ -46,8 +46,8 @@
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  color: var(--brand-foreground, #0a0f1e);
-  background: linear-gradient(135deg, var(--brand, #00ffa3), #00cc82);
+  color: var(--brand-foreground, #ffffff);
+  background: linear-gradient(135deg, var(--brand, #a855f7), #d946ef);
 }
 
 .app-shell-btn:disabled {
@@ -56,7 +56,7 @@
 }
 
 .app-shell-link {
-  color: var(--brand, #00ffa3);
+  color: var(--brand, #a855f7);
   text-decoration: none;
 }
 
@@ -114,7 +114,7 @@
 }
 
 .app-shell-btn--success {
-  background: linear-gradient(135deg, var(--brand), #00cc82);
+  background: linear-gradient(135deg, var(--brand), #d946ef);
 }
 
 .app-shell-nav {
@@ -138,8 +138,8 @@
 }
 
 .app-shell-alert--success {
-  background: rgba(0, 255, 163, 0.1);
-  border: 1px solid rgba(0, 255, 163, 0.25);
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.25);
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 2rem;

@@ -46,13 +46,13 @@ html {
 
 /* Selection */
 ::selection {
-  background: var(--color-secondary, #00FFA3);
+  background: var(--color-secondary, #a855f7);
   color: var(--color-primary, #0A0F1E);
 }
 
 /* Focus styles */
 *:focus {
-  outline: 2px solid var(--color-secondary, #00FFA3);
+  outline: 2px solid var(--color-secondary, #a855f7);
   outline-offset: 2px;
 }
 
@@ -150,7 +150,7 @@ html {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #00FFA3 0%, #00CC82 100%);
+  background: linear-gradient(135deg, #a855f7 0%, #d946ef 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

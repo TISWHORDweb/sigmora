@@ -1,3 +1,5 @@
+'use client';
+
 const OPTIONS = [
   { id: 'ALL', label: 'All' },
   { id: 'BUY', label: 'Buy' },

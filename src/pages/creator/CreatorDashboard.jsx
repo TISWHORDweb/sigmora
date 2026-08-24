@@ -1,5 +1,7 @@
+'use client';
+
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../../lib/router';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
@@ -102,7 +104,7 @@ const CreatorDashboard = () => {
       icon: TrendingUpIcon,
       color: theme.colors.success,
       link: '/creator/trades/completed',
-      bgGradient: 'linear-gradient(135deg, rgba(0, 230, 118, 0.1) 0%, rgba(0, 178, 72, 0.1) 100%)',
+      bgGradient: 'linear-gradient(135deg, rgba(52, 211, 153, 0.12) 0%, rgba(168, 85, 247, 0.08) 100%)',
     },
     {
       title: 'Total Packages',
@@ -110,7 +112,7 @@ const CreatorDashboard = () => {
       icon: PackageIcon,
       color: theme.colors.primary,
       link: '/creator/packages/create',
-      bgGradient: 'linear-gradient(135deg, rgba(10, 25, 41, 0.1) 0%, rgba(30, 58, 95, 0.1) 100%)',
+      bgGradient: 'linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(217, 70, 239, 0.1) 100%)',
     },
     {
       title: 'Subscribers',
@@ -125,7 +127,7 @@ const CreatorDashboard = () => {
       icon: ChartIcon,
       color: stats.winRate >= 70 ? theme.colors.success : theme.colors.danger,
       bgGradient: stats.winRate >= 70 
-        ? 'linear-gradient(135deg, rgba(0, 230, 118, 0.1) 0%, rgba(0, 178, 72, 0.1) 100%)'
+        ? 'linear-gradient(135deg, rgba(52, 211, 153, 0.12) 0%, rgba(168, 85, 247, 0.08) 100%)'
         : 'linear-gradient(135deg, rgba(255, 23, 68, 0.1) 0%, rgba(197, 17, 98, 0.1) 100%)',
     },
     {
@@ -133,7 +135,7 @@ const CreatorDashboard = () => {
       value: `$${stats.totalProfit.toLocaleString()}`,
       icon: CoinsIcon,
       color: theme.colors.success,
-      bgGradient: 'linear-gradient(135deg, rgba(0, 230, 118, 0.1) 0%, rgba(0, 178, 72, 0.1) 100%)',
+      bgGradient: 'linear-gradient(135deg, rgba(52, 211, 153, 0.12) 0%, rgba(168, 85, 247, 0.08) 100%)',
     },
   ];
 

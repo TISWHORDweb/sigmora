@@ -1,5 +1,7 @@
+'use client';
+
 import { useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from '../../lib/router';
 import toast from 'react-hot-toast';
 import { authService } from '../../services/authService';
 import AuthLayout from './AuthLayout';

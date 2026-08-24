@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useMemo } from 'react';
 import { Users } from 'lucide-react';
 import CreatorShell from '../../components/creator/CreatorShell';

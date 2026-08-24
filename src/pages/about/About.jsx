@@ -1,5 +1,7 @@
+'use client';
+
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link } from '../../lib/router';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import FloatingCard from '../../components/3d/FloatingCards';
@@ -103,6 +105,24 @@ const About = () => {
       </section>
 
       <section className="landing-section section-bg-even">
+        <div className="section-container">
+          <div className="mk-stats">
+            {[
+              { value: '12,000+', label: 'Traders' },
+              { value: '96%', label: 'Success Rate' },
+              { value: '18+', label: 'Industry Awards' },
+              { value: '99.9%', label: 'Uptime' },
+            ].map((s) => (
+              <div className="mk-stat" key={s.label}>
+                <div className="mk-stat-value">{s.value}</div>
+                <div className="mk-stat-label">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="landing-section section-bg-even">
         <div className="section-container landing-split">
           <motion.div
             className="landing-prose"
@@ -122,8 +142,8 @@ const About = () => {
               flows freely, strategies are shared transparently, and growth happens collectively.
             </p>
             <p>
-              Today, Sigmora serves traders across 50+ countries with professional-grade tools and
-              community support for the competitive world of forex.
+              Today, Sigmora serves 12,000+ traders across 50+ countries with professional-grade tools,
+              99.9% uptime, and a community rated 4.9/5 by 2,400+ verified traders.
             </p>
           </motion.div>
           <motion.div
@@ -146,6 +166,50 @@ const About = () => {
       </section>
 
       <section className="landing-section section-bg-odd">
+        <div className="section-container">
+          <div className="section-header">
+            <span className="section-eyebrow">Timeline</span>
+            <h2 className="section-title">How Sigmora got here</h2>
+            <p className="section-subtitle">
+              A short history of the desk — built around creators, academies, and signals that actually ship on time.
+            </p>
+          </div>
+          <div className="mk-timeline">
+            {[
+              {
+                year: '2024',
+                title: 'Sigmora is founded',
+                desc: 'A small team set out to democratize professional forex: expert strategies, real-time insight, and a community that does not hide its numbers.',
+              },
+              {
+                year: '2024',
+                title: 'Academies go live',
+                desc: 'Invite codes, packages, and live trade publishing. Payments stay between creator and subscriber — Sigmora runs the rails.',
+              },
+              {
+                year: '2025',
+                title: 'Multi-asset tape',
+                desc: 'Forex remains the core. Gold, bitcoin, and names like NVDA join the same dashboard with pip-level risk notes.',
+              },
+              {
+                year: 'Now',
+                title: '12,000+ traders',
+                desc: '96% marked success rate, 18+ industry awards, 99.9% uptime — and a 4.9/5 from 2,400+ verified traders who use the product daily.',
+              },
+            ].map((item) => (
+              <div className="mk-timeline-item" key={item.title}>
+                <div className="mk-timeline-year">{item.year}</div>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="landing-section section-bg-even">
         <div className="section-container">
           <div className="landing-mission">
             <span className="section-eyebrow">Our Mission</span>
@@ -209,6 +273,38 @@ const About = () => {
         </div>
       </section>
 
+      <section className="landing-section">
+        <div className="section-container">
+          <div className="section-header">
+            <span className="section-eyebrow">Next</span>
+            <h2 className="section-title">Keep exploring</h2>
+          </div>
+          <div className="mk-related">
+            <Link to="/features" className="mk-related-card">
+              <h3>Features</h3>
+              <p>Analytics, alerts, security, multi-platform</p>
+              <span>
+                View <ArrowRightIcon size={14} color="currentColor" />
+              </span>
+            </Link>
+            <Link to="/club" className="mk-related-card">
+              <h3>Sigmora Club</h3>
+              <p>Verified desks with public win rates</p>
+              <span>
+                View <ArrowRightIcon size={14} color="currentColor" />
+              </span>
+            </Link>
+            <Link to="/careers" className="mk-related-card">
+              <h3>Careers</h3>
+              <p>Build the desk traders actually open</p>
+              <span>
+                View <ArrowRightIcon size={14} color="currentColor" />
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="landing-cta section-bg-odd">
         <div className="landing-cta-inner">
           <h2>
@@ -218,7 +314,7 @@ const About = () => {
             Join successful traders on Sigmora and experience professional-grade tools and expert guidance.
           </p>
           <div className="landing-cta-actions">
-            <Link to="/register/creator" className="btn-landing-primary">
+            <Link to="/register" className="btn-landing-primary">
               Get Started Today
               <ArrowRightIcon size={18} color="currentColor" />
             </Link>

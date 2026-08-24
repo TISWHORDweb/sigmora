@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { CheckCircle2, CreditCard, X } from 'lucide-react';
 import { subscriptionService } from '../../services/subscriptionService';

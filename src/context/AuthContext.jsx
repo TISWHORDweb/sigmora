@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext, useState, useEffect } from 'react';
 import { authService } from '../services/authService';
 import { normalizeSubscriberUser } from '../utils/subscriberAcademy';
@@ -123,7 +125,7 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/logout`, {
+          await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/auth/logout`, {
             method: 'POST',
             headers: {
               'Authorization': `Bearer ${token}`,

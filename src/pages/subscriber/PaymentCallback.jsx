@@ -1,5 +1,7 @@
+'use client';
+
 import { useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from '../../lib/router';
 import SigmoraLoader from '../../components/common/SigmoraLoader';
 import toast from 'react-hot-toast';
 import '../../styles/creator-admin.css';

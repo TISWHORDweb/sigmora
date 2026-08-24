@@ -1,5 +1,7 @@
+'use client';
+
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '../../lib/router';
 import { Bell, CheckCheck } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import CreatorShell from '../../components/creator/CreatorShell';

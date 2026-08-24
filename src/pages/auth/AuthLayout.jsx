@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom';
+'use client';
+
+import { Link } from '../../lib/router';
 import '../../styles/landing-tokens.css';
 import './Auth.css';
 
@@ -10,7 +12,7 @@ const AuthLayout = ({ children, wide = false }) => (
         <div className="auth-visual-overlay" />
         <div className="auth-visual-content">
           <Link to="/" className="auth-visual-logo">
-            <span className="auth-logo-spark" />
+            <img src="/logo.png" alt="Sigmora" className="auth-logo-img" />
             <span>SIGMORA</span>
           </Link>
           <h2>Institutional grade signals</h2>

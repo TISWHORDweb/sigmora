@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext, useState, useEffect } from 'react';
 import { lightTheme, darkTheme } from '../styles/theme';
 
@@ -12,22 +14,22 @@ export const useTheme = () => {
 };
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(() => {
-    // Check localStorage for saved theme preference, default to dark
+  const [theme, setTheme] = useState(darkTheme);
+
+  useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      return savedTheme === 'dark' ? darkTheme : lightTheme;
+    if (savedTheme === 'light') {
+      setTheme(lightTheme);
+    } else if (savedTheme === 'dark') {
+      setTheme(darkTheme);
     }
-    // Default to dark theme
-    return darkTheme;
-  });
+  }, []);
 
   const toggleTheme = () => {
     const newTheme = theme.name === 'light' ? darkTheme : lightTheme;
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme.name);
-    
-    // Apply theme to document root for CSS variables
+
     document.documentElement.setAttribute('data-theme', newTheme.name);
   };
 
@@ -45,7 +47,11 @@ export const ThemeProvider = ({ children }) => {
     root.style.setProperty('--surface', theme.colors.backgroundTertiary);
     root.style.setProperty('--foreground', theme.colors.text);
     root.style.setProperty('--brand', theme.colors.secondary);
-    root.style.setProperty('--brand-foreground', theme.colors.primary);
+    root.style.setProperty('--brand-foreground', '#ffffff');
+    root.style.setProperty('--accent', theme.colors.secondary);
+    root.style.setProperty('--accent-dim', theme.colors.secondaryDark);
+    root.style.setProperty('--accent-glow', 'rgba(168, 85, 247, 0.28)');
+    root.style.setProperty('--success', theme.colors.success);
     root.style.setProperty('--danger', theme.colors.danger);
     root.style.setProperty('--muted-foreground', theme.colors.textSecondary);
     root.style.setProperty('--border-slate', theme.colors.border);

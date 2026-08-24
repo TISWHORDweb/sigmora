@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useCallback } from 'react';
 import { X } from 'lucide-react';
 import DetailModal from '../common/DetailModal';

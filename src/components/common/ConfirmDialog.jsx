@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 import { AlertTriangle, CheckCircle, X } from 'lucide-react';
 import './ConfirmDialog.css';

@@ -1,5 +1,7 @@
+'use client';
+
 import { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '../../lib/router';
 import { ArrowLeft, Receipt } from 'lucide-react';
 import SubscriberShell from '../../components/subscriber/SubscriberShell';
 import TradeSearchBar from '../../components/creator/TradeSearchBar';

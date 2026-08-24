@@ -1,5 +1,7 @@
+'use client';
+
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from '../../lib/router';
 import {
   Activity,
   Boxes,
@@ -108,6 +110,7 @@ const CreatorShell = ({
       <aside className="cr-sidebar" aria-label="Creator navigation">
         <div className="cr-sidebar-brand">
           <button type="button" className="cr-logo-btn" onClick={() => navigate('/creator/dashboard')}>
+            <img src="/logo.png" alt="" className="cr-logo-img" />
             <span className="cr-logo">Sigmora</span>
           </button>
           <span className="cr-sidebar-badge">Creator Studio</span>

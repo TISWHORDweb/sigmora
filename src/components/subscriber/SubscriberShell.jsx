@@ -1,5 +1,7 @@
+'use client';
+
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from '../../lib/router';
 import {
   Activity,
   CheckCircle2,
@@ -97,6 +99,7 @@ const SubscriberShell = ({
       <aside className="cr-sidebar" aria-label="Subscriber navigation">
         <div className="cr-sidebar-brand">
           <button type="button" className="cr-logo-btn" onClick={() => navigate('/subscriber/dashboard')}>
+            <img src="/logo.png" alt="" className="cr-logo-img" />
             <span className="cr-logo">Sigmora</span>
           </button>
           <span className="cr-sidebar-badge">Subscriber Studio</span>

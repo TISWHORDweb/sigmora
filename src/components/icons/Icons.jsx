@@ -1,3 +1,5 @@
+'use client';
+
 // Professional SVG Icons to replace emojis
 
 export const ChartIcon = ({ size = 24, color = 'currentColor' }) => (

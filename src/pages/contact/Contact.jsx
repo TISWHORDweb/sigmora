@@ -1,5 +1,8 @@
+'use client';
+
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from '../../lib/router';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import FloatingCard from '../../components/3d/FloatingCards';
@@ -64,9 +67,31 @@ const Contact = () => {
             Get In Touch, <span className="gradient-modern">We're Here to Help</span>
           </h1>
           <p className="page-hero-subtitle">
-            Questions about our platform, features, or trading services? Reach out anytime.
+            Questions about academies, packages, signals, or the desk? Reach out anytime — 24/7.
           </p>
         </motion.div>
+      </section>
+
+      <section className="landing-section">
+        <div className="section-container">
+          <div className="mk-related">
+            <Link to="/faq" className="mk-related-card">
+              <h3>Help center</h3>
+              <p>Accounts, billing, creator tools — answered</p>
+              <span>View FAQ</span>
+            </Link>
+            <Link to="/getting-started" className="mk-related-card">
+              <h3>Getting started</h3>
+              <p>Three steps from signup to a live desk</p>
+              <span>Read the path</span>
+            </Link>
+            <Link to="/legal/risk" className="mk-related-card">
+              <h3>Risk disclosures</h3>
+              <p>Signals are not a broker. Your capital is yours.</p>
+              <span>Read first</span>
+            </Link>
+          </div>
+        </div>
       </section>
 
       <section className="landing-section section-bg-even">

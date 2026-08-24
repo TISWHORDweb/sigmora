@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo } from 'react';
 import {
   LineChart,
@@ -22,7 +24,7 @@ const AnalyticsChart = ({
   data = [], 
   dataKey = 'value',
   name = 'Value',
-  color = '#00FFA3',
+  color = '#a855f7',
   height = 300,
   showGrid = true,
   showLegend = true,

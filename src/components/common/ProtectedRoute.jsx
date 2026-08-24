@@ -1,4 +1,6 @@
-import { Navigate } from 'react-router-dom';
+'use client';
+
+import { Navigate } from '../../lib/router';
 import { useAuth } from '../../context/AuthContext';
 import SigmoraLoader from './SigmoraLoader';
 

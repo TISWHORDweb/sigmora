@@ -1,5 +1,7 @@
+'use client';
+
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from '../../lib/router';
 import { useAuth } from '../../context/AuthContext';
 import AuthLayout from './AuthLayout';
 
@@ -29,7 +31,7 @@ const Login = () => {
   return (
     <AuthLayout>
       <Link to="/" className="auth-logo auth-logo-mobile-only">
-        <span className="auth-logo-spark" aria-hidden="true" />
+        <img src="/logo.png" alt="Sigmora" className="auth-logo-img" />
         <span className="auth-logo-text">SIGMORA</span>
       </Link>
       <h1 className="auth-heading">Sign in</h1>

@@ -1,5 +1,7 @@
+'use client';
+
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../../lib/router';
 import toast from 'react-hot-toast';
 import { authService } from '../../services/authService';
 import AuthLayout from './AuthLayout';

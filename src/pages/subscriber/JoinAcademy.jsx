@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { academyService } from '../../services/academyService';
 import { paymentService } from '../../services/paymentService';

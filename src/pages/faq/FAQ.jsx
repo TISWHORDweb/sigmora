@@ -1,5 +1,7 @@
+'use client';
+
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../../lib/router';
 import { motion } from 'framer-motion';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
@@ -153,6 +155,34 @@ const FAQ = () => {
         </motion.div>
       </section>
 
+      <section className="landing-section">
+        <div className="section-container">
+          <div className="mk-related">
+            <Link to="/getting-started" className="mk-related-card">
+              <h3>Getting started</h3>
+              <p>Account, package, first signal — in three steps</p>
+              <span>
+                View <ArrowRightIcon size={14} color="currentColor" />
+              </span>
+            </Link>
+            <Link to="/fees" className="mk-related-card">
+              <h3>Fees</h3>
+              <p>Creator packages, 30 days, no auto-renew trap</p>
+              <span>
+                View <ArrowRightIcon size={14} color="currentColor" />
+              </span>
+            </Link>
+            <Link to="/contact" className="mk-related-card">
+              <h3>Customer support</h3>
+              <p>24/7 — trading and technical specialists</p>
+              <span>
+                View <ArrowRightIcon size={14} color="currentColor" />
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="landing-section section-bg-even">
         <div className="section-container">
           {faqs.map((category, categoryIndex) => (
@@ -217,6 +247,9 @@ const FAQ = () => {
             <Link to="/contact" className="btn-landing-primary">
               Contact Support
               <ArrowRightIcon size={18} color="currentColor" />
+            </Link>
+            <Link to="/getting-started" className="btn-landing-secondary">
+              Getting started
             </Link>
           </div>
         </div>

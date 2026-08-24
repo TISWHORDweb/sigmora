@@ -1,5 +1,7 @@
+'use client';
+
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '../../lib/router';
 import { ArrowLeft } from 'lucide-react';
 import CreatorShell from '../../components/creator/CreatorShell';
 import TradeSearchBar from '../../components/creator/TradeSearchBar';

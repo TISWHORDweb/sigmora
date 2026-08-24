@@ -1,5 +1,7 @@
+'use client';
+
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '../../lib/router';
 import { Activity, ArrowRight, CheckCircle2, GraduationCap, History, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 import SubscriberShell from '../../components/subscriber/SubscriberShell';

@@ -1,5 +1,7 @@
+'use client';
+
 import { useState, useEffect } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from '../../lib/router';
 import { useAuth } from '../../context/AuthContext';
 import AuthLayout from './AuthLayout';
 

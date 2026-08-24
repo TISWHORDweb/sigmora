@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { Copy } from 'lucide-react';
 import CreatorShell from '../../components/creator/CreatorShell';

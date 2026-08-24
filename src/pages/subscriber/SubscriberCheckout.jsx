@@ -1,5 +1,7 @@
+'use client';
+
 import { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from '../../lib/router';
 import { ArrowLeft, CreditCard } from 'lucide-react';
 import SubscriberShell from '../../components/subscriber/SubscriberShell';
 import { paymentService } from '../../services/paymentService';

@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useCallback, useContext, useRef, useState } from 'react';
 import ConfirmDialog from '../components/common/ConfirmDialog';
 

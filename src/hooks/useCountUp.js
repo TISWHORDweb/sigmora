@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 
 export function useCountUp(target, duration = 1200, enabled = true) {

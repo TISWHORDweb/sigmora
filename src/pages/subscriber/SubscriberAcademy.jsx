@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { ArrowRight, CheckCircle2, GraduationCap } from 'lucide-react';
 import SubscriberShell from '../../components/subscriber/SubscriberShell';

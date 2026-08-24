@@ -1,5 +1,7 @@
+'use client';
+
 import { useState, useEffect, useMemo } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate } from '../../lib/router';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Boxes, Layers, Plus, Search, X } from 'lucide-react';
 import DetailModal, { DetailRow } from '../../components/common/DetailModal';

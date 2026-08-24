@@ -1,5 +1,7 @@
+'use client';
+
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from '../../lib/router';
 import { motion } from 'framer-motion';
 import { packageService } from '../../services/packageService';
 import { useTheme } from '../../context/ThemeContext';
