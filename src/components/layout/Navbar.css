@@ -30,6 +30,19 @@
   gap: 32px;
 }
 
+.navbar-modern a,
+.navbar-modern button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.navbar-modern a:focus,
+.navbar-modern a:focus-visible,
+.navbar-modern button:focus,
+.navbar-modern button:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
 .navbar-logo-modern {
   display: inline-flex;
   align-items: center;

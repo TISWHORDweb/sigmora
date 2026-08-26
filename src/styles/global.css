@@ -50,8 +50,12 @@ html {
   color: var(--color-primary, #0A0F1E);
 }
 
-/* Focus styles */
+/* Focus styles — keyboard only, not mouse click */
 *:focus {
+  outline: none;
+}
+
+*:focus-visible {
   outline: 2px solid var(--color-secondary, #a855f7);
   outline-offset: 2px;
 }
