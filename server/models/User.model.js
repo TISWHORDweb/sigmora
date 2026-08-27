@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
     lowercase: true,
-    trim: true
+    trim: true,
   },
   password: {
     type: String,
@@ -23,6 +23,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['creator', 'subscriber'],
     required: true
+  },
+  /** When true, subscriber cannot log in or use the product (set by their academy creator). */
+  disabled: {
+    type: Boolean,
+    default: false,
   },
   academyCode: {
     type: String,
@@ -90,7 +95,7 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 export default User;
 

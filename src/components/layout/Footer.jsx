@@ -2,6 +2,7 @@
 
 import { Link } from '../../lib/router';
 import { FOOTER_COLUMNS } from '../../content/siteNav';
+import BrandWordmark from '../common/BrandWordmark';
 import './Footer.css';
 
 const Footer = ({ landing = false }) => {
@@ -10,10 +11,7 @@ const Footer = ({ landing = false }) => {
       <div className="footer-container-modern">
         <div className="footer-content-modern">
           <div className="footer-section-modern footer-brand-col">
-            <h3 className="footer-logo-modern">
-              <img src="/logo.png" alt="" className="footer-logo-img" />
-              Sig<span>mora</span>
-            </h3>
+            <BrandWordmark to="/" className="footer-logo-modern brand-wordmark--footer" />
             <p className="footer-description-modern">
               Institutional-grade signals without the noise. Connect with verified creators, join an academy, and
               follow live trades — then execute on your own broker.

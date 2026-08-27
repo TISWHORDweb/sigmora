@@ -223,6 +223,18 @@
   color: var(--muted-foreground);
 }
 
+.auth-field-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.auth-field-label-row label {
+  margin-bottom: 0;
+}
+
 .auth-field input {
   width: 100%;
   padding: 12px 14px;
@@ -233,6 +245,37 @@
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   transition: border-color 0.2s ease;
+}
+
+.auth-password-wrap {
+  position: relative;
+}
+
+.auth-password-wrap input {
+  padding-right: 44px;
+}
+
+.auth-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  padding: 0;
+}
+
+.auth-password-toggle:hover {
+  color: var(--foreground);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .auth-field input::placeholder {
@@ -247,7 +290,7 @@
 .auth-field-row {
   display: flex;
   justify-content: flex-end;
-  margin-top: -8px;
+  margin-top: 8px;
 }
 
 .auth-forgot-link {

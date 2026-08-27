@@ -49,7 +49,7 @@ sessionSchema.methods.isExpired = function () {
   return new Date() > this.expiresAt;
 };
 
-const Session = mongoose.model('Session', sessionSchema);
+const Session = mongoose.models.Session || mongoose.model('Session', sessionSchema);
 
 export default Session;
 

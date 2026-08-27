@@ -19,6 +19,7 @@ import {
 import { useAuth } from '../../context/AuthContext';
 import NotificationBell from '../common/NotificationBell';
 import SigmoraLoader from '../common/SigmoraLoader';
+import BrandWordmark from '../common/BrandWordmark';
 import '../../styles/creator-admin.css';
 
 const VIEWS = {
@@ -109,10 +110,11 @@ const CreatorShell = ({
 
       <aside className="cr-sidebar" aria-label="Creator navigation">
         <div className="cr-sidebar-brand">
-          <button type="button" className="cr-logo-btn" onClick={() => navigate('/creator/dashboard')}>
-            <img src="/logo.png" alt="" className="cr-logo-img" />
-            <span className="cr-logo">Sigmora</span>
-          </button>
+          <BrandWordmark
+            as="button"
+            className="cr-logo-btn brand-wordmark--sidebar"
+            onClick={() => navigate('/creator/dashboard')}
+          />
           <span className="cr-sidebar-badge">Creator Studio</span>
         </div>
 

@@ -48,7 +48,7 @@ const subscriptionSchema = new mongoose.Schema({
 subscriptionSchema.index({ subscriber: 1, status: 1 });
 subscriptionSchema.index({ expiryDate: 1 });
 
-const Subscription = mongoose.model('Subscription', subscriptionSchema);
+const Subscription = mongoose.models.Subscription || mongoose.model('Subscription', subscriptionSchema);
 
 export default Subscription;
 

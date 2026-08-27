@@ -19,6 +19,13 @@ export const subscriptionService = {
     return response.data;
   },
 
+  setSubscriberDisabled: async (subscriberId, disabled) => {
+    const response = await api.patch(`/subscriptions/creator/subscribers/${subscriberId}`, {
+      disabled,
+    });
+    return response.data;
+  },
+
   /** Mock subscribe — no live payment gateway */
   subscribeToPackage: async (packageId) => {
     const response = await api.post('/subscriptions/subscribe', { packageId });

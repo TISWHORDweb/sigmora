@@ -65,6 +65,15 @@ export const protect = async (req, res, next) => {
         });
       }
 
+      if (user.disabled) {
+        session.isActive = false;
+        await session.save();
+        return res.status(403).json({
+          message: 'Your account has been disabled by the academy. Contact your creator.',
+          code: 'ACCOUNT_DISABLED',
+        });
+      }
+
       // Attach user and session to request
       req.user = user;
       req.session = session;

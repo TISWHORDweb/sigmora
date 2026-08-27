@@ -1,6 +1,7 @@
 import Subscription from '../models/Subscription.model.js';
 import Package from '../models/Package.model.js';
 import User from '../models/User.model.js';
+import Session from '../models/Session.model.js';
 import { notifyCreatorAsync } from '../utils/notifications.js';
 
 // @desc    Get subscriber's subscriptions
@@ -139,11 +140,55 @@ export const getCreatorSubscriptions = async (req, res) => {
     const subscriptions = await Subscription.find({
       creator: req.user._id
     })
-      .populate('subscriber', 'name email')
+      .populate('subscriber', 'name email disabled createdAt')
       .populate('package', 'name price')
       .sort({ createdAt: -1 });
 
     res.json(subscriptions);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Enable or disable a subscriber in this academy
+// @route   PATCH /api/subscriptions/creator/subscribers/:subscriberId
+// @access  Private/Creator
+export const setSubscriberDisabled = async (req, res) => {
+  try {
+    const { subscriberId } = req.params;
+    const disabled = Boolean(req.body.disabled);
+
+    const subscriber = await User.findById(subscriberId);
+    if (!subscriber || subscriber.role !== 'subscriber') {
+      return res.status(404).json({ message: 'Subscriber not found' });
+    }
+
+    const belongs =
+      String(subscriber.subscribedTo) === String(req.user._id) ||
+      Boolean(
+        await Subscription.exists({
+          creator: req.user._id,
+          subscriber: subscriber._id,
+        })
+      );
+
+    if (!belongs) {
+      return res.status(403).json({ message: 'Not authorized for this subscriber' });
+    }
+
+    subscriber.disabled = disabled;
+    await subscriber.save();
+
+    if (disabled) {
+      await Session.updateMany({ user: subscriber._id, isActive: true }, { isActive: false });
+    }
+
+    res.json({
+      _id: subscriber._id,
+      name: subscriber.name,
+      email: subscriber.email,
+      disabled: subscriber.disabled,
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

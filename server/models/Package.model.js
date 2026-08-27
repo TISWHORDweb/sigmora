@@ -39,7 +39,7 @@ packageSchema.pre('save', function (next) {
   next();
 });
 
-const Package = mongoose.model('Package', packageSchema);
+const Package = mongoose.models.Package || mongoose.model('Package', packageSchema);
 
 export default Package;
 

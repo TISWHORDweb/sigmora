@@ -8,7 +8,7 @@ const ProtectedRoute = ({ children, role }) => {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <SigmoraLoader fullScreen />;
+    return <SigmoraLoader fullScreen message="Loading…" />;
   }
 
   if (!user) {

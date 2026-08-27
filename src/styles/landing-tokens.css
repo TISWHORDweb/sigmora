@@ -91,6 +91,18 @@
   outline-offset: 2px;
 }
 
+.landing-premium .email-form,
+.landing-premium .email-form:focus-within,
+.landing-premium .email-form input:focus,
+.landing-premium .email-form input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.landing-premium .email-form:focus-within {
+  border-color: var(--line, rgba(255, 255, 255, 0.1));
+}
+
 .scroll-progress-bar {
   position: fixed;
   top: 0;
@@ -102,4 +114,17 @@
   box-shadow: 0 0 12px var(--accent-glow);
   transition: width 0.1s ease-out;
   pointer-events: none;
+}
+
+/* Brand lockup styles live in BrandWordmark.css (SVG text). */
+.brand-wordmark--nav {
+  color: var(--text-primary, #f5f3f7);
+}
+
+.brand-wordmark--footer {
+  color: var(--text-primary, #f5f3f7);
+}
+
+.brand-wordmark--auth {
+  color: var(--brand, #a855f7);
 }

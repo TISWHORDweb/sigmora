@@ -69,7 +69,7 @@ const Register = () => {
   return (
     <AuthLayout wide>
       <h1 className="auth-heading">Create your account</h1>
-      <p className="auth-subheading">Pick how you&apos;ll use Sigmora</p>
+      <p className="auth-subheading">Pick how you&apos;ll use the platform</p>
 
       <div className="auth-role-toggle" role="tablist">
         <button

@@ -5,6 +5,7 @@ import { useNavigate } from '../../lib/router';
 import { Activity, ArrowRight, CheckCircle2, GraduationCap, History, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 import SubscriberShell from '../../components/subscriber/SubscriberShell';
+import AssetAvatar from '../../components/creator/AssetAvatar';
 import { useAuth } from '../../context/AuthContext';
 import { useCountUp } from '../../hooks/useCountUp';
 import { getAcademyName } from '../../utils/subscriberAcademy';
@@ -207,21 +208,24 @@ const SubscriberDashboard = () => {
             ) : (
               <ul className="cr-signal-list">
                 {recentSignals.map((s) => (
-                  <li key={s.id} className="cr-signal-item">
-                    <div className="cr-signal-item__main">
-                      <div className="cr-signal-pair">{s.pair}</div>
-                      <div className="cr-signal-meta">
-                        {s.type} · {s.time}
+                  <li key={s.id}>
+                    <div className="cr-signal-item cr-signal-item--row">
+                      <AssetAvatar symbol={s.pair} size={34} />
+                      <div className="cr-signal-item__main">
+                        <div className="cr-signal-pair">{s.pair}</div>
+                        <div className="cr-signal-meta">
+                          {s.type} · {s.time}
+                        </div>
                       </div>
+                      <span className={`cr-trade-badge ${s.type === 'BUY' ? 'buy' : 'sell'}`}>{s.type}</span>
+                      <span
+                        className={`cr-signal-outcome ${
+                          s.pips.startsWith('+') ? 'up' : s.pips.startsWith('-') ? 'down' : 'neutral'
+                        }`}
+                      >
+                        {s.close} {s.pips}
+                      </span>
                     </div>
-                    <span className={`cr-trade-badge ${s.type === 'BUY' ? 'buy' : 'sell'}`}>{s.type}</span>
-                    <span
-                      className={`cr-signal-outcome ${
-                        s.pips.startsWith('+') ? 'up' : s.pips.startsWith('-') ? 'down' : 'neutral'
-                      }`}
-                    >
-                      {s.close} {s.pips}
-                    </span>
                   </li>
                 ))}
               </ul>
@@ -244,19 +248,29 @@ const SubscriberDashboard = () => {
               ))}
             </div>
 
-            <div className="cr-card cr-panel-card">
-              <h3 className="cr-section-title">At a glance</h3>
-              <div className="cr-aside-row">
-                <span>Live signals</span>
-                <span>{stats.active}</span>
-              </div>
-              <div className="cr-aside-row">
-                <span>Closed signals</span>
-                <span>{stats.completed}</span>
-              </div>
-              <div className="cr-aside-row">
-                <span>Academy</span>
-                <span className="cr-aside-row__value">{academyName}</span>
+            <div className="cr-card cr-ops-card">
+              <h3 className="cr-section-title">Signal pulse</h3>
+              <div className="cr-ops-list">
+                <div className="cr-ops-row">
+                  <span>Live signals</span>
+                  <strong>{stats.active}</strong>
+                </div>
+                <div className="cr-ops-row">
+                  <span>Closed signals</span>
+                  <strong>{stats.completed}</strong>
+                </div>
+                <div className="cr-ops-row">
+                  <span>Win rate</span>
+                  <strong className={stats.winRate > 50 ? 'up' : stats.winRate === 0 ? '' : 'down'}>
+                    {stats.winRate}%
+                  </strong>
+                </div>
+                <div className="cr-ops-row">
+                  <span>Academy</span>
+                  <strong style={{ fontFamily: 'inherit', fontSize: '0.78rem', textAlign: 'right' }}>
+                    {academyName}
+                  </strong>
+                </div>
               </div>
               <button
                 type="button"

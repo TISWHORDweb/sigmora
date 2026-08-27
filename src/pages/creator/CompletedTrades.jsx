@@ -6,6 +6,7 @@ import { ArrowLeft } from 'lucide-react';
 import CreatorShell from '../../components/creator/CreatorShell';
 import TradeSearchBar from '../../components/creator/TradeSearchBar';
 import TradeTypeFilter from '../../components/creator/TradeTypeFilter';
+import AssetAvatar from '../../components/creator/AssetAvatar';
 import { tradeService } from '../../services/tradeService';
 import { filterTrades, getTradeTypeCounts } from '../../utils/filterTrades';
 import toast from 'react-hot-toast';
@@ -90,7 +91,10 @@ const CompletedTrades = () => {
               className={`cr-card cr-trade-card ${trade.type === 'BUY' ? 'buy' : 'sell'}`}
             >
               <div className="cr-trade-head">
-                <span className="cr-trade-symbol">{trade.asset?.symbol || '—'}</span>
+                <span className="cr-trade-head__left">
+                  <AssetAvatar symbol={trade.asset?.symbol} size={32} />
+                  <span className="cr-trade-symbol">{trade.asset?.symbol || '—'}</span>
+                </span>
                 <span className={`cr-trade-badge ${trade.type === 'BUY' ? 'buy' : 'sell'}`}>{trade.type}</span>
               </div>
               <dl className="cr-trade-meta">

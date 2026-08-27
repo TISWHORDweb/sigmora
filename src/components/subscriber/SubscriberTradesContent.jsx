@@ -5,9 +5,11 @@ import { useNavigate } from '../../lib/router';
 import { ArrowLeft } from 'lucide-react';
 import TradeSearchBar from '../creator/TradeSearchBar';
 import TradeTypeFilter from '../creator/TradeTypeFilter';
+import AssetAvatar from '../creator/AssetAvatar';
+import TradeEngagement from './TradeEngagement';
 import { filterTrades, getTradeTypeCounts } from '../../utils/filterTrades';
 
-const SubscriberTradesContent = ({ trades, variant = 'active' }) => {
+const SubscriberTradesContent = ({ trades, variant = 'active', onTradeUpdated }) => {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState('ALL');
@@ -76,8 +78,11 @@ const SubscriberTradesContent = ({ trades, variant = 'active' }) => {
             >
               <div className="cr-trade-head">
                 <div className="cr-trade-head__left">
+                  <AssetAvatar symbol={trade.asset?.symbol} size={32} />
                   <span className="cr-trade-symbol">{trade.asset?.symbol || '—'}</span>
-                  <span className={`cr-trade-badge ${trade.type === 'BUY' ? 'buy' : 'sell'}`}>{trade.type}</span>
+                  <span className={`cr-trade-badge ${trade.type === 'BUY' ? 'buy' : 'sell'}`}>
+                    {trade.type}
+                  </span>
                 </div>
                 {isActive && trade.status === 'active' && (
                   <span className="cr-status-pill cr-status-pill--active">Live</span>
@@ -132,6 +137,7 @@ const SubscriberTradesContent = ({ trades, variant = 'active' }) => {
                   <dd>{trade.creator?.creatorName || '—'}</dd>
                 </div>
               </dl>
+              <TradeEngagement trade={trade} onUpdated={onTradeUpdated} />
             </article>
           ))}
         </div>

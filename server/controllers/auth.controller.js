@@ -9,6 +9,12 @@ import { validationResult } from 'express-validator';
 const hashResetToken = (token) =>
   crypto.createHash('sha256').update(token).digest('hex');
 
+const normalizeEmail = (email = '') => String(email).trim().toLowerCase();
+
+function isDuplicateEmailError(error) {
+  return error?.code === 11000 && (error?.keyPattern?.email || error?.message?.includes('email'));
+}
+
 // @desc    Register creator
 // @route   POST /api/auth/register/creator
 // @access  Public
@@ -19,15 +25,14 @@ export const registerCreator = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password, creatorName } = req.body;
+    const { name, password, creatorName } = req.body;
+    const email = normalizeEmail(req.body.email);
 
-    // Check if user exists
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({ message: 'An account with this email already exists' });
     }
 
-    // Create user
     const user = await User.create({
       name,
       email,
@@ -39,10 +44,8 @@ export const registerCreator = async (req, res) => {
     if (user) {
       await ensureCreatorFreePackage(user._id);
 
-      // Generate token
       const token = generateToken(user._id);
       
-      // Create session (expires in 5 hours)
       const expiresAt = new Date();
       expiresAt.setHours(expiresAt.getHours() + 5);
       
@@ -68,6 +71,9 @@ export const registerCreator = async (req, res) => {
       res.status(400).json({ message: 'Invalid user data' });
     }
   } catch (error) {
+    if (isDuplicateEmailError(error)) {
+      return res.status(400).json({ message: 'An account with this email already exists' });
+    }
     res.status(500).json({ message: error.message });
   }
 };
@@ -82,7 +88,8 @@ export const registerSubscriber = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password, academyCode } = req.body;
+    const { name, password, academyCode } = req.body;
+    const email = normalizeEmail(req.body.email);
 
     // Find creator by academy code
     const creator = await User.findOne({
@@ -93,10 +100,9 @@ export const registerSubscriber = async (req, res) => {
       return res.status(404).json({ message: 'Invalid academy code' });
     }
 
-    // Check if subscriber already exists
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ message: 'User already exists with this email' });
+      return res.status(400).json({ message: 'An account with this email already exists' });
     }
 
     // Create subscriber
@@ -152,6 +158,9 @@ export const registerSubscriber = async (req, res) => {
       res.status(400).json({ message: 'Invalid user data' });
     }
   } catch (error) {
+    if (isDuplicateEmailError(error)) {
+      return res.status(400).json({ message: 'An account with this email already exists' });
+    }
     res.status(500).json({ message: error.message });
   }
 };
@@ -166,7 +175,7 @@ export const forgotPassword = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email } = req.body;
+    const email = normalizeEmail(req.body.email);
     const user = await User.findOne({ email });
 
     const message =
@@ -240,15 +249,21 @@ export const login = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password } = req.body;
+    const { password } = req.body;
+    const email = normalizeEmail(req.body.email);
 
-    // Find user
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    // Check password
+    if (user.disabled) {
+      return res.status(403).json({
+        message: 'Your account has been disabled by the academy. Contact your creator.',
+        code: 'ACCOUNT_DISABLED',
+      });
+    }
+
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid email or password' });

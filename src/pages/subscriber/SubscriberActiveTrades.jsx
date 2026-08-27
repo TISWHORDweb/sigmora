@@ -47,7 +47,15 @@ const SubscriberActiveTrades = () => {
         </button>
       }
     >
-      {!loading && <SubscriberTradesContent trades={trades} variant="active" />}
+      {!loading && (
+        <SubscriberTradesContent
+          trades={trades}
+          variant="active"
+          onTradeUpdated={(updated) =>
+            setTrades((prev) => prev.map((t) => (t._id === updated._id ? updated : t)))
+          }
+        />
+      )}
     </SubscriberShell>
   );
 };

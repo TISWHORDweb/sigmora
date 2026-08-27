@@ -42,7 +42,7 @@ assetSchema.pre('save', function (next) {
   next();
 });
 
-const Asset = mongoose.model('Asset', assetSchema);
+const Asset = mongoose.models.Asset || mongoose.model('Asset', assetSchema);
 
 export default Asset;
 

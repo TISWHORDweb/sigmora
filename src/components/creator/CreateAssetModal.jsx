@@ -4,9 +4,10 @@ import { useState } from 'react';
 import { X } from 'lucide-react';
 import { assetService } from '../../services/assetService';
 import { getApiErrorMessage } from '../../utils/apiErrors';
+import SymbolPicker from './SymbolPicker';
 import toast from 'react-hot-toast';
 
-const CreateAssetModal = ({ open, onClose, onCreated }) => {
+const CreateAssetModal = ({ open, onClose, onCreated, existingSymbols = [] }) => {
   const [symbol, setSymbol] = useState('');
   const [pip, setPip] = useState('');
   const [spread, setSpread] = useState('');
@@ -28,7 +29,10 @@ const CreateAssetModal = ({ open, onClose, onCreated }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!symbol.trim()) return;
+    if (!symbol.trim()) {
+      toast.error('Select a symbol');
+      return;
+    }
     setSubmitting(true);
     try {
       await assetService.createAsset({
@@ -58,18 +62,17 @@ const CreateAssetModal = ({ open, onClose, onCreated }) => {
           <X size={18} />
         </button>
         <h2 className="confirm-dialog__title">Add asset</h2>
-        <p className="confirm-dialog__message">Add a tradable symbol to your catalog.</p>
+        <p className="confirm-dialog__message">Pick a market symbol, then set PIP, spread, and margin.</p>
         <form onSubmit={handleSubmit} className="detail-modal__form">
           <div className="cr-form-grid-2">
-            <div className="cr-field">
+            <div className="cr-field" style={{ gridColumn: '1 / -1' }}>
               <span className="cr-field-label">Symbol</span>
-              <input
-                className="cr-input"
-                placeholder="EUR"
+              <SymbolPicker
                 value={symbol}
-                onChange={(e) => setSymbol(e.target.value)}
+                onChange={setSymbol}
+                exclude={existingSymbols}
+                placeholder="Search forex, crypto, metals…"
                 required
-                style={{ fontFamily: 'var(--cr-body)' }}
               />
             </div>
             <div className="cr-field">
@@ -81,6 +84,7 @@ const CreateAssetModal = ({ open, onClose, onCreated }) => {
                 placeholder="0.0001"
                 value={pip}
                 onChange={(e) => setPip(e.target.value)}
+                required
               />
             </div>
             <div className="cr-field">
@@ -92,6 +96,7 @@ const CreateAssetModal = ({ open, onClose, onCreated }) => {
                 placeholder="1.2"
                 value={spread}
                 onChange={(e) => setSpread(e.target.value)}
+                required
               />
             </div>
             <div className="cr-field">
@@ -102,6 +107,7 @@ const CreateAssetModal = ({ open, onClose, onCreated }) => {
                 placeholder="500"
                 value={margin}
                 onChange={(e) => setMargin(e.target.value)}
+                required
               />
             </div>
           </div>

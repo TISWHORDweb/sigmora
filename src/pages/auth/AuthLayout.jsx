@@ -1,6 +1,6 @@
 'use client';
 
-import { Link } from '../../lib/router';
+import BrandWordmark from '../../components/common/BrandWordmark';
 import '../../styles/landing-tokens.css';
 import './Auth.css';
 
@@ -11,10 +11,7 @@ const AuthLayout = ({ children, wide = false }) => (
         <img src="/auth-hero.png" alt="" className="auth-visual-img" />
         <div className="auth-visual-overlay" />
         <div className="auth-visual-content">
-          <Link to="/" className="auth-visual-logo">
-            <img src="/logo.png" alt="Sigmora" className="auth-logo-img" />
-            <span>SIGMORA</span>
-          </Link>
+          <BrandWordmark to="/" className="auth-visual-logo brand-wordmark--auth" />
           <h2>Institutional grade signals</h2>
           <p>
             Connect with verified creators. Real-time trade signals and structured learning

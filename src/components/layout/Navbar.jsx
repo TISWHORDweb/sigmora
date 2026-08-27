@@ -5,6 +5,7 @@ import { Link, useNavigate, useLocation } from '../../lib/router';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
 import { NAV_MENUS, isMenuActive, pathMatches } from '../../content/siteNav';
+import BrandWordmark from '../common/BrandWordmark';
 import './Navbar.css';
 
 const Caret = () => (
@@ -67,9 +68,7 @@ const Navbar = ({ landing = false }) => {
       transition={{ duration: 0.5 }}
     >
       <div className="navbar-container-modern">
-        <Link to="/" className="navbar-logo-modern" aria-label="Sigmora home">
-          <img src="/logo.png" alt="Sigmora" className="navbar-logo-img" />
-        </Link>
+        <BrandWordmark to="/" className="navbar-logo-modern brand-wordmark--nav" />
 
         <div className="navbar-links-modern">
           {NAV_MENUS.map((menu) => {
