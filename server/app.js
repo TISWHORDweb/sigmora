@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import connectDB from './lib/mongodb.js';
 import { corsOptions, isAllowedOrigin } from './lib/cors.js';
+import { bootstrapPlatformCreator } from './utils/platformCreator.js';
 
 import authRoutes from './routes/auth.routes.js';
 import packageRoutes from './routes/package.routes.js';
@@ -40,6 +41,7 @@ app.use(async (req, res, next) => {
   if (req.method === 'OPTIONS') return next();
   try {
     await connectDB();
+    await bootstrapPlatformCreator();
     next();
   } catch (err) {
     next(err);
