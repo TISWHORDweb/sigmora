@@ -56,7 +56,13 @@ app.use('/api/academy', academyRoutes);
 app.use('/api/notifications', notificationRoutes);
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Sigmora API is running' });
+  const mongoUri = String(process.env['MONGODB_URI'] || process.env['MONGO_URI'] || '').trim();
+  res.json({
+    status: 'OK',
+    message: 'Sigmora API is running',
+    mongoConfigured: Boolean(mongoUri),
+    vercel: Boolean(process.env.VERCEL),
+  });
 });
 
 app.use((err, req, res, next) => {
