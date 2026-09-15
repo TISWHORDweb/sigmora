@@ -1,2 +1,5 @@
 'use client';
-export { default } from '../../src/pages/subscriber/JoinAcademy';
+import { Navigate } from '../../src/lib/router';
+export default function Page() {
+  return <Navigate to="/register" replace />;
+}

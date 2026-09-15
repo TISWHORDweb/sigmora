@@ -1,5 +1,5 @@
 'use client';
-import MarketingPage from '../../src/pages/marketing/MarketingPage';
+import { Navigate } from '../../src/lib/router';
 export default function Page() {
-  return <MarketingPage pageId="insights" />;
+  return <Navigate to="/faq" replace />;
 }

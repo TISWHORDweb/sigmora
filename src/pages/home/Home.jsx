@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from '../../lib/router';
+import { Link } from '../../lib/router';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 import '../../styles/landing-tokens.css';
@@ -18,11 +18,11 @@ const TICKER = [
   { pair: 'AUD/USD', px: '0.6512', chg: '▲ 0.33%', up: true },
 ];
 
-const CREATOR_PERKS = [
-  'Private academy invite codes',
-  'Subscriber & package management',
-  'Real-time trade publishing',
-  'Asset-level pip & margin control',
+const SUBSCRIBER_PERKS = [
+  'Live trade signals from the Sigmora desk',
+  'Package-based access that matches your style',
+  'Real-time alerts and trade history',
+  'Bank-level account security',
 ];
 
 const TRADERS = [
@@ -31,32 +31,28 @@ const TRADERS = [
     desc: 'A results-driven portfolio manager with a decade of consistent performance.',
     ret: '78%',
     win: '73%',
-    image:
-      'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=300&fit=crop&crop=faces&q=80&auto=format',
+    image: '/images/trader-smith.png',
   },
   {
     name: 'L. Chen',
     desc: 'Expert quant strategist with a sharp focus on volatility and risk.',
     ret: '76%',
     win: '71%',
-    image:
-      'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=300&fit=crop&crop=faces&q=80&auto=format',
+    image: '/images/trader-chen.png',
   },
   {
-    name: 'L. Litm',
+    name: 'L. Lim',
     desc: 'Experienced commodities trader focused on macro trends and cycles.',
     ret: '76%',
     win: '69%',
-    image:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=300&fit=crop&crop=faces&q=80&auto=format',
+    image: '/images/trader-lim.png',
   },
   {
     name: 'H. Wallace',
     desc: 'Long-term equity investor with a disciplined, research-first approach.',
     ret: '74%',
     win: '68%',
-    image:
-      'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=300&fit=crop&crop=faces&q=80&auto=format',
+    image: '/images/trader-wu.png',
   },
 ];
 
@@ -74,7 +70,7 @@ const WHY = [
   },
   {
     title: 'Expert Strategies',
-    desc: 'Follow proven trading strategies from professional forex experts with years of market experience. Learn from the best and replicate their success.',
+    desc: 'Follow proven trading strategies from the Sigmora desk with years of market experience. Replicate disciplined setups with clarity.',
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <circle cx="12" cy="12" r="10" />
@@ -123,9 +119,7 @@ const WHY = [
 ];
 
 const Home = () => {
-  const navigate = useNavigate();
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [academyCode, setAcademyCode] = useState('');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -137,13 +131,6 @@ const Home = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const handleJoinAcademy = (e) => {
-    e.preventDefault();
-    const code = academyCode.trim().toUpperCase();
-    if (!code) return;
-    navigate(`/register?role=subscriber&code=${encodeURIComponent(code)}`);
-  };
 
   return (
     <div className="home-page landing-premium">
@@ -177,8 +164,7 @@ const Home = () => {
         <div className="wrap hero-grid">
           <div>
             <div className="status-pill reveal reveal-1">
-              <span className="pulse" />
-              Markets Open · Live Pricing
+              Sigmora desk
             </div>
             <h1 className="reveal reveal-2">
               Institutional grade
@@ -186,46 +172,24 @@ const Home = () => {
               <em>signals</em>, without the noise.
             </h1>
             <p className="hero-sub reveal reveal-3">
-              Connect with verified trading creators. Access real-time trade signals, institutional risk
-              management, and structured learning paths — built for traders who take their edge seriously.
+              Subscribe to Sigmora for real-time trade signals, institutional risk
+              management, and a clean desk built for traders who take their edge seriously.
             </p>
 
             <div className="reveal reveal-4">
-              <form className="email-form" onSubmit={handleJoinAcademy}>
-                <input
-                  type="text"
-                  value={academyCode}
-                  onChange={(e) => setAcademyCode(e.target.value.toUpperCase())}
-                  placeholder="Enter Academy Code (e.g. TRD782)"
-                  maxLength={6}
-                  aria-label="Academy code"
-                />
-                <button type="submit" className="btn btn-primary">
-                  Join Academy
-                </button>
-              </form>
               <div className="hero-actions-row">
                 <Link to="/register" className="btn btn-primary">
                   Start Trading →
                 </Link>
                 <span className="register-inline">
-                  Or <Link to="/register?role=creator">register as a creator →</Link>
+                  Already a member? <Link to="/login">Sign in →</Link>
                 </span>
               </div>
             </div>
 
             <div className="trust-row reveal reveal-5">
-              <div className="trust-avatars">
-                <span style={{ background: 'rgba(168, 85, 247,0.18)', color: '#a855f7' }}>AS</span>
-                <span style={{ background: 'rgba(232,184,75,0.18)', color: '#e8b84b' }}>LC</span>
-                <span style={{ background: 'rgba(226,86,79,0.18)', color: '#e2564f' }}>HW</span>
-                <span style={{ background: 'rgba(217, 70, 239,0.18)', color: '#d946ef' }}>LL</span>
-              </div>
-              <div>
-                <div className="trust-stars">★★★★★</div>
-                <div className="trust-text">
-                  <b>4.9/5</b> from 2,400+ verified traders on Sigmora
-                </div>
+              <div className="trust-text">
+                Live packages and desk alerts — execute on your own broker.
               </div>
             </div>
           </div>
@@ -431,34 +395,34 @@ const Home = () => {
       <section className="creator">
         <div className="wrap creator-grid">
           <div>
-            <div className="eyebrow">For Creators</div>
+            <div className="eyebrow">For Subscribers</div>
             <h2>
-              Are you a creator?
+              Follow the Sigmora desk.
               <br />
-              <span className="accent">Control your destiny.</span>
+              <span className="accent">Trade with clarity.</span>
             </h2>
             <p>
-              Set up your academy in minutes. Publish trades, define packages, and share your invite code — payments
-              stay between you and your subscribers.
+              Open an account, pick a package, and receive live signals from our team — entries, stops,
+              and targets without the marketplace noise.
             </p>
             <ul className="check-list">
-              {CREATOR_PERKS.map((perk) => (
+              {SUBSCRIBER_PERKS.map((perk) => (
                 <li key={perk}>{perk}</li>
               ))}
             </ul>
-            <Link to="/register?role=creator" className="btn btn-primary">
-              Launch your academy →
+            <Link to="/register" className="btn btn-primary">
+              Create your account →
             </Link>
           </div>
           <div className="creator-visual">
             <div className="analyst-card">
               <img
-                src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=500&h=650&fit=crop&crop=faces&q=80&auto=format"
+                src="/images/market-analyst.png"
                 alt="Market analyst portrait"
               />
               <div className="analyst-tag">
                 Market Analyst
-                <span>Sigmora Verified Creator</span>
+                <span>Sigmora Desk</span>
               </div>
             </div>
             <div className="phone-mock">
@@ -531,8 +495,8 @@ const Home = () => {
               </div>
               <h3>Create Your Account</h3>
               <p>
-                Sign up as a creator or subscriber. Creators can share their trading strategies, while subscribers can
-                follow expert traders.
+                Sign up as a subscriber in minutes. You&apos;ll get access to Sigmora packages and live trade
+                signals from our desk.
               </p>
             </div>
             <div className="step-card">

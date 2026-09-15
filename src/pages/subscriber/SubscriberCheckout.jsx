@@ -76,12 +76,8 @@ const SubscriberCheckout = () => {
           </div>
           <div className="cr-receipt__divider" />
           <div className="cr-receipt__row">
-            <span>Academy</span>
-            <strong>{creator?.creatorName || '—'}</strong>
-          </div>
-          <div className="cr-receipt__row">
-            <span>Academy code</span>
-            <code className="cr-nav-code">{creator?.academyCode || '—'}</code>
+            <span>Publisher</span>
+            <strong>{creator?.creatorName || 'Sigmora'}</strong>
           </div>
           <div className="cr-receipt__divider" />
           <div className="cr-receipt__row cr-receipt__row--package">

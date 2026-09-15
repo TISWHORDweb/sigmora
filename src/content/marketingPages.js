@@ -309,7 +309,7 @@ export const MARKETING_PAGES = {
     ],
     related: [
       { to: '/markets/hours', label: 'Market hours', desc: 'Full session map' },
-      { to: '/calendar', label: 'Economic calendar', desc: 'ECB, NFP, Fed speak' },
+      { to: '/markets/hours', label: 'Economic calendar', desc: 'ECB, NFP, Fed speak' },
       { to: '/markets/commodities', label: 'Gold', desc: 'XAU next to the dollar book' },
     ],
   },
@@ -394,7 +394,7 @@ export const MARKETING_PAGES = {
       },
     ],
     related: [
-      { to: '/insights', label: 'Market insights', desc: 'Vol and the story behind the print' },
+      { to: '/signals', label: 'Market insights', desc: 'Vol and the story behind the print' },
       { to: '/legal/risk', label: 'Risk disclosures', desc: 'Read before you size crypto' },
       { to: '/signals', label: 'Signal anatomy', desc: 'Entry, stop, target' },
     ],
@@ -470,7 +470,7 @@ export const MARKETING_PAGES = {
     ],
     related: [
       { to: '/club', label: 'Sigmora Club', desc: 'Smith, Wallace, and verified win rates' },
-      { to: '/insights', label: 'Insights', desc: 'Why the name moved' },
+      { to: '/signals', label: 'Insights', desc: 'Why the name moved' },
       { to: '/markets', label: 'All markets', desc: 'FX and metals on the same login' },
     ],
   },
@@ -536,7 +536,7 @@ export const MARKETING_PAGES = {
     ],
     related: [
       { to: '/markets/forex', label: 'Forex', desc: 'Dollar pairs that move gold' },
-      { to: '/calendar', label: 'Calendar', desc: 'US prints and the metal' },
+      { to: '/markets/hours', label: 'Calendar', desc: 'US prints and the metal' },
       { to: '/club', label: 'Club', desc: 'Commodities desks with public stats' },
     ],
   },
@@ -560,7 +560,7 @@ export const MARKETING_PAGES = {
       ],
     },
     actions: [
-      { to: '/calendar', label: 'Open the calendar →', primary: true },
+      { to: '/markets/hours', label: 'Open the calendar →', primary: true },
       { to: '/markets/forex', label: 'FX pairs' },
     ],
     sections: [
@@ -617,12 +617,12 @@ export const MARKETING_PAGES = {
           'Use this page for session opens. Use the calendar for the week. Let notifications handle the second the trade is live.',
         ],
         image: IMG.desk,
-        cta: { to: '/calendar', label: 'Economic calendar' },
+        cta: { to: '/markets/hours', label: 'Economic calendar' },
       },
     ],
     related: [
-      { to: '/calendar', label: 'Economic calendar', desc: 'The week ahead' },
-      { to: '/insights', label: 'Insights', desc: 'What the tape just said' },
+      { to: '/markets/hours', label: 'Economic calendar', desc: 'The week ahead' },
+      { to: '/signals', label: 'Insights', desc: 'What the tape just said' },
       { to: '/markets/forex', label: 'Forex', desc: 'Pairs mapped to these sessions' },
     ],
   },
@@ -723,8 +723,8 @@ export const MARKETING_PAGES = {
       },
     ],
     related: [
-      { to: '/getting-started', label: 'Getting started', desc: 'Account → package → signals' },
-      { to: '/creators', label: 'Creator earnings', desc: 'If you sell the desk' },
+      { to: '/faq', label: 'Getting started', desc: 'Account → package → signals' },
+      { to: '/features', label: 'Platform features', desc: 'If you sell the desk' },
       { to: '/faq', label: 'Help center', desc: 'Subscriptions in full' },
     ],
   },
@@ -803,7 +803,7 @@ export const MARKETING_PAGES = {
     related: [
       { to: '/club', label: 'Sigmora Club', desc: 'The desks behind the cards' },
       { to: '/legal/risk', label: 'Risk', desc: 'What a signal is not' },
-      { to: '/getting-started', label: 'Getting started', desc: 'From signup to first alert' },
+      { to: '/faq', label: 'Getting started', desc: 'From signup to first alert' },
     ],
   },
 
@@ -822,7 +822,7 @@ export const MARKETING_PAGES = {
     trust: TRUST,
     actions: [
       { to: '/register', label: 'Follow a desk →', primary: true },
-      { to: '/register?role=creator', label: 'Apply as a creator' },
+      { to: '/register', label: 'Create your account' },
     ],
     sections: [
       {
@@ -854,7 +854,7 @@ export const MARKETING_PAGES = {
       },
     ],
     related: [
-      { to: '/creators', label: 'Creator earnings', desc: 'Launch the academy they follow' },
+      { to: '/features', label: 'Platform features', desc: 'Launch the academy they follow' },
       { to: '/signals', label: 'Signals', desc: 'What Club desks actually send' },
       { to: '/awards', label: 'Awards', desc: 'Why the product keeps getting mentioned' },
     ],
@@ -873,13 +873,13 @@ export const MARKETING_PAGES = {
       alt: 'Sigmora verified creator',
     },
     actions: [
-      { to: '/register?role=creator', label: 'Launch your academy →', primary: true },
-      { to: '/partners', label: 'Creator Relations' },
+      { to: '/register', label: 'Start Trading →', primary: true },
+      { to: '/about', label: 'About Sigmora' },
     ],
     sections: [
       {
         type: 'split',
-        eyebrow: 'Creator earnings',
+        eyebrow: 'Platform features',
         heading: 'Your book. Your packages. Your relationship.',
         paragraphs: [
           'Sigmora is the operating system for trading educators. Issue a private invite code, publish live trades, and keep the relationship with your room.',
@@ -892,7 +892,7 @@ export const MARKETING_PAGES = {
           'Asset-level pip & margin control',
         ],
         image: IMG.learn,
-        cta: { to: '/register?role=creator', label: 'Register as a creator' },
+        cta: { to: '/register', label: 'Create your account' },
       },
       {
         type: 'cards',
@@ -910,7 +910,7 @@ export const MARKETING_PAGES = {
         eyebrow: 'Simple process',
         heading: 'Signup to first signal',
         items: [
-          { title: 'Register as a creator', desc: 'No approval queue. Open the dashboard and configure the desk.' },
+          { title: 'Create your account', desc: 'No approval queue. Open the dashboard and configure the desk.' },
           { title: 'Publish a package', desc: 'Name, price, features. Your academy code is waiting.' },
           { title: 'Go live', desc: 'Add assets, post trades, watch the book fill in.' },
         ],
@@ -931,16 +931,16 @@ export const MARKETING_PAGES = {
       },
     ],
     cta: {
-      heading: 'Launch your academy',
+      heading: 'Start with Sigmora',
       headingAccent: 'this week.',
       text: 'Professional-grade tools for people who already have a book worth following.',
-      primary: { to: '/register?role=creator', label: 'Register as a creator →' },
-      secondary: { to: '/partners', label: 'Creator Relations' },
+      primary: { to: '/register', label: 'Create your account →' },
+      secondary: { to: '/about', label: 'About Sigmora' },
     },
     related: [
-      { to: '/partners', label: 'Creator Relations', desc: 'Established desks and migrations' },
+      { to: '/about', label: 'About Sigmora', desc: 'Established desks and migrations' },
       { to: '/fees', label: 'Fees', desc: 'How your subscribers pay' },
-      { to: '/academy', label: 'Academy product', desc: 'Curriculum next to the tape' },
+      { to: '/faq', label: 'Academy product', desc: 'Curriculum next to the tape' },
     ],
   },
 
@@ -963,7 +963,7 @@ export const MARKETING_PAGES = {
     },
     actions: [
       { to: '/register?role=subscriber', label: 'Join with a code →', primary: true },
-      { to: '/register?role=creator', label: 'Build an academy' },
+      { to: '/register', label: 'Browse packages' },
     ],
     sections: [
       {
@@ -1025,9 +1025,9 @@ export const MARKETING_PAGES = {
       },
     ],
     related: [
-      { to: '/getting-started', label: 'Getting started', desc: 'The three-step path' },
-      { to: '/creators', label: 'For creators', desc: 'Turn a playbook into an academy' },
-      { to: '/digest', label: 'Digest', desc: 'Weekly brief next to class' },
+      { to: '/faq', label: 'Getting started', desc: 'The three-step path' },
+      { to: '/features', label: 'For traders', desc: 'Turn a playbook into an academy' },
+      { to: '/signals', label: 'Digest', desc: 'Weekly brief next to class' },
     ],
   },
 
@@ -1088,7 +1088,7 @@ export const MARKETING_PAGES = {
             title: 'I want to lead',
             desc: 'Creator account, package, code, go live.',
             details: ['Packages and assets', 'Real-time publishing', 'Payments stay with you'],
-            to: '/register?role=creator',
+            to: '/register',
           },
           {
             icon: 'shield',
@@ -1126,7 +1126,7 @@ export const MARKETING_PAGES = {
     },
     related: [
       { to: '/fees', label: 'Fees', desc: 'What packages cost' },
-      { to: '/academy', label: 'Academy', desc: 'Learning next to signals' },
+      { to: '/faq', label: 'Academy', desc: 'Learning next to signals' },
       { to: '/faq', label: 'Help center', desc: 'Everything else' },
     ],
   },
@@ -1142,7 +1142,7 @@ export const MARKETING_PAGES = {
     visual: TAPE_VISUAL,
     actions: [
       { to: '/register', label: 'Follow with context →', primary: true },
-      { to: '/digest', label: 'Read the Digest' },
+      { to: '/signals', label: 'Read the Digest' },
     ],
     sections: [
       {
@@ -1211,8 +1211,8 @@ export const MARKETING_PAGES = {
       },
     ],
     related: [
-      { to: '/digest', label: 'Sigmora Digest', desc: 'The brief for people with a book' },
-      { to: '/calendar', label: 'Calendar', desc: 'The week ahead' },
+      { to: '/signals', label: 'Sigmora Digest', desc: 'The brief for people with a book' },
+      { to: '/markets/hours', label: 'Calendar', desc: 'The week ahead' },
       { to: '/markets', label: 'All markets', desc: 'The tape itself' },
     ],
   },
@@ -1276,7 +1276,7 @@ export const MARKETING_PAGES = {
     ],
     related: [
       { to: '/markets/hours', label: 'Hours', desc: 'Sydney to New York' },
-      { to: '/insights', label: 'Insights', desc: 'After the print' },
+      { to: '/signals', label: 'Insights', desc: 'After the print' },
       { to: '/markets/forex', label: 'Forex', desc: 'Pairs these events move' },
     ],
   },
@@ -1295,7 +1295,7 @@ export const MARKETING_PAGES = {
     },
     actions: [
       { to: '/register', label: 'Follow along in-product →', primary: true },
-      { to: '/insights', label: 'Live insights' },
+      { to: '/signals', label: 'Live insights' },
     ],
     sections: [
       {
@@ -1319,7 +1319,7 @@ export const MARKETING_PAGES = {
             tag: 'Learn',
             title: 'Risk module still leads academy progress',
             desc: 'If you only finish one course, make it the one that keeps you in the game.',
-            to: '/academy',
+            to: '/faq',
           },
           {
             tag: 'Platform',
@@ -1352,9 +1352,9 @@ export const MARKETING_PAGES = {
       },
     ],
     related: [
-      { to: '/insights', label: 'Insights', desc: 'Intraday feed' },
+      { to: '/signals', label: 'Insights', desc: 'Intraday feed' },
       { to: '/club', label: 'Club', desc: 'The desks in this edition' },
-      { to: '/academy', label: 'Academy', desc: 'The risk module' },
+      { to: '/faq', label: 'Academy', desc: 'The risk module' },
     ],
   },
 
@@ -1485,7 +1485,7 @@ export const MARKETING_PAGES = {
   },
 
   partners: {
-    badge: 'Creator Relations',
+    badge: 'About Sigmora',
     badgeIcon: 'users',
     title: 'Partner with the rails.',
     titleAccent: 'Keep the relationship.',
@@ -1494,7 +1494,7 @@ export const MARKETING_PAGES = {
     visual: { type: 'image', src: IMG.learn, alt: 'Creator relations' },
     actions: [
       { to: '/contact', label: 'Talk to the team →', primary: true },
-      { to: '/register?role=creator', label: 'Start as a creator' },
+      { to: '/register', label: 'Create your account' },
     ],
     sections: [
       {
@@ -1541,9 +1541,9 @@ export const MARKETING_PAGES = {
       },
     ],
     related: [
-      { to: '/creators', label: 'Creator earnings', desc: 'Self-serve launch' },
+      { to: '/features', label: 'Platform features', desc: 'See how it works' },
       { to: '/fees', label: 'Fee schedule', desc: 'What subscribers pay' },
-      { to: '/contact', label: 'Contact', desc: 'Creator Relations' },
+      { to: '/contact', label: 'Contact', desc: 'About Sigmora' },
     ],
   },
 
@@ -1868,7 +1868,7 @@ export const MARKETING_PAGES = {
     },
     related: [
       { to: '/legal/disclaimer', label: 'Disclaimer', desc: 'Not advice' },
-      { to: '/getting-started', label: 'Getting started', desc: 'Use the product as designed' },
+      { to: '/faq', label: 'Getting started', desc: 'Use the product as designed' },
       { to: '/faq', label: 'Help center', desc: 'Practical questions' },
     ],
   },

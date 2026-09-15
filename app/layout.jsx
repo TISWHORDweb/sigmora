@@ -7,8 +7,8 @@ export const metadata = {
   description:
     'Sigmora helps forex and trading educators run their academy — create and broadcast trade signals, manage packages, and grow a paid subscriber base.',
   icons: {
-    icon: '/logo.png',
-    apple: '/logo.png',
+    icon: '/new-favicon.png',
+    apple: '/new-favicon.png',
   },
 };
 

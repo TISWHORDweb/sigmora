@@ -662,11 +662,11 @@ const MarketingPage = ({ pageId }) => {
     heading: 'Ready to Transform Your Trading?',
     text: 'Join thousands of successful traders on Sigmora and start your journey to trading excellence.',
     primary: { to: '/register', label: 'Start Trading →' },
-    secondary: { to: '/register?role=creator', label: 'Register as a creator' },
+    secondary: { to: '/login', label: 'Sign in' },
   };
   const actions = page.actions || [
     { to: '/register', label: 'Start Trading →', primary: true },
-    { to: '/register?role=creator', label: 'Register as a creator' },
+    { to: '/login', label: 'Sign in' },
   ];
 
   return (

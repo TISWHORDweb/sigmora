@@ -1,7 +1,6 @@
 import express from 'express';
 import { body } from 'express-validator';
 import {
-  registerCreator,
   registerSubscriber,
   forgotPassword,
   resetPassword,
@@ -23,18 +22,12 @@ const registerValidation = [
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters')
 ];
 
-const creatorValidation = [
-  ...registerValidation,
-  body('name').trim().notEmpty().withMessage('Name is required')
-];
-
 const subscriberValidation = [
   ...registerValidation,
-  body('academyCode').trim().notEmpty().withMessage('Academy code is required')
+  body('name').optional().trim(),
 ];
 
-// Routes
-router.post('/register/creator', creatorValidation, registerCreator);
+// Routes — public signup is subscriber-only (Sigmora is the publisher)
 router.post('/register/subscriber', subscriberValidation, registerSubscriber);
 router.post(
   '/forgot-password',
@@ -74,4 +67,3 @@ router.post('/logout-all', protect, logoutAll);
 router.post('/refresh', protect, refreshToken);
 
 export default router;
-

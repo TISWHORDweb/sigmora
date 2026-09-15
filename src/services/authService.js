@@ -1,13 +1,7 @@
 import api from './api';
 
 export const authService = {
-  // Creator registration
-  registerCreator: async (data) => {
-    const response = await api.post('/auth/register/creator', data);
-    return response.data;
-  },
-
-  // Subscriber registration
+  // Subscriber registration (public auth is subscriber-only)
   registerSubscriber: async (data) => {
     const response = await api.post('/auth/register/subscriber', data);
     return response.data;

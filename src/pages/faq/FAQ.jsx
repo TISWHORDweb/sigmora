@@ -158,8 +158,8 @@ const FAQ = () => {
       <section className="landing-section">
         <div className="section-container">
           <div className="mk-related">
-            <Link to="/getting-started" className="mk-related-card">
-              <h3>Getting started</h3>
+            <Link to="/register" className="mk-related-card">
+              <h3>Create account</h3>
               <p>Account, package, first signal — in three steps</p>
               <span>
                 View <ArrowRightIcon size={14} color="currentColor" />
@@ -167,7 +167,7 @@ const FAQ = () => {
             </Link>
             <Link to="/fees" className="mk-related-card">
               <h3>Fees</h3>
-              <p>Creator packages, 30 days, no auto-renew trap</p>
+              <p>Transparent packages, clear billing</p>
               <span>
                 View <ArrowRightIcon size={14} color="currentColor" />
               </span>
@@ -248,8 +248,8 @@ const FAQ = () => {
               Contact Support
               <ArrowRightIcon size={18} color="currentColor" />
             </Link>
-            <Link to="/getting-started" className="btn-landing-secondary">
-              Getting started
+            <Link to="/register" className="btn-landing-secondary">
+              Create account
             </Link>
           </div>
         </div>

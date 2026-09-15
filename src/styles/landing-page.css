@@ -71,7 +71,7 @@
   align-items: center;
   gap: 8px;
   padding: 6px 14px;
-  border-radius: 100px;
+  border-radius: 10px;
   font-family: var(--font-body);
   font-size: 12px;
   font-weight: 500;
@@ -95,7 +95,7 @@
 }
 
 .page-hero-title .gradient-modern {
-  background: linear-gradient(135deg, var(--brand), #d946ef);
+  background: var(--accent);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -525,7 +525,7 @@
   font-weight: 700;
   text-decoration: none;
   color: var(--brand-foreground);
-  background: linear-gradient(135deg, var(--brand), #d946ef);
+  background: var(--accent);
   box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
   border: none;
   cursor: pointer;
@@ -588,7 +588,7 @@
 }
 
 .landing-cta-inner h2 .gradient-modern {
-  background: linear-gradient(135deg, var(--brand), #d946ef);
+  background: var(--accent);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1510,7 +1510,7 @@ a.mk-article:hover {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   padding: 3px 8px;
-  border-radius: 100px;
+  border-radius: 10px;
   color: var(--text-muted);
   border: 1px solid var(--line);
 }
@@ -1595,7 +1595,7 @@ a.mk-article:hover {
 
 .mk-region-bar {
   height: 6px;
-  border-radius: 100px;
+  border-radius: 10px;
   background: rgba(255, 255, 255, 0.06);
   overflow: hidden;
 }

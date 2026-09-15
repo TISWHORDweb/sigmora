@@ -188,15 +188,15 @@ const Features = () => {
             </Link>
           </div>
           <div className="landing-prose">
-            <span className="section-eyebrow">Academy</span>
-            <h2>Market education from people who still trade</h2>
+            <span className="section-eyebrow">Packages</span>
+            <h2>Access that matches how you trade</h2>
             <p>
-              Risk Management, Chart Patterns, Options Basics, Macro 101 — progress bars, not a PDF dump.
-              Curriculum unlocks with the same academy code as the live tape.
+              Pick a Sigmora package and unlock live signals, completed-trade history, and alerts —
+              without juggling invite codes or third-party academies.
             </p>
-            <p>Premium support sits next to class: 24/7 when something breaks at session open.</p>
-            <Link to="/academy" className="btn-landing-secondary" style={{ marginTop: 8 }}>
-              Explore Academy
+            <p>Premium support sits next to the desk: 24/7 when something breaks at session open.</p>
+            <Link to="/fees" className="btn-landing-secondary" style={{ marginTop: 8 }}>
+              View packages
             </Link>
           </div>
         </div>
@@ -206,28 +206,28 @@ const Features = () => {
         <div className="section-container">
           <div className="section-header">
             <span className="section-eyebrow">Who it’s for</span>
-            <h2 className="section-title">Same platform. Two jobs.</h2>
+            <h2 className="section-title">Built for serious subscribers</h2>
           </div>
           <div className="mk-compare">
             <div className="mk-compare-col">
               <h3>
-                <UsersIcon size={18} color="currentColor" /> Subscribers
+                <UsersIcon size={18} color="currentColor" /> What you get
               </h3>
               <ul>
-                <li>Join with a code or a public package</li>
+                <li>Open an account and choose a package</li>
                 <li>Live alerts and completed-trade history</li>
-                <li>Analytics on how following a desk actually went</li>
+                <li>Analytics on how following the desk actually went</li>
                 <li>Execute on your own broker — full control</li>
               </ul>
             </div>
             <div className="mk-compare-col">
               <h3>
-                <ZapIcon size={18} color="currentColor" /> Creators
+                <ZapIcon size={18} color="currentColor" /> What Sigmora runs
               </h3>
               <ul>
-                <li>Invite codes, packages, pip-level publishing</li>
-                <li>Subscriber stats and win-rate dashboards</li>
-                <li>Payments stay between you and your room</li>
+                <li>Desk-published signals with clear levels</li>
+                <li>Package tiers and transparent fees</li>
+                <li>Secure accounts and session management</li>
                 <li>99.9% uptime so London open never goes dark</li>
               </ul>
             </div>
@@ -249,16 +249,16 @@ const Features = () => {
                 View <ArrowRightIcon size={14} color="currentColor" />
               </span>
             </Link>
-            <Link to="/creators" className="mk-related-card">
-              <h3>Creator earnings</h3>
-              <p>Launch an academy this week</p>
+            <Link to="/club" className="mk-related-card">
+              <h3>Sigmora Club</h3>
+              <p>Member access and performance</p>
               <span>
                 View <ArrowRightIcon size={14} color="currentColor" />
               </span>
             </Link>
-            <Link to="/getting-started" className="mk-related-card">
-              <h3>Getting started</h3>
-              <p>Three steps to a live desk</p>
+            <Link to="/faq" className="mk-related-card">
+              <h3>Help Center</h3>
+              <p>Accounts, packages, and support</p>
               <span>
                 View <ArrowRightIcon size={14} color="currentColor" />
               </span>
@@ -281,8 +281,8 @@ const Features = () => {
               Start Trading →
               <ArrowRightIcon size={18} color="currentColor" />
             </Link>
-            <Link to="/register?role=creator" className="btn-landing-secondary">
-              Register as a creator
+            <Link to="/login" className="btn-landing-secondary">
+              Sign in
             </Link>
           </div>
         </div>

@@ -14,7 +14,7 @@ import {
   User,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { getAcademyName, getAcademyCode } from '../../utils/subscriberAcademy';
+import { getAcademyName } from '../../utils/subscriberAcademy';
 import NotificationBell from '../common/NotificationBell';
 import SigmoraLoader from '../common/SigmoraLoader';
 import BrandWordmark from '../common/BrandWordmark';
@@ -25,7 +25,7 @@ const NAV_SECTIONS = [
     label: 'Main',
     items: [
       { id: 'dashboard', label: 'Overview', icon: LayoutDashboard, path: '/subscriber/dashboard' },
-      { id: 'academy', label: 'My Academy', icon: GraduationCap, path: '/subscriber/academy' },
+      { id: 'academy', label: 'Packages', icon: GraduationCap, path: '/subscriber/academy' },
     ],
   },
   {
@@ -69,8 +69,7 @@ const SubscriberShell = ({
 
   const activeNav = activeNavProp ?? getSubscriberActiveNav(location.pathname);
   const displayName = user?.name || 'Subscriber';
-  const academyName = getAcademyName(user) || 'Your academy';
-  const academyCode = getAcademyCode(user) || '—';
+  const academyName = getAcademyName(user) || 'Sigmora';
   const initials = displayName
     .split(' ')
     .map((w) => w[0])
@@ -185,7 +184,7 @@ const SubscriberShell = ({
               title={academyName}
             >
               <GraduationCap size={14} />
-              <span className="cr-topbar-chip__text">{academyCode}</span>
+              <span className="cr-topbar-chip__text">{academyName}</span>
             </button>
             {topAction}
           </div>

@@ -13,8 +13,8 @@ const Footer = ({ landing = false }) => {
           <div className="footer-section-modern footer-brand-col">
             <BrandWordmark to="/" className="footer-logo-modern brand-wordmark--footer" />
             <p className="footer-description-modern">
-              Institutional-grade signals without the noise. Connect with verified creators, join an academy, and
-              follow live trades — then execute on your own broker.
+              Trade signals from the Sigmora desk — packages, alerts, and history for traders who execute on their own
+              broker.
             </p>
             <div className="social-links-modern">
               <a href="#" aria-label="X" className="social-link-modern">

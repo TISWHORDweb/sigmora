@@ -1,9 +1,8 @@
-/* Brand: S glyph + "igmora" — SVG text with system fonts so the g always paints fully */
+/* Brand: logo image only */
 
 .brand-wordmark {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
   text-decoration: none;
   color: inherit;
   border: none;
@@ -15,64 +14,31 @@
 }
 
 .brand-wordmark__img {
-  width: 36px;
+  width: 120px;
   height: 36px;
   object-fit: contain;
-  object-position: center;
+  object-position: left center;
   display: block;
   flex-shrink: 0;
-}
-
-.brand-wordmark__svg {
-  display: block;
-  height: 26px;
-  width: auto;
-  min-width: 78px;
-  overflow: visible;
-  flex-shrink: 0;
-  color: inherit;
 }
 
 .brand-wordmark--nav .brand-wordmark__img {
-  width: 42px;
+  width: 140px;
   height: 42px;
 }
 
-.brand-wordmark--nav .brand-wordmark__svg {
-  height: 30px;
-  min-width: 90px;
-  color: var(--text-primary, #f5f3f7);
-}
-
 .brand-wordmark--footer .brand-wordmark__img {
-  width: 32px;
+  width: 110px;
   height: 32px;
 }
 
-.brand-wordmark--footer .brand-wordmark__svg {
-  height: 24px;
-  min-width: 72px;
-  color: var(--text-primary, #f5f3f7);
-}
-
 .brand-wordmark--auth .brand-wordmark__img {
-  width: 36px;
+  width: 130px;
   height: 36px;
 }
 
-.brand-wordmark--auth .brand-wordmark__svg {
-  height: 22px;
-  min-width: 68px;
-  color: #a855f7;
-}
-
 .brand-wordmark--sidebar .brand-wordmark__img {
-  width: 34px;
+  width: 120px;
   height: 34px;
 }
 
-.brand-wordmark--sidebar .brand-wordmark__svg {
-  height: 24px;
-  min-width: 74px;
-  color: #c4b5fd;
-}

@@ -63,7 +63,7 @@
 }
 
 .logo-text-modern {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-heading);
   font-size: 21px;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -103,7 +103,7 @@
   position: relative;
   padding: 0;
   text-decoration: none;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-size: 14.5px;
   font-weight: 500;
   color: var(--text-secondary);
@@ -218,7 +218,7 @@
 }
 
 .btn-nav-login {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-size: 14.5px;
   font-weight: 500;
   color: var(--text-secondary);
@@ -265,28 +265,30 @@
   align-items: center;
   gap: 8px;
   padding: 12px 22px;
-  border-radius: 999px;
-  font-family: 'Inter', sans-serif;
+  border-radius: 10px;
+  font-family: var(--font-body);
   font-size: 14.5px;
   font-weight: 600;
   text-decoration: none;
   color: #ffffff;
-  background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+  background: var(--accent);
   border: none;
   cursor: pointer;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  transition: background 0.15s ease;
   white-space: nowrap;
 }
 
 .btn-nav-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px -6px var(--accent-glow);
+  background: var(--accent-dim);
+  transform: none;
+  box-shadow: none;
+  color: #ffffff;
 }
 
 .btn-nav-secondary {
   padding: 10px 18px;
-  border-radius: 999px;
-  font-family: 'Inter', sans-serif;
+  border-radius: 10px;
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
@@ -334,7 +336,7 @@
   padding: 12px 16px;
   text-decoration: none;
   border-radius: 8px;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-size: 15px;
   font-weight: 500;
   color: var(--text-secondary);

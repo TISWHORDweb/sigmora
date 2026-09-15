@@ -77,13 +77,13 @@ const Contact = () => {
           <div className="mk-related">
             <Link to="/faq" className="mk-related-card">
               <h3>Help center</h3>
-              <p>Accounts, billing, creator tools — answered</p>
+              <p>Accounts, billing, signals — answered</p>
               <span>View FAQ</span>
             </Link>
-            <Link to="/getting-started" className="mk-related-card">
-              <h3>Getting started</h3>
+            <Link to="/register" className="mk-related-card">
+              <h3>Create account</h3>
               <p>Three steps from signup to a live desk</p>
-              <span>Read the path</span>
+              <span>Get started</span>
             </Link>
             <Link to="/legal/risk" className="mk-related-card">
               <h3>Risk disclosures</h3>

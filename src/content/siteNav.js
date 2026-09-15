@@ -9,12 +9,12 @@ export const NAV_MENUS = [
           {
             path: '/markets/forex',
             label: 'Forex',
-            desc: 'Major and cross pairs with live creator signals',
+            desc: 'Major and cross pairs with live signals',
           },
           {
             path: '/markets/crypto',
             label: 'Crypto',
-            desc: 'Bitcoin and digital assets from verified desks',
+            desc: 'Bitcoin and digital assets with desk coverage',
           },
           {
             path: '/markets/equities',
@@ -39,7 +39,7 @@ export const NAV_MENUS = [
           {
             path: '/fees',
             label: 'Fees',
-            desc: 'Creator-set packages. Payments stay between you two',
+            desc: 'Transparent packages for every trading style',
           },
           {
             path: '/markets/hours',
@@ -49,7 +49,7 @@ export const NAV_MENUS = [
           {
             path: '/signals',
             label: 'Trade Signals',
-            desc: 'Real-time entries, stops, and targets from creators',
+            desc: 'Real-time entries, stops, and targets from Sigmora',
           },
         ],
       },
@@ -70,48 +70,7 @@ export const NAV_MENUS = [
           {
             path: '/club',
             label: 'Sigmora Club',
-            desc: 'Verified creators with public win rates and returns',
-          },
-          {
-            path: '/creators',
-            label: 'Creator Earnings',
-            desc: 'Launch an academy. Keep the relationship with your book',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'learn',
-    label: 'Learn',
-    columns: [
-      {
-        heading: 'Education',
-        links: [
-          {
-            path: '/academy',
-            label: 'Academy',
-            desc: 'Structured paths built by working traders',
-          },
-          {
-            path: '/getting-started',
-            label: 'Getting Started',
-            desc: 'Account, package, signals — in three steps',
-          },
-          {
-            path: '/insights',
-            label: 'Market Insights',
-            desc: 'Live feed context behind every signal',
-          },
-          {
-            path: '/calendar',
-            label: 'Economic Calendar',
-            desc: 'Central banks, data prints, and session risk',
-          },
-          {
-            path: '/digest',
-            label: 'Sigmora Digest',
-            desc: 'A concise brief for traders who hate noise',
+            desc: 'Member access with public win rates and returns',
           },
           {
             path: '/faq',
@@ -138,7 +97,6 @@ export const NAV_MENUS = [
       {
         heading: 'Trust',
         links: [
-          { path: '/partners', label: 'Creator Relations', desc: 'Partner with Sigmora to grow your academy' },
           { path: '/awards', label: 'Awards', desc: '18+ industry recognitions and counting' },
           { path: '/legal/risk', label: 'Risk Disclosures', desc: 'Signals are not a broker. Trade your own book' },
         ],
@@ -163,16 +121,14 @@ export const FOOTER_COLUMNS = [
     links: [
       { path: '/features', label: 'Features' },
       { path: '/club', label: 'Sigmora Club' },
-      { path: '/creators', label: 'Creator Earnings' },
       { path: '/fees', label: 'Fee Schedule' },
-      { path: '/academy', label: 'Academy' },
+      { path: '/faq', label: 'Help Center' },
     ],
   },
   {
     heading: 'Support',
     links: [
       { path: '/faq', label: 'Help Center' },
-      { path: '/getting-started', label: 'Getting Started' },
       { path: '/register', label: 'Open an Account' },
       { path: '/legal/risk', label: 'Risk Disclosures' },
       { path: '/responsible-trading', label: 'Responsible Trading' },
@@ -182,7 +138,6 @@ export const FOOTER_COLUMNS = [
     heading: 'Company',
     links: [
       { path: '/about', label: 'About Sigmora' },
-      { path: '/partners', label: 'Creator Relations' },
       { path: '/careers', label: 'Careers' },
       { path: '/awards', label: 'Awards' },
       { path: '/media', label: 'Media Center' },

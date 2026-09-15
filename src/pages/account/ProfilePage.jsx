@@ -99,10 +99,10 @@ const ProfileForm = () => {
           )}
           {!isCreator && user?.creatorInfo && (
             <div className="cr-field" style={{ gridColumn: '1 / -1' }}>
-              <span className="cr-field-label">Subscribed academy</span>
+              <span className="cr-field-label">Publisher</span>
               <input
                 className="cr-input"
-                value={`${user.creatorInfo.creatorName || '—'} (${user.creatorInfo.academyCode || '—'})`}
+                value={user.creatorInfo.creatorName || 'Sigmora'}
                 disabled
               />
             </div>

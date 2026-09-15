@@ -286,7 +286,7 @@ const SubscriberDashboard = () => {
 
         <div className="cr-dash-toolbar">
           {[
-            { path: '/subscriber/academy', icon: GraduationCap, label: 'My Academy' },
+            { path: '/subscriber/academy', icon: GraduationCap, label: 'Packages' },
             { path: '/subscriber/trades/active', icon: Activity, label: 'Active Trades' },
             { path: '/subscriber/trades/completed', icon: CheckCircle2, label: 'Completed' },
             { path: '/subscriber/subscriptions', icon: History, label: 'Subscriptions' },

@@ -1,64 +1,36 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Link, useNavigate, useSearchParams } from '../../lib/router';
+import { useState } from 'react';
+import { Link, useNavigate } from '../../lib/router';
 import { useAuth } from '../../context/AuthContext';
 import AuthLayout from './AuthLayout';
 
 const Register = () => {
-  const [searchParams] = useSearchParams();
-  const initialRole = searchParams.get('role') === 'creator' ? 'creator' : 'subscriber';
-  const [role, setRole] = useState(initialRole);
   const [loading, setLoading] = useState(false);
-  const { registerCreator, registerSubscriber } = useAuth();
+  const { registerSubscriber } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
-    creatorName: '',
-    academyCode: searchParams.get('code')?.toUpperCase() || '',
   });
-
-  useEffect(() => {
-    const r = searchParams.get('role');
-    if (r === 'creator' || r === 'subscriber') setRole(r);
-    const code = searchParams.get('code');
-    if (code) {
-      setFormData((prev) => ({ ...prev, academyCode: code.toUpperCase() }));
-    }
-  }, [searchParams]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: name === 'academyCode' ? value.toUpperCase() : value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      if (role === 'creator') {
-        await registerCreator({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-          creatorName: formData.creatorName || formData.name,
-        });
-        navigate('/creator/dashboard');
-      } else {
-        await registerSubscriber({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-          academyCode: formData.academyCode,
-        });
-        navigate('/subscriber/dashboard');
-      }
+      await registerSubscriber({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
+      navigate('/subscriber/dashboard');
     } catch {
       // handled in context
     } finally {
@@ -69,28 +41,7 @@ const Register = () => {
   return (
     <AuthLayout wide>
       <h1 className="auth-heading">Create your account</h1>
-      <p className="auth-subheading">Pick how you&apos;ll use the platform</p>
-
-      <div className="auth-role-toggle" role="tablist">
-        <button
-          type="button"
-          role="tab"
-          aria-selected={role === 'subscriber'}
-          className={`auth-role-btn ${role === 'subscriber' ? 'active' : ''}`}
-          onClick={() => setRole('subscriber')}
-        >
-          I&apos;m a Subscriber
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={role === 'creator'}
-          className={`auth-role-btn ${role === 'creator' ? 'active' : ''}`}
-          onClick={() => setRole('creator')}
-        >
-          I&apos;m a Creator
-        </button>
-      </div>
+      <p className="auth-subheading">Subscribe to Sigmora signals and packages</p>
 
       <form className="auth-form" onSubmit={handleSubmit}>
         <div className="auth-field">
@@ -105,36 +56,6 @@ const Register = () => {
             placeholder="Your display name"
           />
         </div>
-
-        {role === 'creator' && (
-          <div className="auth-field">
-            <label htmlFor="reg-academy">Academy name (optional)</label>
-            <input
-              id="reg-academy"
-              type="text"
-              name="creatorName"
-              value={formData.creatorName}
-              onChange={handleChange}
-              placeholder="e.g. Alpha FX Academy"
-            />
-          </div>
-        )}
-
-        {role === 'subscriber' && (
-          <div className="auth-field">
-            <label htmlFor="reg-code">Academy code</label>
-            <input
-              id="reg-code"
-              type="text"
-              name="academyCode"
-              value={formData.academyCode}
-              onChange={handleChange}
-              required
-              maxLength={6}
-              placeholder="e.g. TRD782"
-            />
-          </div>
-        )}
 
         <div className="auth-field">
           <label htmlFor="reg-email">Email</label>
@@ -164,11 +85,7 @@ const Register = () => {
         </div>
 
         <button type="submit" className="auth-submit" disabled={loading}>
-          {loading
-            ? 'Creating account...'
-            : role === 'creator'
-              ? 'Create creator account'
-              : 'Create subscriber account'}
+          {loading ? 'Creating account...' : 'Create account'}
         </button>
       </form>
 

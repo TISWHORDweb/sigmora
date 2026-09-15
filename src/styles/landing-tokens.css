@@ -1,5 +1,5 @@
 /* Sigmora Design Tokens — violet / magenta fintech palette */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Syne:wght@600;700;800&display=swap');
 
 :root {
   --bg-void: #0a0612;
@@ -13,7 +13,7 @@
   --text-muted: #6e667c;
   --accent: #a855f7;
   --accent-dim: #d946ef;
-  --accent-glow: rgba(168, 85, 247, 0.28);
+  --accent-glow: rgba(168, 85, 247, 0.12);
   --red: #f43f5e;
   --red-glow: rgba(244, 63, 94, 0.18);
   --gold: #e8b84b;
@@ -43,10 +43,10 @@
   --success: #34d399;
   --border: var(--line);
   --border-accent: rgba(168, 85, 247, 0.38);
-  --font-heading: 'Space Grotesk', 'Inter', sans-serif;
-  --font-display: 'Fraunces', 'Space Grotesk', serif;
-  --font-body: 'Inter', -apple-system, sans-serif;
-  --font-mono: 'Space Grotesk', monospace;
+  --font-heading: 'Syne', 'DM Sans', sans-serif;
+  --font-display: 'Syne', 'DM Sans', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'DM Sans', monospace;
   --section-pad: clamp(48px, 6vw, 80px);
   --content-max: var(--container);
   --content-pad: clamp(16px, 4vw, 32px);
@@ -68,8 +68,7 @@
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse 900px 500px at 85% 4%, var(--accent-glow), transparent 60%),
-    radial-gradient(ellipse 700px 400px at 10% 60%, rgba(217, 70, 239, 0.08), transparent 60%);
+    radial-gradient(ellipse 700px 380px at 90% 0%, rgba(168, 85, 247, 0.06), transparent 65%);
   pointer-events: none;
   z-index: 0;
 }
@@ -110,8 +109,8 @@
   height: 2px;
   width: 0%;
   z-index: 9999;
-  background: linear-gradient(90deg, var(--accent), var(--accent-dim));
-  box-shadow: 0 0 12px var(--accent-glow);
+  background: var(--accent);
+  box-shadow: none;
   transition: width 0.1s ease-out;
   pointer-events: none;
 }

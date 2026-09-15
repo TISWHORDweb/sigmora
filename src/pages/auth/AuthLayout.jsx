@@ -14,8 +14,8 @@ const AuthLayout = ({ children, wide = false }) => (
           <BrandWordmark to="/" className="auth-visual-logo brand-wordmark--auth" />
           <h2>Institutional grade signals</h2>
           <p>
-            Connect with verified creators. Real-time trade signals and structured learning
-            paths for serious traders.
+            Subscribe to Sigmora for real-time trade signals and institutional risk
+            management — built for traders who take their edge seriously.
           </p>
         </div>
       </aside>

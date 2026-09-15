@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import User from '../models/User.model.js';
 import Session from '../models/Session.model.js';
 import { generateToken } from '../utils/generateToken.js';
-import { ensureCreatorFreePackage } from '../utils/ensureCreatorFreePackage.js';
+import { ensurePlatformCreator, getPlatformCreator } from '../utils/platformCreator.js';
 import { notifyCreatorAsync } from '../utils/notifications.js';
 import { validationResult } from 'express-validator';
 
@@ -15,70 +15,7 @@ function isDuplicateEmailError(error) {
   return error?.code === 11000 && (error?.keyPattern?.email || error?.message?.includes('email'));
 }
 
-// @desc    Register creator
-// @route   POST /api/auth/register/creator
-// @access  Public
-export const registerCreator = async (req, res) => {
-  try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { name, password, creatorName } = req.body;
-    const email = normalizeEmail(req.body.email);
-
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-      return res.status(400).json({ message: 'An account with this email already exists' });
-    }
-
-    const user = await User.create({
-      name,
-      email,
-      password,
-      role: 'creator',
-      creatorName: creatorName || name
-    });
-
-    if (user) {
-      await ensureCreatorFreePackage(user._id);
-
-      const token = generateToken(user._id);
-      
-      const expiresAt = new Date();
-      expiresAt.setHours(expiresAt.getHours() + 5);
-      
-      await Session.create({
-        user: user._id,
-        token,
-        expiresAt,
-        ipAddress: req.ip || req.connection.remoteAddress,
-        userAgent: req.get('user-agent')
-      });
-
-      res.status(201).json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        creatorName: user.creatorName,
-        academyCode: user.academyCode,
-        token,
-        expiresAt
-      });
-    } else {
-      res.status(400).json({ message: 'Invalid user data' });
-    }
-  } catch (error) {
-    if (isDuplicateEmailError(error)) {
-      return res.status(400).json({ message: 'An account with this email already exists' });
-    }
-    res.status(500).json({ message: error.message });
-  }
-};
-
-// @desc    Register subscriber with academy code
+// @desc    Register subscriber (linked to Sigmora platform publisher)
 // @route   POST /api/auth/register/subscriber
 // @access  Public
 export const registerSubscriber = async (req, res) => {
@@ -88,16 +25,17 @@ export const registerSubscriber = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, password, academyCode } = req.body;
+    const { name, password } = req.body;
     const email = normalizeEmail(req.body.email);
 
-    // Find creator by academy code
-    const creator = await User.findOne({
-      academyCode: String(academyCode).toUpperCase(),
-      role: 'creator',
-    });
+    let creator = await getPlatformCreator();
     if (!creator) {
-      return res.status(404).json({ message: 'Invalid academy code' });
+      creator = await ensurePlatformCreator();
+    }
+    if (!creator) {
+      return res.status(503).json({
+        message: 'Platform is not ready for signups yet. Please try again later.',
+      });
     }
 
     const userExists = await User.findOne({ email });
@@ -105,36 +43,33 @@ export const registerSubscriber = async (req, res) => {
       return res.status(400).json({ message: 'An account with this email already exists' });
     }
 
-    // Create subscriber
     const user = await User.create({
       name: name?.trim() || email.split('@')[0],
       email,
       password,
       role: 'subscriber',
-      subscribedTo: creator._id
+      subscribedTo: creator._id,
     });
 
     if (user) {
-      // Generate token
       const token = generateToken(user._id);
-      
-      // Create session (expires in 5 hours)
+
       const expiresAt = new Date();
       expiresAt.setHours(expiresAt.getHours() + 5);
-      
+
       await Session.create({
         user: user._id,
         token,
         expiresAt,
         ipAddress: req.ip || req.connection.remoteAddress,
-        userAgent: req.get('user-agent')
+        userAgent: req.get('user-agent'),
       });
 
       notifyCreatorAsync({
         recipient: creator._id,
         type: 'subscriber_joined',
-        title: 'New academy member',
-        message: `${user.name} joined your academy using code ${creator.academyCode}`,
+        title: 'New subscriber',
+        message: `${user.name} joined Sigmora`,
         meta: { subscriberId: user._id, subscriberName: user.name },
         link: '/creator/subscribers',
       });
@@ -148,7 +83,7 @@ export const registerSubscriber = async (req, res) => {
         creatorName: creator.creatorName,
         creatorInfo: {
           _id: creator._id,
-          creatorName: creator.creatorName,
+          creatorName: creator.creatorName || 'Sigmora',
           academyCode: creator.academyCode,
         },
         token,
@@ -259,9 +194,14 @@ export const login = async (req, res) => {
 
     if (user.disabled) {
       return res.status(403).json({
-        message: 'Your account has been disabled by the academy. Contact your creator.',
+        message: 'Your account has been disabled. Contact support.',
         code: 'ACCOUNT_DISABLED',
       });
+    }
+
+    // Public product auth is subscriber-only; platform publisher logs in separately via role.
+    if (user.role !== 'subscriber' && user.role !== 'creator') {
+      return res.status(403).json({ message: 'Access denied' });
     }
 
     const isMatch = await user.comparePassword(password);

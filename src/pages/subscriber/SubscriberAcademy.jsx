@@ -54,8 +54,7 @@ const SubscriberAcademy = () => {
     );
   }, [mySubscriptions]);
 
-  const academyName = academy?.creator?.creatorName || getAcademyName(user) || 'Your academy';
-  const academyCode = academy?.creator?.academyCode || user?.creatorInfo?.academyCode || '—';
+  const academyName = academy?.creator?.creatorName || getAcademyName(user) || 'Sigmora';
 
   const handleSubscribe = (pkg) => {
     if (activePackageIds.has(String(pkg._id))) {
@@ -72,8 +71,8 @@ const SubscriberAcademy = () => {
 
   return (
     <SubscriberShell
-      title="My Academy"
-      subtitle="Academy details and available packages"
+      title="Packages"
+      subtitle="Available Sigmora packages and access"
       activeNav="academy"
       loading={loading}
     >
@@ -85,9 +84,6 @@ const SubscriberAcademy = () => {
             </div>
             <div className="cr-academy-hero__body">
               <h2 className="cr-academy-hero__title">{academyName}</h2>
-              <p className="cr-academy-hero__meta">
-                Academy code: <code className="cr-nav-code">{academyCode}</code>
-              </p>
               <p className="cr-academy-hero__text">
                 Subscribe to a package to unlock live signals for that tier. You only see trades tied to packages
                 you have subscribed to.

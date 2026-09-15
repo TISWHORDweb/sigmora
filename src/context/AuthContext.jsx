@@ -81,24 +81,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const registerCreator = async (formData) => {
-    try {
-      const data = await authService.registerCreator(formData);
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data));
-      // Store token expiration time
-      if (data.expiresAt) {
-        localStorage.setItem('tokenExpiresAt', data.expiresAt);
-      }
-      setUser(data);
-      toast.success('Registration successful!');
-      return data;
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Registration failed');
-      throw error;
-    }
-  };
-
   const registerSubscriber = async (formData) => {
     try {
       const data = await authService.registerSubscriber(formData);
@@ -173,7 +155,6 @@ export const AuthProvider = ({ children }) => {
     user,
     loading,
     login,
-    registerCreator,
     registerSubscriber,
     logout,
     refreshUser,
