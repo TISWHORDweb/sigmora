@@ -9,6 +9,8 @@
 .sigmora-loader--fullscreen {
   position: fixed;
   inset: 0;
+  z-index: 10000;
+  background: #0a0e1a;
 }
 
 .sigmora-loader--inline {
@@ -21,19 +23,22 @@
 .sigmora-loader__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(10, 6, 18, 0.35);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: #0a0e1a;
+}
+
+.sigmora-loader--inline .sigmora-loader__backdrop {
+  background: rgba(10, 14, 26, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .sigmora-loader__text {
   position: relative;
   z-index: 1;
   margin: 0;
-  font-family: 'DM Sans', 'Inter', sans-serif;
+  font-family: 'DM Sans', 'Syne', sans-serif;
   font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: 0.02em;
   color: rgba(238, 241, 245, 0.92);
-  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
 }

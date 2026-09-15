@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from '../../lib/router';
 import { useAuth } from '../../context/AuthContext';
+import SigmoraLoader from '../../components/common/SigmoraLoader';
 import AuthLayout from './AuthLayout';
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
   const { registerSubscriber } = useAuth();
   const navigate = useNavigate();
 
@@ -30,13 +32,17 @@ const Register = () => {
         email: formData.email,
         password: formData.password,
       });
+      setRedirecting(true);
       navigate('/subscriber/dashboard');
     } catch {
-      // handled in context
-    } finally {
       setLoading(false);
+      setRedirecting(false);
     }
   };
+
+  if (redirecting) {
+    return <SigmoraLoader fullScreen message="Opening dashboard…" />;
+  }
 
   return (
     <AuthLayout wide>

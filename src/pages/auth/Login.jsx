@@ -5,12 +5,14 @@ import { Eye, EyeOff } from 'lucide-react';
 import { Link, useNavigate } from '../../lib/router';
 import { useAuth } from '../../context/AuthContext';
 import BrandWordmark from '../../components/common/BrandWordmark';
+import SigmoraLoader from '../../components/common/SigmoraLoader';
 import AuthLayout from './AuthLayout';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -23,13 +25,17 @@ const Login = () => {
     setLoading(true);
     try {
       const user = await login(formData.email, formData.password);
+      setRedirecting(true);
       navigate(user.role === 'creator' ? '/creator/dashboard' : '/subscriber/dashboard');
     } catch {
-      // handled in context
-    } finally {
       setLoading(false);
+      setRedirecting(false);
     }
   };
+
+  if (redirecting) {
+    return <SigmoraLoader fullScreen message="Opening dashboard…" />;
+  }
 
   return (
     <AuthLayout>
